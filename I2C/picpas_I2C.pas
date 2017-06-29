@@ -1,4 +1,4 @@
-// NUEVA INFORMACION PARA VER Y COPIAR METODO LECTURA Y ESCRITURA
+// NUEVA INFORMACION PARA VER SOBRE METODO LECTURA Y ESCRITURA
 // http://embeddedlaboratory.blogspot.com.es/2017/05/saving-and-reading-data-from-internal.html
 
 {
@@ -7,11 +7,10 @@
 *
 *  Compilador PicPas v.0.6.8 (https://github.com/t-edson/PicPas)
 *
-*  ESCRITURA DE DATOS EN EEMPROM INTERNA DEL MICROCONTROLADOR
-*  Aunque el codigo tal y como esta compila y funciona perfectamente
-*  ambos procedimientos, el escrito en ensamblador y el escrito en Pascal,
-*  pero se ponen en evidencia ciertos errores a corrregir en futuras versiones
-*  de Picpas.
+*  COMUNICACION I2C
+*  ================
+*  Sin probar. En fase de pruebas y codificacion.
+*
 }
 
 {$FREQUENCY 8 MHZ }
