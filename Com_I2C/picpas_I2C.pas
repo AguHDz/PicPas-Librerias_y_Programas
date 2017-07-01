@@ -27,12 +27,73 @@ var
   ACK      : bit;
   contador : byte;
 
-procedure espera_10us;
-begin
-  contador = 1;
+procedure delay_cycles(cycles : byte);
+begin                   // 2 cycles (call procedure)
   repeat
-    dec(contador);
-  until contador = 0;
+    dec(cycles);       // 1 cycle
+  until cycles = 0;    // 5 cycles (goto repeat or return)
+  
+  while cycles > 0 do
+    dec(cycles);
+  end;
+  
+  for contador:=0 to cycles do
+  end; 
+
+{
+__delay_cycles:
+    $0001 movf cycles,w
+    $0002 sublw 0x00
+    $0003 btfsc 0x003, 0
+    $0004 goto 0x007
+    $0005 decf cycles,f
+    $0006 goto 0x001
+    $0007 return 
+    
+- Contador de Ciclos:
+  2 de llamada a procedimiento (call).
+  7 por cada ves que se repita el bucle repeat..until.
+  5 en la ultima vuelta del bucle repeat..until.
+  2 de retorno del procedimiento (return) 
+
+TOTAL: 4 + 7*(cycles-1) + 5*cycles 
+
+ENTRADA  CYCLES
+   1       9 
+   2       
+Da lugar al siguiente código:
+__delay_cycles:              --> 2 cycles. (call)
+    $0001 decf cycles,f      --> 1 cycle.
+    $0002 movlw 0x00         --> 1 cycle.
+    $0003 subwf cycles,w     --> 1 cycle.
+    $0004 btfss 0x003, 2     --> 1 or 2 cycles.
+    $0005 goto 0x001         --> 2 cycles.
+    $0006 nop                --> 1 cycle.
+    $0007 return             --> 2 cycles.
+end;
+
+- Contador de Ciclos:
+  2 de llamada a procedimiento (call).
+  6 por cada ves que se repita el bucle repeat..until.
+  6 en la ultima vuelta del bucle repeat..until.
+  2 de retorno del procedimiento (return)
+  
+  TOTAL: 2 + 6*cycles + 2 = 
+         4 + 12*cycles
+         
+- Contador de Ciclos (sin $0006 nop):
+  2 de llamada a procedimiento (call).
+  6 por cada ves que se repita el bucle repeat..until.
+  5 en la ultima vuelta del bucle repeat..until.
+  2 de retorno del procedimiento (return)
+  
+  TOTAL: 2 + 6*(cycles-1) + 5*cycles + 2 = 
+         4 + 11*cycles - 6 =
+         (11 * cycles) - 2
+         
+  VALOR    con NOP     sin NOP
+             4               
+}
 end;
 
 //*********************************************************************
@@ -72,9 +133,9 @@ Procedure Start_I2C;
 begin
   SCL := 1;
   SDA := 1;
-  espera_10us;   //x10us delay
+  delay_10us;   //x10us delay
   SDA := 0;
-  espera_10us;   //x10us delay
+  delay_10us;   //x10us delay
   SCL := 0;
 end;
 
@@ -83,7 +144,7 @@ begin
   SCL := 0;
   SDA := 0;
   SCL := 1;
-  espera_10us;   //x10us delay
+  delay_10us;   //x10us delay
   SDA := 1;
 end;
 
@@ -97,22 +158,25 @@ begin
         SDA  := 1;
         SCL  := 1;
         dato := dato<<1;
-        espera_10us;   //x10us delay 
+        delay_10us;   //x10us delay 
         SCL  := 0;
       end;
    end;
    SCL := 0;
    SDA := 1; //input...
-   espera_10us;   //x10us delay 
+   delay_10us;   //x10us delay 
    ACK := SDA;
    SCL := 0;
 end;
  
 begin
   Start_I2C;
-  espera_10us;
+  delay_10us;
   WriteI2C($AA);
-  espera_10us;
+  delay_10us;
   Stop_I2C;
+  
+  // Solo para que compile funciona alternativa de espera y ver codigo resultante.
+  delay_cycles(10);
 end.
 

@@ -1,6 +1,6 @@
 {
 *  (C) AguHDz 27-JUN-2017
-*  Ultima Actualizacion: 29-JUN-2017
+*  Ultima Actualizacion: 01-JUL-2017
 *
 *  Compilador PicPas v.0.7.1 (https://github.com/t-edson/PicPas)
 *
@@ -8,10 +8,10 @@
 *  =================================================
 *  Envio y recepcion de caracteres ASCII mediante puerto serie RS232 creando una
 *  UART mediante software. Cualquier pin de los puertos I/O del microcontrolador
-*  es valido para configurase como linea de Transmision (TX) o Recepcion (RX) de
+*  es valido para configurarse como linea de Transmision (TX) o Recepcion (RX) de
 *  datos.
 *
-*  Este ejemplo de aplicacion utiliza el protocolo RS232 en su configuracion mas
+*  Este ejemplo de aplicacion utiliza el protocolo RS-232 en su configuracion mas
 *  comun: 8 bits de datos, 1 bit de Stop, sin paridad ni control de flujo
 *  (solo 2 hilos de comunicacion), a una velocidad de 1200 bits por segundo.
 *
