@@ -134,7 +134,7 @@ end;
 // Procedure UARTSOFT_SENTCHAR
 // Envia un caracter enviado por el puerto serie (UART).
 // -----------------------------------------------------------------
-procedure UARTSoft_SendChar(dato : char);
+procedure UARTSoft_SendChar(register dato : char);
 var
   contador, dataValue : byte;
 begin
