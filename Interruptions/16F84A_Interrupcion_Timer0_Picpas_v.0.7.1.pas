@@ -59,10 +59,6 @@ var
 begin
 ASM
 ;------------------------------------------------------------------------------------
-; Posiciona la primera instruccion de interrupcion en la direccion $0004.
-;------------------------------------------------------------------------------------
-;  org $0004
-;------------------------------------------------------------------------------------
 ; Inicio de instrucciones que se ejecutan cuando se produce una interrupcion.
 ;------------------------------------------------------------------------------------
   MOVWF Reg_W        ; Guarda en registro W en Reg_W.
@@ -99,7 +95,6 @@ ASM
                      ; Se usa SWAPF en lugar de MOVF porque no afecta al flag Z del registro STATUS.
                      ; Es la tecnica recomendada por Microchip para salvaguardar los valores previos 
                      ; a la interrupcion.
-;  RETFIE             ; Retorna de la interrupcion.
 ;------------------------------------------------------------------------------------
 END
 end;
@@ -116,12 +111,12 @@ begin
   // --------------------------------------------------------------------------------
   
   // Configuracion de Timer TMR0 ----------------------------------------------------
-  OPTION_REG_T0CS := 0;       // Origen de pulsos de incremento de TMR0 es cada ciclo de instruccion (Xtal/4).
-  OPTION_REG_T0SE := 0;       // Incrementea contador de TMR0 en los pulsos de bajada.
-  OPTION_REG_PSA  := 0;       // El divisor de frecuenta usado es el de TMR0
-  OPTION_REG_PS2  := 1;       // Configura divisor (Preescaler) de TMR0 con valor 111 = 1:256.
-  OPTION_REG_PS1  := 1;
-  OPTION_REG_PS0  := 1;
+  OPTION_T0CS := 0;           // Origen de pulsos de incremento de TMR0 es cada ciclo de instruccion (Xtal/4).
+  OPTION_T0SE := 0;           // Incrementea contador de TMR0 en los pulsos de bajada.
+  OPTION_PSA  := 0;           // El divisor de frecuenta usado es el de TMR0
+  OPTION_PS2  := 1;           // Configura divisor (Preescaler) de TMR0 con valor 111 = 1:256.
+  OPTION_PS1  := 1;
+  OPTION_PS0  := 1;
   // --------------------------------------------------------------------------------
 
   // Inicializa variables -----------------------------------------------------------
