@@ -19,7 +19,7 @@
   IMPORTANTE:
   PicPas en su version 0.6.1 aun no permite incluir los fuses en el 
   fichero HEX generado, por lo que hay que configurar manualmente el 
-  grabador o emulador de PIC con este valor de FUSES. O también se
+  grabador o emulador de PIC con este valor de FUSES. O tambiÃ©n se
   puede anadir la linea :02400E00FE3F73 en la penultima linea del
   fichero HEX que general PicPas (insertar antes de la linea 
   :00000001FF que indica el final de los datos a grabar.
@@ -33,7 +33,7 @@ uses PIC16F84A;
 
 begin
   // Asigna preescala al WDT (PSA=1) con valor 1:64 (PS2:PS0=110).
-  OPTION_REG := %00001110;
+  OPTION := %00001110;
   // Tiempo de RESET por Watchdog = 4*1/8e6*256*128*64 = 1,048576 segundos.
   // Mas info sobre Timer PIC en:
   //  https://es.slideshare.net/lmzurita/gua-rpida-tmr0-e-interrupciones
