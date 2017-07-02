@@ -81,17 +81,17 @@ var
 begin
   ASM   
 	          ;2078 cycles -> 20 MHz
-            ;1243 cycles -> 12 MHz
-            ;1038 cycles -> 10 MHz
-            ; 828 cycles ->  8 MHz
+                  ;1243 cycles -> 12 MHz
+                  ;1038 cycles -> 10 MHz
+                  ; 828 cycles ->  8 MHz
 	          movlw	       CICLOS_DELAY_1
 	          movwf	       d1
 	          movlw	       CICLOS_DELAY_2
 	          movwf	       d2
   Delay_0:               
-	          decfsz	     d1, f
+	          decfsz       d1, f
 	          goto         $+2
-	          decfsz	     d2, f
+	          decfsz       d2, f
 	          goto         Delay_0
                          
 	          ;2 cycles    
@@ -176,15 +176,15 @@ begin
     Inc(contador);                   // Incrementa contador de bits de datos.
   until (contador = DataBitCount);   // Acaba cuando se han recibido los 8 bits de datos.
   
-	// Comprueba correcta recepcion mediante bit de Stop.
+  // Comprueba correcta recepcion mediante bit de Stop.
   // Aquí se podría añadir en su caso la deteccion de los bits de paridad.
-	if (UART_RX = HIGH_LEVEL) then     // Bit de Stop debe ser un uno logico.
-		MedioBitDelay;                   // Espera final para completar el tiempo de la trama de bits completa.
-		exit(Chr(DataValue));            // Devuelve el dato leido.
-	else                               // Ha ocurrido algun error !
-		MedioBitDelay;                   // Espera final para completar el tiempo de la trama de bits completa.
-		exit(Chr(0));                    // Si detecta error devuelve el valor cero.
-	end;  
+  if (UART_RX = HIGH_LEVEL) then     // Bit de Stop debe ser un uno logico.
+    MedioBitDelay;                   // Espera final para completar el tiempo de la trama de bits completa.
+    exit(Chr(DataValue));            // Devuelve el dato leido.
+  else                               // Ha ocurrido algun error !
+    MedioBitDelay;                   // Espera final para completar el tiempo de la trama de bits completa.
+    exit(Chr(0));                    // Si detecta error devuelve el valor cero.
+  end;
 end;
 
 
@@ -212,4 +212,3 @@ begin
   until false;
 
 end. 
-
