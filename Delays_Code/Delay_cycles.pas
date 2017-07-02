@@ -13,8 +13,9 @@
 *
 }
 
-{$FREQUENCY 8 MHZ }
 {$PROCESSOR PIC16F84A}
+{$FREQUENCY 8 MHZ}
+{$MODE PICPAS}
 
 program DELAY_CYCLES;
 
@@ -53,12 +54,12 @@ end;
 procedure delay_x10cycles(cyclesx10:byte);
 begin
   while (dec(cyclesx10) > 0) do
-    // ---< 3 cycles
+    //----< 3 cycles >---------------------------
     ASM
       goto $+1
       nop
     END
-    // end 3 cycles >---
+    //-------------------------------------------
   end;
 end;
 
@@ -70,7 +71,7 @@ end;
 //   Call -------------------------> 2
 //   Decrementa cyclesx100 --------> 3
 //   Si cyclesx100 > 0 while ------> 2 + 95 = 97
-//   Tras funcion while -----------> 1 + 2 + 90 = 97
+//   Tras funcion while -----------> 1 + 2 + 90 = 93
 //   Return -----------------------> 2
 // 
 //  TOTAL Ciclos = 2 + (3+2+95)*(cyclesx100-1) + (3+1+2+90) + 2
@@ -81,7 +82,7 @@ var
   d1 : byte;
 begin
   while (dec(cyclesx100) > 0) do
-    // ---< 95 cycles
+    //----< 95 cycles >--------------------------
     ASM
                ;94 cycles
                movlw      $1F
@@ -93,10 +94,9 @@ begin
                ;1 cycle
                nop
     END
-    //  end 95 cycles >---
+    //-------------------------------------------
   end;
-  
-  // ---< 90 cycles
+  //----< 90 cycles >----------------------------
   ASM
              ;88 cycles
              movlw      $1D
@@ -108,7 +108,7 @@ begin
              ;2 cycles
              goto	$+1
   END
-  //  end 90 cycles >---
+  //---------------------------------------------
 end;
 
 
@@ -119,7 +119,7 @@ end;
 //   Call -------------------------> 2
 //   Decrementa cyclesx1000 -------> 3
 //   Si cyclesx100 > 0 while ------> 2 + 995 = 997
-//   Tras funcion while -----------> 1 + 2 + 990 = 997
+//   Tras funcion while -----------> 1 + 2 + 990 = 993
 //   Return -----------------------> 2
 // 
 //  TOTAL Ciclos = 2 + (3+2+995)*(cyclesx1000-1) + (3+1+2+990) + 2
@@ -130,7 +130,7 @@ var
   d1, d2 : byte;
 begin
   while (dec(cyclesx1000) > 0) do
-    // ---< 995 cycles
+    //----< 995 cycles >--------------------------
     ASM
                ;993 cycles
                movlw      $C6
@@ -140,16 +140,15 @@ begin
       Delay_0:
                decfsz	    d1, f
                goto	      $+2
-               DECFSZ     d2, f
+               decfsz     d2, f
                goto	      Delay_0
                
                ;2 cycle
                goto       $+1
     END
-    //  end 995 cycles >---
-  end;
-  
-  // ---< 990 cycles
+    //-------------------------------------------
+  end;  
+  //----< 990 cycles >---------------------------
   ASM
              ;988 cycles
              movlw      $C5
@@ -159,13 +158,13 @@ begin
     Delay_0:
              decfsz	    d1, f
              goto	      $+2
-             DECFSZ     d2, f
+             decfsz     d2, f
              goto	      Delay_0
              
              ;2 cycle
              goto       $+1
   END
-  //  end 990 cycles >---
+  //---------------------------------------------
 end;
 
 
