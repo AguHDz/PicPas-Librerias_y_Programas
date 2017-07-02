@@ -98,8 +98,8 @@ begin
 	          goto         $+1               ; -> Para 8, 12 y 20 MHz
 	          ;2 cycles    
 	          ;goto         $+1               ; -> Para 12 MHz
-            ;1 cycle
-            ;nop                            ; -> Para 10 y 20 Mhz
+                  ;1 cycle
+                  ;nop                            ; -> Para 10 y 20 Mhz
 	          ;4 cycles (call & return)
   END
 end;
