@@ -50,7 +50,7 @@ var
 //  PROCEDIMIENTO: _ISR_
 //  I.S.R. : Interrupt Service Routine (Rutina de Servicio a la Interrupcion)
 //  Cualquier interrupcion producida en el uC 16F84A salta a la
-//  direccion $0004, a partir de la que código de programa debe decidir
+//  direccion $0004, a partir de la que cÃ³digo de programa debe decidir
 //  que hacer.
 //***********************************************************************
 procedure _ISR_; 
@@ -153,12 +153,12 @@ begin
   // --------------------------------------------------------------------------------
   
   // Configuracion de Timer TMR0 ----------------------------------------------------
-  OPTION_REG_T0CS := 0;       // Origen de pulsos de incremento de TMR0 es cada ciclo de instruccion (Xtal/4).
-  OPTION_REG_T0SE := 0;       // Incrementea contador de TMR0 en los pulsos de bajada.
-  OPTION_REG_PSA  := 0;       // El divisor de frecuenta usado es el de TMR0
-  OPTION_REG_PS2  := 1;       // Configura divisor (Preescaler) de TMR0 con valor 111 = 1:256.
-  OPTION_REG_PS1  := 1;
-  OPTION_REG_PS0  := 1;
+  OPTION_T0CS := 0;           // Origen de pulsos de incremento de TMR0 es cada ciclo de instruccion (Xtal/4).
+  OPTION_T0SE := 0;           // Incrementea contador de TMR0 en los pulsos de bajada.
+  OPTION_PSA  := 0;           // El divisor de frecuenta usado es el de TMR0
+  OPTION_PS2  := 1;           // Configura divisor (Preescaler) de TMR0 con valor 111 = 1:256.
+  OPTION_PS1  := 1;
+  OPTION_PS0  := 1;
   // --------------------------------------------------------------------------------
 
   // Inicializa variables -----------------------------------------------------------
@@ -191,7 +191,7 @@ begin
   // Llamada a la funcion de interrupcion para que PicPas la compile.
   // En realidad nunca se va a ejecutar por estar despues del LOOP
   // infinito repeat.. until anterior.
-  // Pero eso el compilador no lo sabe y "le engañamos" para que compile
+  // Pero eso el compilador no lo sabe y "le engaÃ±amos" para que compile
   // la funcion que interrupciones.
   _ISR_;
   // --------------------------------------------------------------------------------
