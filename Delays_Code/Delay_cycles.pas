@@ -104,11 +104,11 @@ begin
     //----< 95 cycles >--------------------------
     ASM
                ;94 cycles
-               movlw      $1F
-               movwf	    d1
+               movlw $1F
+               movwf d1
       Delay_0:
-               decfsz	    d1, f
-               goto	      Delay_0
+               decfsz d1, f
+               goto Delay_0
                
                ;1 cycle
                nop
@@ -118,11 +118,11 @@ begin
   //----< 90 cycles >----------------------------
   ASM
              ;88 cycles
-             movlw      $1D
-             movwf	    d1
+             movlw $1D
+             movwf d1
     Delay_0:
-             decfsz	    d1, f
-             goto	      Delay_0
+             decfsz d1, f
+             goto Delay_0
              
              ;2 cycles
              goto	$+1
@@ -152,36 +152,36 @@ begin
     //----< 995 cycles >--------------------------
     ASM
                ;993 cycles
-               movlw      $C6
-               movwf	    d1
-               movlw      $01
-               movwf	    d2
+               movlw $C6
+               movwf d1
+               movlw $01
+               movwf d2
       Delay_0:
-               decfsz	    d1, f
-               goto	      $+2
-               decfsz     d2, f
-               goto	      Delay_0
+               decfsz d1, f
+               goto $+2
+               decfsz d2, f
+               goto Delay_0
                
                ;2 cycle
-               goto       $+1
+               goto $+1
     END
     //-------------------------------------------
   end;  
   //----< 990 cycles >---------------------------
   ASM
              ;988 cycles
-             movlw      $C5
-             movwf	    d1
-             movlw      $01
-             movwf	    d2
+             movlw $C5
+             movwf d1
+             movlw $01
+             movwf d2
     Delay_0:
-             decfsz	    d1, f
-             goto	      $+2
-             decfsz     d2, f
-             goto	      Delay_0
+             decfsz d1, f
+             goto $+2
+             decfsz d2, f
+             goto Delay_0
              
              ;2 cycle
-             goto       $+1
+             goto $+1
   END
   //---------------------------------------------
 end;
