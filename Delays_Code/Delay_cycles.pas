@@ -68,7 +68,7 @@ begin
   ASM
     ; Retardo de 10 ciclos maquina.
     ; 10 ciclos por bucle
-    ;  6 ciclos si cycles = 1 + call&return = 20 ciclos.
+    ;  6 ciclos si cycles = 1 + call&return = 10 ciclos.
     Init_Loop:
               decf cycles,f
               movlw $01
