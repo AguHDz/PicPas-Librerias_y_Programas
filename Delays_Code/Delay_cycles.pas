@@ -1,6 +1,6 @@
 {
 *  (C) AguHDz 01-07-2017
-*  Ultima Actualizacion: 02-07-2017
+*  Ultima Actualizacion: 04-07-2017
 *
 *  Compilador PicPas v.0.7.1 (https://github.com/t-edson/PicPas)
 *
@@ -61,6 +61,25 @@ begin
     END
     //-------------------------------------------
   end;
+end;
+
+procedure delay_x10cycles_ASM(cycles:byte);
+begin
+  ASM
+    ; Retardo de 10 ciclos maquina.
+    ; 10 ciclos por bucle
+    ;  6 ciclos si cycles = 1 + call&return = 20 ciclos.
+    Init_Loop:
+              decf cycles,f
+              movlw $01
+              subwf cycles,w
+              btfsc STATUS, 2   ; si cycles = 1 goto End_Loop
+              goto End_Loop
+              nop
+              goto $+1
+              goto Init_Loop
+    End_Loop:
+  END    
 end;
 
 
@@ -172,34 +191,86 @@ end;
 // Entrada cyclesx29 = 20 x ciclos maquina (4 ciclos reloj) de espera.
 // ----------------------------------------------------------------------------
 // Pendiente de revision ******************************************************
-procedure delay_x20cycles(cycles : word);
+procedure delay_x20cycles_v1(cycles : word);
 begin   
-  while((cycles.low <> 0) OR (cycles.high <> 0)) do  // --> 12 cycles.
+  while((cycles.low <> 1) OR (cycles.high <> 0)) do  // --> 11 cycles (12 si cycles=1).
     if (dec(cycles.low) = 0) then                    // -|
       dec(cycles.high);                              //  |
-    end;                                             //   > 8 cycles.
-  end;                                               //  |
-                                                     // -|
+    end;                                             //   > 9 cycles.
+    ASM nop END                                      // -|
+  end;                                               // -|
   ASM                                                
     goto $+1  ; 2 cycles                             // -|
     goto $+1  ; 2 cycles                             //   > 4 cycles.
   END                                                // -|
-end;                                                 // --> 4 cycles (call & return)
+end;                                                 // --> 4 cycles (call & return)    
+
+procedure delay_x20cycles_v2(cycles : word);
+begin   
+  repeat
+    if (dec(cycles.low) = 0) then
+      if (cycles.high = 0) then
+        ASM
+          goto $+1
+          goto $+1
+          goto $+1
+          nop
+        END          
+        exit;
+      else
+        dec(cycles.high);
+      end;
+    else
+      ASM
+        goto $+1
+        goto $+1
+        goto $+1
+        nop
+      END
+    end;
+    ASM
+      goto $+1
+      goto $+1
+      nop
+    END
+  until false;
+end;
 // ****************************************************************************
 procedure delay_x20cycles(cycles : byte);
 begin
-  delay_x10cycles(1);  // 10 cycles.
-  delay_4cycles;       //  4 cycles.
-  ASM goto $+1 END     //  2 cycles.
-end;                   //  4 cycles (call & retunr)
+  ASM
+    ; Retardo de 20 ciclos maquina.
+    ; 20 ciclos por bucle
+    ; 16 ciclos si cycles = 1 + call&return = 20 ciclos.
+    Init_Loop:
+              goto $+1
+              goto $+1
+              goto $+1
+              goto $+1
+              goto $+1
+              decf cycles,f
+              movlw $01
+              subwf cycles,w
+              btfsc STATUS, 2   ; si cycles = 1 goto End_Loop
+              goto End_Loop
+              nop
+              goto $+1
+              goto Init_Loop
+    End_Loop:
+  END    
+end;
+
+
 // ----------------------------------------------------------------------------
 
 begin
   delay_4cycles;
   delay_x10cycles(100);
+  delay_x10cycles_ASM(100);
   delay_x100cycles(100);
   delay_x1000cycles(100);
   delay_x20cycles(100);
-  delay_x20cycles(1000);
+  delay_x20cycles_v1(1000);
+  delay_x20cycles_v2(1000);
 end.
 
