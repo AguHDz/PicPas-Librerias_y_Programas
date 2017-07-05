@@ -167,22 +167,39 @@ begin
   //---------------------------------------------
 end;
 
-
+// ----------------------------------------------------------------------------
+// Procedure DELAY_X20CYCLES
+// Entrada cyclesx29 = 20 x ciclos maquina (4 ciclos reloj) de espera.
+// ----------------------------------------------------------------------------
 // Pendiente de revision ******************************************************
-procedure delay_cycles(x : word);
-begin
-  repeat
-    x := x - word(1);
-  until ((x.low = 0) AND (x.high = 0));
-end;
+procedure delay_x20cycles(cycles : word);
+begin   
+  while((cycles.low <> 0) OR (cycles.high <> 0)) do  // --> 12 cycles.
+    if (dec(cycles.low) = 0) then                    // -|
+      dec(cycles.high);                              //  |
+    end;                                             //   > 8 cycles.
+  end;                                               //  |
+                                                     // -|
+  ASM                                                
+    goto $+1  ; 2 cycles                             // -|
+    goto $+1  ; 2 cycles                             //   > 4 cycles.
+  END                                                // -|
+end;                                                 // --> 4 cycles (call & return)
 // ****************************************************************************
-
+procedure delay_x20cycles(cycles : byte);
+begin
+  delay_x10cycles(1);  // 10 cycles.
+  delay_4cycles;       //  4 cycles.
+  ASM goto $+1 END     //  2 cycles.
+end;                   //  4 cycles (call & retunr)
+// ----------------------------------------------------------------------------
 
 begin
   delay_4cycles;
   delay_x10cycles(100);
   delay_x100cycles(100);
   delay_x1000cycles(100);
-  delay_cycles(1000);
+  delay_x20cycles(100);
+  delay_x20cycles(1000);
 end.
 
