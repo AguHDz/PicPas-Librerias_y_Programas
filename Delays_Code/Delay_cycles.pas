@@ -130,6 +130,73 @@ begin
   //---------------------------------------------
 end;
 
+procedure delay_x100cycles_ASM(cyclesx100:byte);
+var
+  d1 : byte;
+begin
+  ASM
+  ;----< 90 cycles >----------------------------
+             ;88 cycles
+             movlw $1D
+             movwf d1
+    Delay_0:
+             decfsz d1, f
+             goto Delay_0
+             
+             ;2 cycles
+             goto	$+1  
+  ;---------------------------------------------
+    Init_Loop:
+             decf cyclesx100,f
+             movf cyclesx100,w
+             sublw $00
+             btfsc STATUS, 0
+             goto Fin_Loop
+             
+  ;----< 95 cycles >--------------------------
+             ;94 cycles
+             movlw $1F
+             movwf d1
+    Delay_1:
+             decfsz d1, f
+             goto Delay_1
+             
+             ;1 cycle
+             nop    
+  ;-------------------------------------------             
+  Fin_Loop:
+  END
+end;
+
+
+procedure delay_x100cycles_ASM_V2(cyclesx100:byte);
+var
+  d1 : byte;
+begin
+  ASM
+             goto Cycles_88       ; 88+2 = 90 cycles.
+    Init_Loop:
+             decf cyclesx100,f
+             movf cyclesx100,w
+             sublw $00
+             btfsc STATUS, 0
+             goto Fin_Loop
+             goto $+1
+             goto $+1
+             nop
+            
+  ;----< 88 cycles >----------------------------
+    cycles_88:
+             movlw $1D
+             movwf d1
+    Delay_0:
+             decfsz d1, f
+             goto Delay_0
+  ;---------------------------------------------
+  Fin_Loop:
+  END
+end;
+
 
 // ----------------------------------------------------------------------------
 // Procedure DELAY_X1000CYCLES
@@ -268,6 +335,7 @@ begin
   delay_x10cycles(100);
   delay_x10cycles_ASM(100);
   delay_x100cycles(100);
+  delay_x100cycles_ASM(100);
   delay_x1000cycles(100);
   delay_x20cycles(100);
   delay_x20cycles_v1(1000);
