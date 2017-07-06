@@ -3,8 +3,11 @@
 *  SFR del microcontrolador PIC 16F84A
 *
 *  (C) AguHDz 05-JUN-2017
-*  Ultima Actualizacion: 23-JUN-2017
+*  Ultima Actualizacion: 05-JUL-2017
 }
+
+{$PROCESSOR PIC16F84A}
+
 unit PIC16F84A;
  
 interface
@@ -54,14 +57,25 @@ var
   INTCON_INTF       : bit  absolute INTCON.1;
   INTCON_RBIF       : bit  absolute INTCON.0;
   OPTION            : byte absolute $0081;
-  OPTION_RBPU       : bit  absolute OPTION_REG.7;
-  OPTION_INTEDG     : bit  absolute OPTION_REG.6;
-  OPTION_T0CS       : bit  absolute OPTION_REG.5;
-  OPTION_T0SE       : bit  absolute OPTION_REG.4;
-  OPTION_PSA        : bit  absolute OPTION_REG.3;
-  OPTION_PS2        : bit  absolute OPTION_REG.2;
-  OPTION_PS1        : bit  absolute OPTION_REG.1;
-  OPTION_PS0        : bit  absolute OPTION_REG.0;
+  OPTION_RBPU       : bit  absolute OPTION.7;
+  OPTION_INTEDG     : bit  absolute OPTION.6;
+  OPTION_T0CS       : bit  absolute OPTION.5;
+  OPTION_T0SE       : bit  absolute OPTION.4;
+  OPTION_PSA        : bit  absolute OPTION.3;
+  OPTION_PS2        : bit  absolute OPTION.2;
+  OPTION_PS1        : bit  absolute OPTION.1;
+  OPTION_PS0        : bit  absolute OPTION.0;
+//---- Por compatibilidad de nombres con versiones anteriores -----
+  OPTION_REG        : byte absolute $0081;
+  OPTION_REG_RBPU   : bit  absolute OPTION_REG.7;
+  OPTION_REG_INTEDG : bit  absolute OPTION_REG.6;
+  OPTION_REG_T0CS   : bit  absolute OPTION_REG.5;
+  OPTION_REG_T0SE   : bit  absolute OPTION_REG.4;
+  OPTION_REG_PSA    : bit  absolute OPTION_REG.3;
+  OPTION_REG_PS2    : bit  absolute OPTION_REG.2;
+  OPTION_REG_PS1    : bit  absolute OPTION_REG.1;
+  OPTION_REG_PS0    : bit  absolute OPTION_REG.0;
+//-----------------------------------------------------------------
   TRISA             : byte absolute $0085;
   TRISB             : byte absolute $0086;
   EECON1            : byte absolute $0088;

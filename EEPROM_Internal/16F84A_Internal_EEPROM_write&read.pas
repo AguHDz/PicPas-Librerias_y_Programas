@@ -12,7 +12,7 @@
 }
 
 {$FREQUENCY 8 MHZ }
-{$PROCESSOR PIC16F84A}
+//{$PROCESSOR PIC16F84A}  // Ya incluido en UNIT PIC16F84A.
 program EEPROMInterna;
 
 uses

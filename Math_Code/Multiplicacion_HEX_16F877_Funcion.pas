@@ -15,7 +15,7 @@
 *  se muestra como salida digital por los puertos C y D.
 }
 
-{$PROCESSOR PIC16F877A}
+// {$PROCESSOR PIC16F877A}
 {$FREQUENCY 8Mhz}
 {$MODE PICPAS}
 program Multipl_HEX_ASM;
