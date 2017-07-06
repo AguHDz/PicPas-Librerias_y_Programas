@@ -183,15 +183,22 @@ begin
              goto Fin_Loop
              goto $+1
              goto $+1
+             goto $+1
              nop
             
   ;----< 88 cycles >----------------------------
     cycles_88:
-             movlw $1D
+             ; 85 cycles
+             movlw $1C
              movwf d1
     Delay_0:
              decfsz d1, f
              goto Delay_0
+             ;1 cycle
+             nop
+             
+             ; 2 cycles
+             goto Init_Loop
   ;---------------------------------------------
   Fin_Loop:
   END
@@ -316,9 +323,9 @@ begin
               goto $+1
               goto $+1
               decf cycles,f
-              movlw $01
+              movlw $00
               subwf cycles,w
-              btfsc STATUS, 2   ; si cycles = 1 goto End_Loop
+              btfsc STATUS, 2   ; si cycles = 0 goto End_Loop
               goto End_Loop
               nop
               goto $+1
@@ -336,6 +343,7 @@ begin
   delay_x10cycles_ASM(100);
   delay_x100cycles(100);
   delay_x100cycles_ASM(100);
+  delay_x100cycles_ASM_V2(100);
   delay_x1000cycles(100);
   delay_x20cycles(100);
   delay_x20cycles_v1(1000);
