@@ -1,18 +1,22 @@
 {
- Unidad para el compilador PicPas,
- con definiciones del microcontrolador PIC16C63
-
- Por Tito Hinostroza 29/06/2017
- Modificado por AguHDz el 05-JUN-2017
+*  UNIT para compilador PicPas
+*  SFR del microcontrolador PIC 16F84A
+*
+*  (C) AguHDz 05-JUL-2017
+*  Ultima Actualizacion: 10-JUL-2017
 }
 
-{$PROCESSOR PIC16C63}
+{$PROCESSOR PIC16F72}
 
-unit PIC16C63;
+// AHORA UN COPIA Y PEGA DEL PIC16F84A, AHORA ACOMPROBALO Y ACTUALIZARLO.....
 
+
+unit PIC16F72;
+ 
 interface
 var
 // DEFINICION DE BYTES Y BITS DE ZONA MEMORIA SFR.
+// Segun los nombres y direcciones en datasheet de Microchip.
   INDF              : byte absolute $0000;
   TMR0              : byte absolute $0001;
   PCL               : byte absolute $0002;
@@ -27,11 +31,17 @@ var
   STATUS_C          : bit  absolute STATUS.0;
   FSR               : byte absolute $0004;
   PORTA             : byte absolute $0005;
+  PORTA_AN4         : bit  absolute PORTA.5;
   PORTA_RA5         : bit  absolute PORTA.5;
+  PORTA_T0CKI       : bit  absolute PORTA.4;
   PORTA_RA4         : bit  absolute PORTA.4;
+  PORTA_AN3         : bit  absolute PORTA.3;
   PORTA_RA3         : bit  absolute PORTA.3;
+  PORTA_AN2         : bit  absolute PORTA.2;
   PORTA_RA2         : bit  absolute PORTA.2;
+  PORTA_AN1         : bit  absolute PORTA.1;
   PORTA_RA1         : bit  absolute PORTA.1;
+  PORTA_AN0         : bit  absolute PORTA.0;
   PORTA_RA0         : bit  absolute PORTA.0;
   PORTB             : byte absolute $0006;
   PORTB_RB7         : bit  absolute PORTB.7;
@@ -42,39 +52,44 @@ var
   PORTB_RB2         : bit  absolute PORTB.2;
   PORTB_RB1         : bit  absolute PORTB.1;
   PORTB_RB0         : bit  absolute PORTB.0;
+  PORTB_INT         : bit  absolute PORTB.0;
   PORTC             : byte absolute $0007;
   PORTC_RC7         : bit  absolute PORTC.7;
   PORTC_RC6         : bit  absolute PORTC.6;
+  PORTC_SDO         : bit  absolute PORTC.5;
   PORTC_RC5         : bit  absolute PORTC.5;
+  PORTC_SCA         : bit  absolute PORTC.4;
+  PORTC_SDI         : bit  absolute PORTC.4;
   PORTC_RC4         : bit  absolute PORTC.4;
+  PORTC_SCL         : bit  absolute PORTC.3;
+  PORTC_SCK         : bit  absolute PORTC.3;
   PORTC_RC3         : bit  absolute PORTC.3;
+  PORTC_CCP1        : bit  absolute PORTC.2;
   PORTC_RC2         : bit  absolute PORTC.2;
+  PORTC_T1OSI       : bit  absolute PORTC.1;
   PORTC_RC1         : bit  absolute PORTC.1;
-  PORTC_RC0         : bit  absolute PORTC.0;
-
-
+  PORTC_T1CKI       : bit  absolute PORTC.0;
+  PORTC_T1OSC       : bit  absolute PORTC.0;
+  PORTC_RC0         : bit  absolute PORTC.0;  
   PCLATH            : byte absolute $000A;
   INTCON            : byte absolute $000B;
   INTCON_GIE        : bit  absolute INTCON.7;
   INTCON_PEIE       : bit  absolute INTCON.6;
-  INTCON_TMR0IE     : bit  absolute INTCON.5;  //T0IE
   INTCON_T0IE       : bit  absolute INTCON.5;
+  INTCON_TMR0IE     : bit  absolute INTCON.5;
   INTCON_INTE       : bit  absolute INTCON.4;
-  INTCON_RBIE       : bit  absolute INTCON.3;  
-  INTCON_TMR0IF     : bit  absolute INTCON.2;  //T0IF
+  INTCON_RBIE       : bit  absolute INTCON.3;
   INTCON_T0IF       : bit  absolute INTCON.2;
+  INTCON_TMR0IF     : bit  absolute INTCON.2;
   INTCON_INTF       : bit  absolute INTCON.1;
-  INTCON_RBIF       : bit  absolute INTCON.0;
+  INTCON_RBIF       : bit  absolute INTCON.0;  
   PIR1              : byte absolute $000C;
-  PIR1_RCIF         : bit  absolute PIR1.5;
-  PIR1_TXIF         : bit  absolute PIR1.4;
+  PIR1_ADIF         : bit  absolute PIR1.6;
   PIR1_SSPIF        : bit  absolute PIR1.3;
   PIR1_CCP1IF       : bit  absolute PIR1.2;
   PIR1_TMR2IF       : bit  absolute PIR1.1;
   PIR1_TMR1IF       : bit  absolute PIR1.0;
-  PIR2              : byte absolute $000D;
-  PIR2_CCP2IF       : bit  absolute PIR2.0;
-  TMR1L             : byte absolute $000E; 
+  TMR1L             : byte absolute $000E;
   TMR1H             : byte absolute $000F;
   T1CON             : byte absolute $0010;
   T1CON_T1CKPS1     : bit  absolute T1CON.5;
@@ -102,8 +117,9 @@ var
   SSPCON_SSPM2      : bit  absolute SSPCON.2;
   SSPCON_SSPM1      : bit  absolute SSPCON.1;
   SSPCON_SSPM0      : bit  absolute SSPCON.0;
-  CCPR1L            : byte absolute $0015;
-  CCPR1H            : byte absolute $0016;
+  CCPR1             : word absolute $0015;
+  CCPR1L            : byte absolute CCPR1.LOW;   // $0015
+  CCPR1H            : byte absolute CCPR1.HIGH;  // $0016
   CCP1CON           : byte absolute $0017;
   CCP1CON_CCP1X     : bit  absolute CCP1CON.5;
   CCP1CON_CCP1Y     : bit  absolute CCP1CON.4;
@@ -111,27 +127,15 @@ var
   CCP1CON_CCP1M2    : bit  absolute CCP1CON.2;
   CCP1CON_CCP1M1    : bit  absolute CCP1CON.1;
   CCP1CON_CCP1M0    : bit  absolute CCP1CON.0;
-  RCSTA             : byte absolute $0018;
-  RCSTA_SPEN        : bit  absolute RCSTA.7;
-  RCSTA_RX9         : bit  absolute RCSTA.6;
-  RCSTA_SREN        : bit  absolute RCSTA.5;
-  RCSTA_CREN        : bit  absolute RCSTA.4;
-//  RCSTA_ADDEN       : bit  absolute RCSTA.3;
-  RCSTA_FERR        : bit  absolute RCSTA.2;
-  RCSTA_OERR        : bit  absolute RCSTA.1;
-  RCSTA_RX9D        : bit  absolute RCSTA.0;
-  TXREG             : byte absolute $0019;
-  RCREG             : byte absolute $001A;
-  CCPR2L            : byte absolute $001B;
-  CCPR2H            : byte absolute $001C;
-  CCP2CON           : byte absolute $001D;
-  CCP2CON_CCP2X     : bit  absolute CCP2CON.5;
-  CCP2CON_CCP2Y     : bit  absolute CCP2CON.4;
-  CCP2CON_CCP2M3    : bit  absolute CCP2CON.3;
-  CCP2CON_CCP2M2    : bit  absolute CCP2CON.2;
-  CCP2CON_CCP2M1    : bit  absolute CCP2CON.1;
-  CCP2CON_CCP2M0    : bit  absolute CCP2CON.0;  
-
+  ADRES             : byte absolute $001E;  
+  ADCON0            : byte absolute $001F;
+  ADCON0_ADCS1      : bit  absolute ADCON0.7;
+  ADCON0_ADCS2      : bit  absolute ADCON0.6;
+  ADCON0_CHS2       : bit  absolute ADCON0.5;
+  ADCON0_CHS1       : bit  absolute ADCON0.4;
+  ADCON0_CHS0       : bit  absolute ADCON0.3;
+  ADCON0_GO_DONE    : bit  absolute ADCON0.1;
+  ADCON0_ADON       : bit  absolute ADCON0.0;
   OPTION            : byte absolute $0081;
   OPTION_RBPU       : bit  absolute OPTION.7;
   OPTION_INTEDG     : bit  absolute OPTION.6;
@@ -142,7 +146,7 @@ var
   OPTION_PS1        : bit  absolute OPTION.1;
   OPTION_PS0        : bit  absolute OPTION.0;
 //---- Por compatibilidad de nombres con versiones anteriores -----
-  OPTION_REG        : byte absolute $0081;  //OPTION
+  OPTION_REG        : byte absolute $0081;
   OPTION_REG_RBPU   : bit  absolute OPTION_REG.7;
   OPTION_REG_INTEDG : bit  absolute OPTION_REG.6;
   OPTION_REG_T0CS   : bit  absolute OPTION_REG.5;
@@ -155,37 +159,36 @@ var
   TRISA             : byte absolute $0085;
   TRISB             : byte absolute $0086;
   TRISC             : byte absolute $0087;
-
   PIE1              : byte absolute $008C;
-  PIE1_RCIE         : bit  absolute PIE1.5;
-  PIE1_TXIE         : bit  absolute PIE1.4;
+  PIE1_ADIE         : bit  absolute PIE1.6;
   PIE1_SSPIE        : bit  absolute PIE1.3;
   PIE1_CCP1IE       : bit  absolute PIE1.2;
-  PIE1_TMR2IE       : bit  absolute PIE1.1;
-  PIE1_TMR1IE       : bit  absolute PIE1.0;
-  PIE2              : byte absolute $008D;
-  PIE2_CCP2IE       : bit  absolute PIE2.0;
+  PIE1_TME2IE       : bit  absolute PIE1.1;
+  PIE1_TME1IE       : bit  absolute PIE1.0;
   PCON              : byte absolute $008E;
-  PCON_POR          : bit  absolute PCON.1;
-  PCON_BOR          : bit  absolute PCON.0;
+  PCON_POR          : bit absolute PCON.1;
+  PCON_BOR          : bit absolute PCON.0;
   PR2               : byte absolute $0092;
   SSPADD            : byte absolute $0093;
   SSPSTAT           : byte absolute $0094;
-  SSPSTAT_DA        : bit  absolute SSPSTAT.5;
+  SSPSTAT_SMP       : bit  absolute SSPSTAT.7;
+  SSPSTAT_CKE       : bit  absolute SSPSTAT.6;
+  SSPSTAT_D_A       : bit  absolute SSPSTAT.5;
   SSPSTAT_P         : bit  absolute SSPSTAT.4;
   SSPSTAT_S         : bit  absolute SSPSTAT.3;
-  SSPSTAT_RW        : bit  absolute SSPSTAT.2;
+  SSPSTAT_R_W       : bit  absolute SSPSTAT.2;
   SSPSTAT_UA        : bit  absolute SSPSTAT.1;
   SSPSTAT_BF        : bit  absolute SSPSTAT.0;
-  TXSTA             : byte absolute $0098;
-  TXSTA_CSRC        : bit  absolute TXSTA.7;
-  TXSTA_TX9         : bit  absolute TXSTA.6;
-  TXSTA_TXEN        : bit  absolute TXSTA.5;
-  TXSTA_SYNC        : bit  absolute TXSTA.4;
-  TXSTA_BRGH        : bit  absolute TXSTA.2;
-  TXSTA_TRMT        : bit  absolute TXSTA.1;
-  TXSTA_TX9D        : bit  absolute TXSTA.0;
-  SPBRG             : byte absolute $0099;
- 
+  ADCON1            : byte absolute $009F;
+  ADCON1_PCFG2      : bit  absolute ADCON1.2;
+  ADCON1_PCFG1      : bit  absolute ADCON1.1;
+  ADCON1_PCFG0      : bit  absolute ADCON1.0;
+  PMDATL            : byte absolute $010C;
+  PMADRL            : byte absolute $010D;
+  PMDATH            : byte absolute $010E;
+  PMADRH            : byte absolute $010F;
+  PMCON1            : byte absolute $018c;
+  PMCON1_RD         : bit absolute PMCON1.0;
+   
 implementation
 end.
