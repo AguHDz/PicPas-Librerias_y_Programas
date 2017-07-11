@@ -3,9 +3,9 @@
 
 {
 *  (C) AguHDz 05-JUN-2017
-*  Ultima Actualizacion: 09-JUN-2017
+*  Ultima Actualizacion: 10-JUL-2017
 *
-*  Compilador PicPas v.0.6.8 (https://github.com/t-edson/PicPas)
+*  Compilador PicPas v.0.7.2 (https://github.com/t-edson/PicPas)
 *
 *  COMUNICACION I2C
 *  ================
@@ -24,10 +24,12 @@ var
   SDA      : bit absolute PORTA.0;
   SCL      : bit absolute PORTA.1;
   LED      : bit absolute PORTB.0;
-  ACK      : bit;
-  contador : byte;
+//  ACK      : bit;
+//  contador : byte;
 
 procedure delay_cycles(cycles : byte);
+var
+  contador : byte;
 begin                   // 2 cycles (call procedure)
   repeat
     dec(cycles);       // 1 cycle
@@ -129,7 +131,7 @@ ASM
 END
 end;
 
-Procedure Start_I2C;
+Procedure I2C_Start;
 begin
   SCL := 1;
   SDA := 1;
@@ -139,7 +141,7 @@ begin
   SCL := 0;
 end;
 
-Procedure Stop_I2C;
+Procedure I2C_Stop;
 begin
   SCL := 0;
   SDA := 0;
@@ -148,35 +150,52 @@ begin
   SDA := 1;
 end;
 
-Procedure WriteI2C(dato : byte);
+Procedure I2C_Write(dato : byte) : bit;
+var
+  ACK      : bit;
+  contador : byte;
 begin
-  for contador:=0 to 8 do 
+  for contador:=0 to 7 do 
     SCL := 0;
-    if(dato AND $80)=0 then
+{    if(dato AND $80)=0 then
       SDA := 0;
-      else
-        SDA  := 1;
-        SCL  := 1;
-        dato := dato<<1;
-        delay_10us;   //x10us delay 
-        SCL  := 0;
-      end;
-   end;
-   SCL := 0;
-   SDA := 1; //input...
-   delay_10us;   //x10us delay 
-   ACK := SDA;
-   SCL := 0;
+    else
+      SDA := 1;
+    end;}
+    SDA := dato.7;
+    SCL  := 1;
+    dato := dato<<1;
+    delay_10us;   //x10us delay 
+    SCL  := 0;
+  end;
+  SCL := 0;
+  SDA := 1;     //input...
+  delay_10us;   //x10us delay 
+  ACK := SDA;
+  SCL := 0;
+  exit(ACK);
 end;
- 
+
+procedure I2C_eeprom_write(address,data : byte);
 begin
-  Start_I2C;
+  LED := 1;
+  I2C_Start;
+  LED := I2C_write($A0);     // I2C Address.
+  LED := I2C_write(address); // byte address.
+  LED := I2C_write(data);    // data 
+  I2C_Stop;
+  // para escribir el siguiente dato sería necesario esperar 10 ms.
+end;
+
+begin
+{  I2C_Start;
   delay_10us;
-  WriteI2C($AA);
+  I2C_Write($AA);
   delay_10us;
-  Stop_I2C;
+  I2C_Stop;
   
   // Solo para que compile funciona alternativa de espera y ver codigo resultante.
-  delay_cycles(10);
+  delay_cycles(10);}
+  I2C_eeprom_write($00,$50);  
 end.
 
