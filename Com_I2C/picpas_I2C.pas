@@ -19,84 +19,15 @@ program I2C;
 
 uses
   PIC16F84A;  
- 
+  
+const
+  I2C_MASTER = true;
+  I2C_SLAVE  = false;
+
 var
   SDA      : bit absolute PORTA.0;
   SCL      : bit absolute PORTA.1;
   LED      : bit absolute PORTB.0;
-//  ACK      : bit;
-//  contador : byte;
-
-procedure delay_cycles(cycles : byte);
-var
-  contador : byte;
-begin                   // 2 cycles (call procedure)
-  repeat
-    dec(cycles);       // 1 cycle
-  until cycles = 0;    // 5 cycles (goto repeat or return)
-  
-  while cycles > 0 do
-    dec(cycles);
-  end;
-  
-  for contador:=0 to cycles do
-  end; 
-
-{
-__delay_cycles:
-    $0001 movf cycles,w
-    $0002 sublw 0x00
-    $0003 btfsc 0x003, 0
-    $0004 goto 0x007
-    $0005 decf cycles,f
-    $0006 goto 0x001
-    $0007 return 
-    
-- Contador de Ciclos:
-  2 de llamada a procedimiento (call).
-  7 por cada ves que se repita el bucle repeat..until.
-  5 en la ultima vuelta del bucle repeat..until.
-  2 de retorno del procedimiento (return) 
-
-TOTAL: 4 + 7*(cycles-1) + 5*cycles 
-
-ENTRADA  CYCLES
-   1       9 
-   2       
-Da lugar al siguiente código:
-__delay_cycles:              --> 2 cycles. (call)
-    $0001 decf cycles,f      --> 1 cycle.
-    $0002 movlw 0x00         --> 1 cycle.
-    $0003 subwf cycles,w     --> 1 cycle.
-    $0004 btfss 0x003, 2     --> 1 or 2 cycles.
-    $0005 goto 0x001         --> 2 cycles.
-    $0006 nop                --> 1 cycle.
-    $0007 return             --> 2 cycles.
-end;
-
-- Contador de Ciclos:
-  2 de llamada a procedimiento (call).
-  6 por cada ves que se repita el bucle repeat..until.
-  6 en la ultima vuelta del bucle repeat..until.
-  2 de retorno del procedimiento (return)
-  
-  TOTAL: 2 + 6*cycles + 2 = 
-         4 + 12*cycles
-         
-- Contador de Ciclos (sin $0006 nop):
-  2 de llamada a procedimiento (call).
-  6 por cada ves que se repita el bucle repeat..until.
-  5 en la ultima vuelta del bucle repeat..until.
-  2 de retorno del procedimiento (return)
-  
-  TOTAL: 2 + 6*(cycles-1) + 5*cycles + 2 = 
-         4 + 11*cycles - 6 =
-         (11 * cycles) - 2
-         
-  VALOR    con NOP     sin NOP
-             4               
-}
-end;
 
 //*********************************************************************
 //  Delay 10 microsecond.
@@ -104,88 +35,171 @@ end;
 //  Delay = 1e-05 seconds = 20 cycles
 //  Error = 0 %
 //  call delay_10us ->  2 cycles
-//  16 x nop       -> 16 cycles
-//  return         ->  2 cycles
+//  8 x goto $+1    -> 16 cycles
+//  return          ->  2 cycles
 //                   ----
-//  TOTAL          -> 20 cycles = 10 us
+//  TOTAL           -> 20 cycles = 10 us
 //*********************************************************************
 procedure delay_10us;
 begin
 ASM
-  NOP  ; 1 cycle (si clock = 8 MHz entonces 1 cycle = 1/8e6*4 = 0.5 us)
-  NOP
-  NOP
-  NOP
-  NOP
-  NOP
-  NOP
-  NOP
-  NOP
-  NOP
-  NOP
-  NOP
-  NOP
-  NOP
-  NOP
-  NOP
+  goto $+1  ; 2 cycle (si clock = 8 MHz entonces 2 cycle = 2/8e6*4 = 1 us)
+  goto $+1
+  goto $+1
+;  goto $+1
+;  goto $+1
+;  goto $+1
+;  goto $+1
+;  goto $+1
 END
 end;
 
+Procedure I2C_Init(master_slave : boolean);
+begin
+  if(master_slave) then
+    SetAsOutput(SCL);  // MASTER BUS
+    SetAsOutput(SDA);
+    SCL := 1;
+    SDA := 1;
+  else
+    SetAsInput(SDA);   // SLAVE
+    SetAsInput(SCL);
+  end;
+end;
+
+
+//            ____
+// SCL:  ____|    |
+procedure I2C_Clock;
+begin
+  delay_10us;
+  SCL := 1;
+  delay_10us;
+  SCL := 0;
+end; 
+
+
+
+//       __
+// SDA:    |______
+//       ____
+// SCL:      |____
 Procedure I2C_Start;
 begin
-  SCL := 1;
-  SDA := 1;
   delay_10us;   //x10us delay
   SDA := 0;
-  delay_10us;   //x10us delay
+  delay_10us;
   SCL := 0;
 end;
 
+
+//            _______
+// SDA:  ____|   
+//          _________
+// SCL:  __|    
 Procedure I2C_Stop;
 begin
-  SCL := 0;
+//  SCL := 0;
+//  delay_10us;   //x10us delay
   SDA := 0;
+  delay_10us;   //x10us delay
   SCL := 1;
   delay_10us;   //x10us delay
-  SDA := 1;
+  SDA := 1
 end;
 
-Procedure I2C_Write(dato : byte) : bit;
+
+//        _______  _______         ______               ________
+// SDA:  / Bit7  \/ Bit6  \_.... _/ Bit0 \____ASK______|          (El ASK o NO_ASK lo envía el SLAVE)
+//         ____      ____           ____      ____
+// SCL:  _|    |____|    |__....___|    |____|    |_____________
+Procedure I2C_Write_Byte(dato : byte) : bit;
 var
   ACK      : bit;
   contador : byte;
 begin
   for contador:=0 to 7 do 
-    SCL := 0;
-{    if(dato AND $80)=0 then
-      SDA := 0;
-    else
+    if((dato AND $80) = $80) then
       SDA := 1;
-    end;}
-    SDA := dato.7;
-    SCL  := 1;
+    else
+      SDA := 0;
+    end;
+//    SDA := NOT dato.7; //Si se quiere usar así, hay que utilizar el NOT por fallo del compilador.
+    I2C_Clock;
     dato := dato<<1;
-    delay_10us;   //x10us delay 
-    SCL  := 0;
   end;
-  SCL := 0;
-  SDA := 1;     //input...
-  delay_10us;   //x10us delay 
+  delay_10us;   //x10us delay
+  SCL := 1;
+  SetAsInput(SDA);
   ACK := SDA;
+  SetAsOutput(SDA);
+  delay_10us;
   SCL := 0;
+  SDA := 1;
   exit(ACK);
 end;
 
-procedure I2C_eeprom_write(address,data : byte);
+Procedure I2C_Write_Char(dato : char) : bit;
+var
+  ACK : bit;
+begin
+  ACK := I2C_Write_Byte(Ord(dato));
+  exit(ACK);
+end;
+
+procedure I2C_Read_Byte : byte;
+var
+  contador : byte;
+  dato     : byte;
+begin
+  SetAsInput(SDA);
+  for contador:= 0 to 7 do
+    SCL := 0;
+    delay_10us;
+    SCL := 1;
+    delay_10us;
+    dato.1 := SDA;
+    dato := dato << 1;
+    delay_10us;
+  end;
+  SetAsOutput(SDA);
+  exit(dato);
+end; 
+
+procedure I2C_Eeprom_Write(address,data : byte);
 begin
   LED := 1;
   I2C_Start;
-  LED := I2C_write($A0);     // I2C Address.
-  LED := I2C_write(address); // byte address.
-  LED := I2C_write(data);    // data 
+  LED := I2C_Write_Byte(%00000000);     // I2C Address.
+  LED := I2C_Write_Byte(address); // byte address.
+  LED := I2C_Write_Byte(data);    // data 
   I2C_Stop;
   // para escribir el siguiente dato sería necesario esperar 10 ms.
 end;
+
+procedure I2C_ACK;
+begin
+  SetAsOutput(SDA);
+  SDA := 0;
+  delay_10us;
+  delay_10us;
+  SetAsInput(SDA);
+end;
+
+procedure I2C_NoACK;
+begin
+  SetAsOutput(SDA);
+  SDA := 1;
+  delay_10us;
+  delay_10us;
+  SetAsInput(SDA);
+end;
+  
+
+procedure I2C_Eeprom_Read(address : byte) : byte;
+begin
+  
+end; 
 
 begin
 {  I2C_Start;
@@ -196,6 +210,27 @@ begin
   
   // Solo para que compile funciona alternativa de espera y ver codigo resultante.
   delay_cycles(10);}
-  I2C_eeprom_write($00,$50);  
+  //I2C_eeprom_write(%10101010,%11111111);
+  
+  SetAsOutput(LED);
+  LED := 1;
+    
+  I2C_Init(I2C_MASTER);
+//  LED := I2C_Write_Byte(%01010101);
+//repeat
+ I2C_Start;
+ I2C_Write_Char('H');
+ I2C_Write_Char('O');
+ I2C_Write_Char('L');
+ I2C_Write_Char('A');
+ I2C_Write_Char(' ');
+ I2C_Write_Char('M');
+ I2C_Write_Char('U');
+ I2C_Write_Char('N');
+ I2C_Write_Char('D');
+ I2C_Write_Char('O');
+ I2C_Stop;
+//until false;
+//I2c_Read_Byte;
 end.
 
