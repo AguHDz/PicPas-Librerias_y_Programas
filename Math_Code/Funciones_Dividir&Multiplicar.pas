@@ -34,17 +34,48 @@ end;
 //***********************************************************************
 //  FUNCION: Words_Restar
 //  PicPas v.0.7.2 no resta variables tipo word.
-//  Esta funcion rudimentaria pero efectiva lo soluciona.
+//  Esta funcion en ensamblador lo soluciona de la manera más efectiva.
 //***********************************************************************
-procedure Words_Restar(dato1,dato2: word) : word;
+procedure Words_Restar(minuendo: byte; register sustraendo: byte) : word;
 begin
-  repeat
-    if ((dato2.high OR dato2.low) = $00) then exit(dato1) end;
-    dec(dato1);
-    dec(dato2);
-  until false;
-// Si fuera necesario mejorar velocidad, codificar la funcion resta
-// en ensamblador usando la instruccion subwf.
+  ASM
+    subwf   minuendo,w
+    clrf    _H
+  END
+end;
+
+procedure Words_Restar(minuendo: word; register sustraendo: byte) : word;
+begin
+  ASM
+    subwf   minuendo.low,f
+    btfss   STATUS_C
+    decf    minuendo.high,f
+  END
+  exit(minuendo);
+end;
+
+procedure Words_Restar(minuendo,sustraendo: word) : word;
+begin
+  ASM
+  ;
+  ;Resta de dos numeros de 16 bits
+  ;
+  ;         minuendo.high:minuendo.low - Numero al que se resta (minuendo)
+  ;         sustraendo - Numero que se resta (sustraendo)
+  ;Salida:  minuendo.high:minuendo.low - Resultado
+  ;
+  
+          movf    sustraendo.low,w
+          subwf   minuendo.low,f
+          movf    sustraendo.high,w
+          btfss   STATUS_C
+          incfsz  sustraendo.high,w
+          subwf   minuendo.high,f    ; minuendo = minuendo - sustraendo
+                                       ; El flag CARRY que queda seria valido,
+                                       ; pero el Z no.
+  ;
+  END
+  exit(minuendo);
 end;
 
 
@@ -62,13 +93,18 @@ begin
   if divisor = 0 then
     exit($FFFF); // devuelve el numero mas alto posible (seria infinito)
   end;
-  repeat
-    if dividendo < divisor then
-      exit(cociente);
-    end;
+//  repeat
+//    if dividendo < divisor then
+//      exit(cociente);
+//    end;
+//    dividendo := dividendo - divisor;
+//    inc(cociente);
+//  until false;
+  while(dividendo >= divisor) do
     dividendo := dividendo - divisor;
     inc(cociente);
-  until false;
+  end;
+  exit(cociente);
 end;
 
 procedure Dividir (dividendo, divisor : word) : word;
@@ -143,13 +179,10 @@ begin
     exit(word(0)); // devuelve Cero.
   end;
   repeat
-    if(dividendo.high <= divisor.high) then
-      if(dividendo.low < divisor.low) then
-        exit(dividendo);
-      end;
+    if(Words_Comparar(divisor,dividendo) = 1) then  // Si dividor > dividendo.
+      exit(dividendo);
     end;
-    auxiliar  := dividendo;
-    dividendo := auxiliar - divisor;
+    dividendo := Words_Restar(dividendo, divisor);
   until false;
 end;
 
@@ -257,20 +290,19 @@ end;
 // FUNCIONES DE PRUEBA........
 procedure Print_Resultado;
 begin
-  resultado := DecToBCD2(resultado.low);
+  resultado := DecToBCD4(resultado);
   PORTC := resultado.low;
+  PORTD := resultado.high;
   delay_ms(2000);
 end; 
 
 procedure Prueba_Tiempo_Divisiones(divisiones:word);
 begin
-  repeat
-    resultado := Dividir(43125,1000);
+  while((divisiones.high OR divisiones.low) > $00) do
+    resultado := Dividir(43125,100);
     dec(divisiones);
-    if ((divisiones.high OR divisiones.low) = $00) then
-      exit;
-    end;
-  until false;
+  end;
+
 end;
 //............................
 
@@ -285,31 +317,50 @@ begin
   SetAsOutput(PORTD);
   PORTC:=0;
   PORTD:=0;
+
   
-  resultado := Dividir(215,10);
+  
+  resultado := Dividir(215,10);         // 21   
   Print_Resultado;
-  resultado := Dividir(3223,100);
+  resultado := Dividir(3223,100);       // 32
   Print_Resultado;
-  resultado := Dividir(43125,1000);
+  resultado := Dividir(43125,1000);     // 43
   Print_Resultado;
-  resultado := Dividir(9999,1);
+  resultado := Dividir(9999,1);         // 9999   
+  Print_Resultado;
+
 { 
   PORTD := $01;
   Prueba_Tiempo_Divisiones(word(10));
-  PORTD := $0f
+  PORTD := $0f;
 }
+
+
+  resultado := Multiplicar(23,10) + 4;   // 234
+  Print_Resultado;
+  resultado := Multiplicar(234,10) + 5;  // 2345
+  Print_Resultado;
+  resultado := Multiplicar(345,10) + 6;  // 3456
+  Print_Resultado;
+  resultado := Multiplicar(1000,4) + Multiplicar(250,2) + Multiplicar(10,6) + 7;  // 4567
+  Print_Resultado;
+
+
+  
+  
+  resultado := Resto_Dividir(255,25);     // 5
+  Print_Resultado;
+  resultado := Resto_Dividir(60000,33);   // 6
+  Print_Resultado;
+  resultado := Resto_Dividir(10000,356);  // 32
+  Print_Resultado;
+
+//  PORTC := Compara_Numeros (2001,2000);
+
+{  
   resultado := DecToBCD4(resultado);
   PORTC := resultado.low;
   PORTD := resultado.high;
-  
-// --------------- HASTA AQUI OK, SEGUIR ACABANDO RESTO DE FUNCIONES --------------------------- //
-  
-//  resultado := Resto_Dividir(100,9);
-//  resultado := Resto_Dividir(10000,300);
-//  resultado := Resto_Dividir(60000,7);
-//  resultado := Multiplicar(100,10);
-//  resultado := Multiplicar(40,2);
-
-//  PORTC := Compara_Numeros (2001,2000);
+}
 end.
 
