@@ -1,6 +1,6 @@
 {
 *  (C) AguHDz 18-JUL-2017
-*  Ultima Actualizacion: 18-JUL-2017
+*  Ultima Actualizacion: 20-JUL-2017
 *
 *  Compilador PicPas v.0.7.2 (https://github.com/t-edson/PicPas)
 *
@@ -30,15 +30,6 @@ unit Math;
 
 interface
 
-var
-  STATUS_C : bit  absolute $0003.0;   // Deberia ser un dato heredado del programa
-                                      // que haga uso de la libreria. En PicPas v.0.7.2
-                                      // todavia no esta implementado.
-                                      // De cualquier modo la posicion STATUS en el SFR
-                                      // de los distintos PIC suelo ser la $0003
-                                      // Si no se define, toma la direccion en el SFR
-                                      // del microcontroaldor por defecto (PIC16F84A)
-
 //***********************************************************************
 //  FUNCION: Words_Comparar
 //  PicPas v.0.7.2 no compara variables tipo word.
@@ -47,6 +38,7 @@ var
 //        0 si sin iguales.
 //        1 si el dato1 es mayor que el dato2.
 //        2 si el dato2 es mayor que el dato1.
+//        Menor que 2 si el dato1 es mayor o igual que el dato 2.
 //***********************************************************************
 procedure Words_Comparar(dato1,dato2: word) : byte;
 
@@ -56,7 +48,9 @@ procedure Words_Comparar(dato1,dato2: word) : byte;
 //  Esta funcion en ensamblador lo soluciona de la manera más efectiva.
 //***********************************************************************
 procedure Words_Restar(minuendo: byte; register sustraendo: byte) : word;
-procedure Words_Restar(minuendo: word; register sustraendo: byte) : word;
+procedure Words_Restar_ASM(minuendo: word; register sustraendo: byte) : word;
+procedure Words_Restar_ASM(minuendo,sustraendo: word) : word;
+procedure Words_Restar(minuendo: word; sustraendo: byte) : word;
 procedure Words_Restar(minuendo,sustraendo: word) : word;
 
 //***********************************************************************
@@ -88,7 +82,8 @@ procedure Multiplicar (multiplicando : word; multiplicador : byte) : word;
 
 implementation
 
-
+//***********************************************************************
+// W O R D S _ C O M P A R A R ******************************************
 //***********************************************************************
 procedure Words_Comparar(dato1,dato2: word) : byte;
 begin
@@ -99,6 +94,9 @@ begin
   if (dato1.high > dato2.high) then exit(1) end;  // dato1>dato2
   exit(2);                                        // dato1<dato2 
 end;
+
+//***********************************************************************
+// W O R D S _ R E S T A R **********************************************
 //***********************************************************************
 procedure Words_Restar(minuendo: byte; register sustraendo: byte) : word;
 begin
@@ -108,7 +106,15 @@ begin
   END
 end;
 
-procedure Words_Restar(minuendo: word; register sustraendo: byte) : word;
+procedure Words_Restar_ASM(minuendo: word; register sustraendo: byte) : word;
+var
+  STATUS_C : bit  absolute $0003.0;   // Deberia ser un dato heredado del programa
+                                      // que haga uso de la libreria. En PicPas v.0.7.2
+                                      // todavia no esta implementado.
+                                      // De cualquier modo la posicion STATUS en el SFR
+                                      // de los distintos PIC suelo ser la $0003
+                                      // Si no se define, toma la direccion en el SFR
+                                      // del microcontroaldor por defecto (PIC16F84A)
 begin
   ASM
     subwf   minuendo.low,f
@@ -118,7 +124,15 @@ begin
   exit(minuendo);
 end;
 
-procedure Words_Restar(minuendo,sustraendo: word) : word;
+procedure Words_Restar_ASM(minuendo,sustraendo: word) : word;
+var
+  STATUS_C : bit  absolute $0003.0;   // Deberia ser un dato heredado del programa
+                                      // que haga uso de la libreria. En PicPas v.0.7.2
+                                      // todavia no esta implementado.
+                                      // De cualquier modo la posicion STATUS en el SFR
+                                      // de los distintos PIC suelo ser la $0003
+                                      // Si no se define, toma la direccion en el SFR
+                                      // del microcontroaldor por defecto (PIC16F84A)
 begin
   ASM
   ;
@@ -141,6 +155,26 @@ begin
   END
   exit(minuendo);
 end;
+
+// Para evitar el uso de la variable absoluta STATUS (aunque algo mas lento)
+procedure Words_Restar(minuendo: word; sustraendo: byte) : word;
+begin
+  if(sustraendo > minuendo.low) then dec(minuendo.high) end;
+  minuendo.low := minuendo.low - sustraendo;
+  exit(minuendo);
+end;
+
+// Para evitar el uso de la variable absoluta STATUS (aunque algo mas lento)
+procedure Words_Restar(minuendo,sustraendo: word) : word;
+begin
+  if(sustraendo.low > minuendo.low) then inc(sustraendo.high) end;
+  minuendo.low := minuendo.low - sustraendo.low;
+  minuendo.high := minuendo.high - sustraendo.high;
+  exit(minuendo);
+end;
+
+//***********************************************************************
+// D I V I D I R ********************************************************
 //***********************************************************************
 procedure Dividir (dividendo, divisor : byte) : word;
 var
@@ -151,13 +185,6 @@ begin
   if divisor = 0 then
     exit($FFFF); // devuelve el numero mas alto posible (seria infinito)
   end;
-//  repeat
-//    if dividendo < divisor then
-//      exit(cociente);
-//    end;
-//    dividendo := dividendo - divisor;
-//    inc(cociente);
-//  until false;
   while(dividendo >= divisor) do
     dividendo := dividendo - divisor;
     inc(cociente);
@@ -174,13 +201,11 @@ begin
   if((divisor.low OR divisor.high) = $00) then
     exit($FFFF); // devuelve el numero mas alto posible (seria infinito)
   end;
-  repeat
-    if(Words_Comparar(divisor,dividendo) = 1) then  // Si dividor > dividendo.
-      exit(cociente);
-    end;
+  while(Words_Comparar(dividendo,divisor) < 2) do  // mientras dividendo >= divisor
     dividendo := Words_Restar(dividendo,divisor);
     inc(cociente);
-  until false;
+  end;
+  exit(cociente);
 end;
 
 procedure Dividir (dividendo : word; divisor : byte) : word;
@@ -194,32 +219,30 @@ begin
   d_word.high := 0;  // Variable auxiliar para poder usar la variables divisor como tipo word.
   d_word.low  := divisor;
   cociente    := 0;
-  repeat
-    if(Words_Comparar(d_word,dividendo) = 1) then  // Si dividor > dividendo.
-      exit(cociente);
-    end;
-    dividendo := Words_Restar(dividendo, d_word);
+  while(Words_Comparar(dividendo,d_word) < 2) do  // mientras dividendo >= divisor
+    dividendo := Words_Restar(dividendo,d_word);
     inc(cociente);
-  until false;
+  end;
+  exit(cociente);  
 end;
+
+//***********************************************************************
+// R E S T O _ D I V I D I R ********************************************
 //***********************************************************************
 procedure Resto_Dividir (dividendo, divisor : byte) : word;
 var
-  resto : word;
+  auxiliar : word;
 begin
-  resto := 0;
   // comprueba division por cero
   if divisor = 0 then
-    exit(resto); // devuelve Cero.
+    exit(word(0)); // devuelve Cero.
   end;
-  repeat
-    if dividendo < divisor then
-      resto.high := 0;
-      resto.low  := dividendo;
-      exit(resto);
-    end;
+  while(dividendo >= divisor) do
     dividendo := dividendo - divisor;
-  until false;
+  end;
+  auxiliar.high := 0;
+  auxiliar.low  := dividendo;
+  exit(auxiliar);   
 end;
 
 procedure Resto_Dividir (dividendo, divisor : word) : word;
@@ -230,12 +253,10 @@ begin
   if((divisor.low = 0) AND (divisor.high = 0)) then
     exit(word(0)); // devuelve Cero.
   end;
-  repeat
-    if(Words_Comparar(divisor,dividendo) = 1) then  // Si dividor > dividendo.
-      exit(dividendo);
-    end;
-    dividendo := Words_Restar(dividendo, divisor);
-  until false;
+  while(Words_Comparar(dividendo,divisor) < 2) do  // mientras dividendo >= divisor
+    dividendo := Words_Restar(dividendo,divisor);
+  end;
+  exit(dividendo);
 end;
 
 procedure Resto_Dividir (dividendo : word; divisor : byte) : word;
@@ -248,13 +269,14 @@ begin
   end;
   d_word.high := 0;  // Variable auxiliar para poder usar la variables divisor como tipo word.
   d_word.low  := divisor;
-  repeat
-    if(Words_Comparar(d_word,dividendo) = 1) then  // Si dividor > dividendo.
-      exit(dividendo);
-    end;
-    dividendo := Words_Restar(dividendo, d_word);
-  until false;
+  while(Words_Comparar(dividendo,d_word) < 2) do  // mientras dividendo >= divisor
+    dividendo := Words_Restar(dividendo,d_word);
+  end;
+  exit(dividendo);
 end;
+
+//***********************************************************************
+// M U L T I P L I C A R ************************************************
 //***********************************************************************
 procedure Multiplicar (multiplicando, multiplicador : byte) : word;
 var
@@ -284,5 +306,6 @@ begin
   end; 
   exit(multiplicacion);
 end;
+
 //***********************************************************************
 end.
