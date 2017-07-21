@@ -10,20 +10,21 @@
 *  contar con ciertas operaciones mantematicas basicas como la multiplicacion
 *  y la division, o funciones para comparar u operar con variables tipo word.
 *
-*  En principio, todos los resultador numericos de esta libreria seran del
+*  Actualmente, todos los resultador numericos de esta libreria seran del
 *  tipo word (16 bits) o booleanos en caso de resultados binarios.
 *  
 *  A medida que estas funciones se vayan implementado con funciones u
-*  operacionesde sistema en PicPas, se iran eliminando de esta libreria, en la
+*  operaciones de sistema en PicPas, se iran eliminando de esta libreria, en la
 *  quedaran solo las funciones de uso particular en ciertos programas que
 *  nunca se implementaran como funciones de sistema.
 *  
 *  NOTA: En un principio, los algoritmos de las funciones implementadas
-*  en esta libreria para funciones muy básicas, no están optimizados para
-*  ser muy veloces, simplemente para realizar su funcion y ocupara poca memoria,
-*  ya que en su momento se eliminara de aqui y quedaran integradas como 
-*  operaciones del sistema en PicPas, donde se se trataria de optimizar la
-*  velocidad o la ocupacion de memoria dependiendo de los casos.
+*  en esta libreria para funciones básicas, no se han optimizado para
+*  ser muy veloces, simplemente realizan su funcion y ocupan poca memoria,
+*  ya que en su momento se eliminaran de aqui y quedaran integradas como 
+*  operaciones del sistema en PicPas, donde se es posible que se trate
+*  de optimizar la velocidad o la ocupacion de memoria dependiendo
+*  de los casos.
 *
 }
 unit Math;
@@ -55,6 +56,7 @@ procedure Words_Restar(minuendo,sustraendo: word) : word;
 
 //***********************************************************************
 //  FUNCION: Dividir
+//  PicPas v.0.7.2 no divide variables numericas.
 //  Divide dos datos numericos de tipo byte y word.
 //  Devuelve el resultado en variable tipo word de 16 bits.
 //***********************************************************************
@@ -64,6 +66,7 @@ procedure Dividir (dividendo : word; divisor : byte) : word;
 
 //***********************************************************************
 //  FUNCION: Resto_Dividir
+//  PicPas v.0.7.2 no calcula el resto de un division entre variables.
 //  Devuelve el resto de la operacion de dividor dos variables numericas.
 //  Devuelve el resultado en variable tipo word de 16 bits.
 //***********************************************************************
@@ -73,6 +76,7 @@ procedure Resto_Dividir (dividendo : word; divisor : byte) : word;
 
 //***********************************************************************
 //  FUNCION: Multiplicar
+//  PicPas v.0.7.2 no multiplica variables numericas.
 //  Multiplica dos valores.
 //  Devuelve el resultado en variable tipo word de 16 bits.
 //***********************************************************************
@@ -92,7 +96,7 @@ begin
     if (dato1.low > dato2.low) then exit(1) end;  // dato1>dato2
   end;
   if (dato1.high > dato2.high) then exit(1) end;  // dato1>dato2
-  exit(2);                                        // dato1<dato2 
+  exit(2);                                          // dato1<dato2 
 end;
 
 //***********************************************************************
@@ -108,7 +112,7 @@ end;
 
 procedure Words_Restar_ASM(minuendo: word; register sustraendo: byte) : word;
 var
-  STATUS_C : bit  absolute $0003.0;   // Deberia ser un dato heredado del programa
+  STATUS_C : bit  absolute $0003.0;  // Deberia ser un dato heredado del programa
                                       // que haga uso de la libreria. En PicPas v.0.7.2
                                       // todavia no esta implementado.
                                       // De cualquier modo la posicion STATUS en el SFR
@@ -126,7 +130,7 @@ end;
 
 procedure Words_Restar_ASM(minuendo,sustraendo: word) : word;
 var
-  STATUS_C : bit  absolute $0003.0;   // Deberia ser un dato heredado del programa
+  STATUS_C : bit  absolute $0003.0;  // Deberia ser un dato heredado del programa
                                       // que haga uso de la libreria. En PicPas v.0.7.2
                                       // todavia no esta implementado.
                                       // De cualquier modo la posicion STATUS en el SFR
@@ -149,8 +153,8 @@ begin
           btfss   STATUS_C
           incfsz  sustraendo.high,w
           subwf   minuendo.high,f    ; minuendo = minuendo - sustraendo
-                                       ; El flag CARRY que queda seria valido,
-                                       ; pero el Z no.
+                                     ; El flag CARRY que queda seria valido,
+                                     ; pero el Z no.
   ;
   END
   exit(minuendo);
