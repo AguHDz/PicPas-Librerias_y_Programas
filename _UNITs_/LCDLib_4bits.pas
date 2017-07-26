@@ -59,7 +59,7 @@ unit LCDLib_4bits;
 
 interface
 
-uses PIC16F72, LCDLib_Const;
+uses PIC16F72, LCDLib_Const, Math; //en la versión 0.7.2 no funciona la importacion de funciones con sobrecarga de datos.
 
 const
   LCD_CmdMode  = 0;    // valores de pin RS
@@ -86,8 +86,15 @@ procedure LCD_Send(dat: byte);
 // El dato enviado es un Comando.
 procedure LCD_Command(comm: byte);
 //-----------------------------------------------------------------------------
-//El dato enviado es un caracter a mostrar en el display LCD.
+// El dato enviado es un caracter a mostrar en el display LCD.
 procedure LCD_WriteChar(register c: char);
+{//-----------------------------------------------------------------------------
+// Imprime un numero enviado en formato word;
+procedure Words_Comparar(dato1,dato2: word) : byte;
+procedure Words_Restar(minuendo,sustraendo: word) : word;
+procedure Resto_Dividir (dividendo, divisor : word) : word;
+procedure Dividir (dividendo, divisor : word) : word;
+procedure LCD_Print_Number(numero : word);}
 //-----------------------------------------------------------------------------
 // Mueve el cursor del display a la fila y columan indicada.
 // Esquina superior izquierda (0,0)
@@ -200,6 +207,62 @@ begin
     LCD_Command(LCD_SET_DISPLAY_ADDRESS + columna + LCD_ROW_3);  
   end;
 end;
+//-----------------------------------------------------------------------------
+{
+procedure Words_Comparar(dato1,dato2: word) : byte;
+begin
+  if (dato1.high = dato2.high) then
+    if (dato1.low = dato2.low) then exit(0) end;  // dato1=dato2
+    if (dato1.low > dato2.low) then exit(1) end;  // dato1>dato2
+  end;
+  if (dato1.high > dato2.high) then exit(1) end;  // dato1>dato2
+  exit(2);                                          // dato1<dato2 
+end;
+
+procedure Words_Restar(minuendo,sustraendo: word) : word;
+begin
+  if(sustraendo.low > minuendo.low) then inc(sustraendo.high) end;
+  minuendo.low := minuendo.low - sustraendo.low;
+  minuendo.high := minuendo.high - sustraendo.high;
+  exit(minuendo);
+end;
+
+procedure Resto_Dividir (dividendo, divisor : word) : word;
+var
+  auxiliar : word;
+begin
+  // comprueba division por cero
+  if((divisor.low = 0) AND (divisor.high = 0)) then
+    exit(word(0)); // devuelve Cero.
+  end;
+  while(Words_Comparar(dividendo,divisor) < 2) do  // mientras dividendo >= divisor
+    dividendo := Words_Restar(dividendo,divisor);
+  end;
+  exit(dividendo);
+end;
+
+procedure Dividir (dividendo, divisor : word) : word;
+var
+  cociente, auxiliar : word;
+begin
+  cociente := 0;
+  // comprueba division por cero
+  if((divisor.low OR divisor.high) = $00) then
+    exit($FFFF); // devuelve el numero mas alto posible (seria infinito)
+  end;
+  while(Words_Comparar(dividendo,divisor) < 2) do  // mientras dividendo >= divisor
+    dividendo := Words_Restar(dividendo,divisor);
+    inc(cociente);
+  end;
+  exit(cociente);
+end;
+
+procedure LCD_Print_Number(numero : word);
+var
+  digito : word;
+begin
+  digito := Dividir(numero,10000);
+end;}
 //-----------------------------------------------------------------------------
 procedure LCD_CursorHome;
 begin
