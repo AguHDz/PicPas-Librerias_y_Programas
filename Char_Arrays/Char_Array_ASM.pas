@@ -1,4 +1,16 @@
-{Cadenas de Caracteres}
+{
+*  (C) AguHDz 28-JUN-2017
+*  Ultima Actualizacion: 30-JUL-2017
+*
+*  Compilador PicPas v.0.7.2 (https://github.com/t-edson/PicPas)
+*
+*  FUNCIONES PARA MANEJO DE STRINGS CONSTANTES (Cadenas de Caracteres)
+*
+*  Las cadenas se alojan en la memoria de programa en el formato estándar
+*  del lenguaje Pascal: 1 byte de longitud de cadena + caracteres de la cadena.
+*  El tamaño máximo de cada cadena es de 255 bytes, pero podemos tener tantas
+*  cadenas como memoria de programa dispongamos.
+}
 
 {$FREQUENCY 8 MHZ }
 {$PROCESSOR PIC16F84A}
@@ -70,7 +82,7 @@ begin
   END
 end;
 
-Procedure Cadena_Get_Longitud(cadena : byte) : byte;
+Procedure String_Length(cadena : byte) : byte;
 var
   puntero : byte;
   counter : byte;
@@ -87,7 +99,7 @@ begin
   exit(valor);
 end; 
 
-Procedure Cadena_Get_Caracter(cadena, caracter : byte) : char;
+Procedure String_Get_Char(cadena, caracter : byte) : char;
 var
   puntero : byte;
   counter : byte;
@@ -95,36 +107,31 @@ begin
   puntero := 0;
   counter := 1;
   while cadena < counter do
-    puntero := puntero + Cadena_Get_Longitud(counter);
+    puntero := puntero + String_Length(counter);
     inc(counter)
   end;
   puntero := puntero + caracter;
   exit(Cadena_Data_Base(puntero));
 end;
 
-Procedure Cadena_Print(cadena : byte);
+Procedure String_Print(cadena : byte);
 var
   contador : byte;
-//  longitud : byte;
   caracter : char;
 begin
   contador := 1;
   repeat 
-    caracter := Cadena_Get_Caracter(cadena,contador);
+    caracter := String_Get_Char(cadena,contador);
     inc(contador);
-  until contador < Cadena_Get_Longitud(cadena);
-{  
-  longitud := Cadena_Get_Longitud(cadena);
-  for contador:=1 to longitud do
-    caracter := Cadena_Get_Caracter(cadena,contador);
-  end;
-  }
+    // Llamar aquí a la función que debe enviar el caracter al puerto serie,
+    // a la pantalla LCD, o en general, al dispositivo de salida requerido.
+  until contador < String_Length(cadena);
 end;
 
 begin
-  Cadena_Print(HOLA_MUNDO);
-  Cadena_Print(COMO_ESTA_USTED);  
-  Cadena_Print(BIEN);
-  Cadena_Print(MAL);
-  Cadena_Print(GRACIAS);
+  String_Print(HOLA_MUNDO);
+  String_Print(COMO_ESTA_USTED);  
+  String_Print(BIEN);
+  String_Print(MAL);
+  String_Print(GRACIAS);
 end. 
