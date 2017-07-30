@@ -3,19 +3,40 @@
 
 {
 *  (C) AguHDz 05-JUN-2017
-*  Ultima Actualizacion: 10-JUL-2017
+*  Ultima Actualizacion: 28-JUL-2017
 *
 *  Compilador PicPas v.0.7.2 (https://github.com/t-edson/PicPas)
 *
-*  COMUNICACION I2C
-*  ================
+*  COMUNICACION I2C SOFTWARE
+*  =========================
 *  Sin probar. En fase de pruebas y codificacion.
+*
+
+   velocidades estandas del bus I2C:
+      - Normal : 100 kbps
+      - Rapido : 400 kbps
+
+   Modos del bus I2C:
+      - Reposo: SCL = 1 / SDA = 1
+      - Inicio de Transmisión (START): SCL = 1 / SDA = 1->0
+      - Fin de Transmisión (STOP): SCL = 1 / SDA = 0->1 
+      - Dato válido: SDA = 1 / SCL = 0->1->0
+      
+   Secuencia de comunicación:
+
+     Bus en Reposo - START - bits de datos (determinado por dispositivo marter bus) - Dato Válido/No Válido (ACK/NoACK) (responde esclavo) - STOP - Bus en Reposo.
+        ______________     ___     ___     ___     ___     ___     ___     ___     ___     ___                                              ____________       
+  SCL:          sTART |___| 1 |___| 2 |___| 3 |___| 4 |___| 5 |___| 6 |___| 7 |___| 8 |___| 9 |__..........................................|  STOP
+        ___________                                                                        ___                                                __________ 
+  SDA:             |_____<bit7>__<bit6>___<bit5>__<bit4>__<bit3>__<bit2>__<bit1>__<bit0>__|ACK|__... SIGUIETES BITS Y ACKs .............. ___|
+
+*
 *
 }
 
 {$FREQUENCY 8 MHZ }
 {$PROCESSOR PIC16F84A}
-program I2C;
+program I2C_Software;
 
 uses
   PIC16F84A;  
@@ -40,7 +61,7 @@ var
 //                   ----
 //  TOTAL           -> 20 cycles = 10 us
 //*********************************************************************
-procedure delay_10us;
+procedure delay_I2C;
 begin
 ASM
   goto $+1  ; 2 cycle (si clock = 8 MHz entonces 2 cycle = 2/8e6*4 = 1 us)
@@ -72,27 +93,27 @@ end;
 // SCL:  ____|    |
 procedure I2C_Clock;
 begin
-  delay_10us;
+  delay_I2C;
   SCL := 1;
-  delay_10us;
+  delay_I2C;
   SCL := 0;
 end; 
 
 
-
-//       __
-// SDA:    |______
-//       ____
-// SCL:      |____
+// I2C  Reposo | Start
+//       ______
+// SDA:        |______
+//       _______
+// SCL:         |____
 Procedure I2C_Start;
 begin
-  delay_10us;   //x10us delay
+  delay_I2C;   //x10us delay
   SDA := 0;
-  delay_10us;
+  delay_I2C;
   SCL := 0;
 end;
 
-
+// I2C  Stop | Reposo
 //            _______
 // SDA:  ____|   
 //          _________
@@ -102,9 +123,9 @@ begin
 //  SCL := 0;
 //  delay_10us;   //x10us delay
   SDA := 0;
-  delay_10us;   //x10us delay
+  delay_I2C;   //x10us delay
   SCL := 1;
-  delay_10us;   //x10us delay
+  delay_I2C;   //x10us delay
   SDA := 1
 end;
 
@@ -128,12 +149,12 @@ begin
     I2C_Clock;
     dato := dato<<1;
   end;
-  delay_10us;   //x10us delay
+  delay_I2C;   //x10us delay
   SCL := 1;
   SetAsInput(SDA);
   ACK := SDA;
   SetAsOutput(SDA);
-  delay_10us;
+  delay_I2C;
   SCL := 0;
   SDA := 1;
   exit(ACK);
@@ -155,12 +176,12 @@ begin
   SetAsInput(SDA);
   for contador:= 0 to 7 do
     SCL := 0;
-    delay_10us;
+    delay_I2C;
     SCL := 1;
-    delay_10us;
+    delay_I2C;
     dato.1 := SDA;
     dato := dato << 1;
-    delay_10us;
+    delay_I2C;
   end;
   SetAsOutput(SDA);
   exit(dato);
@@ -181,8 +202,8 @@ procedure I2C_ACK;
 begin
   SetAsOutput(SDA);
   SDA := 0;
-  delay_10us;
-  delay_10us;
+  delay_I2C;
+  delay_I2C;
   SetAsInput(SDA);
 end;
 
@@ -190,8 +211,8 @@ procedure I2C_NoACK;
 begin
   SetAsOutput(SDA);
   SDA := 1;
-  delay_10us;
-  delay_10us;
+  delay_I2C;
+  delay_I2C;
   SetAsInput(SDA);
 end;
   
