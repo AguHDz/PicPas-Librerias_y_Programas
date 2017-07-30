@@ -14,6 +14,18 @@ interface
 
 uses Math;
 
+//***********************************************************************
+//  FUNCION: DecToBCD2
+//  Devuelve el valor de entrada decimal en formato BCD de 2 digitos.
+//***********************************************************************
+procedure DecToBCD2(decimal : byte) : byte;
+//***********************************************************************
+//  FUNCION: DecToBCD4
+//  Devuelve el valor de entrada decimal en formato BCD de 4 digitos.
+//***********************************************************************
+procedure DecToBCD4(decimal : word) : word;
+
+
 implementation
 
 //***********************************************************************
