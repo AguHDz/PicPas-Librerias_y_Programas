@@ -97,7 +97,7 @@ begin
       fin_ceros_izquierda := true;         // Si se imprime un primer dígito distinto de cero es que ya no existen ceros no a la izquierda del número.
     // SI EL DIGITO ES CERO, DEPENDIENDO DE LA SITUACION SE IMPRIMIRAN DISTINTOS TIPOS DE CARACTERES O NO SE IMPRIMIRA NINGUNO.
     else
-      if(parte_decimal OR fin_ceros_izquierda) then  // Si el dígito de valor cero está en la parte decimal o no es un cero a la izquierda, lo imprime.
+      if(parte_decimal OR fin_ceros_izquierda OR (contador = 0)) then  // Si el dígito de valor cero está en la parte decimal o no es un cero a la izquierda, lo imprime.
         LCD_WriteChar('0');
       elsif(caracter_derecha <> chr(0)) then  // Si se trata de un cero a la izquierda (en la parte no decimal) y se ha indicado que se desea escribir        
         if(decimales<>contador) then          // algún caracter como el propio cero o un espacio de justificación, lo imprime.
