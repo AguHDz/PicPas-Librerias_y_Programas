@@ -59,7 +59,7 @@ unit LCDLib_4bits;
 
 interface
 
-uses PIC16F72, LCDLib_Const, Math; //en la versión 0.7.2 no funciona la importacion de funciones con sobrecarga de datos.
+uses PIC16F877A, LCDLib_Const, Math_Word_Type; //en la versión 0.7.2 no funciona la importacion de funciones con sobrecarga de datos.
 
 const
   LCD_CmdMode  = 0;    // valores de pin RS
@@ -153,6 +153,25 @@ procedure LCD_CreateChar(charnum, chardata0, chardata1, chardata2, chardata3,
 // Rutina de inicializacion del display LCD.
 // Resetea el LCD y lo inicializa en modo 8 bit mode, 2 columnas y cursor off.
 procedure LCD_Init(columnas, filas : byte);
+
+procedure LCD_Print_Number(numero : word; decimales: byte; digitos: byte; caracter_derecha: char);
+//-----------------------------------------------------------------------------
+// Impresión de números:
+// numero           : Variables numérica de tipo word a imprimir en display.
+// decimales        : Numero de decimales del valor numerico. (división por 10)
+// digitos          : Digitos del numero a imprimir (entre 1 y 5)
+// caracter_derecha : Caracter ASCII para rellenar espacio de ceros a la izquierda del número.
+//                    Puede ser cualquier caracter, pero lo normal sería un 0 (cero) para simular
+//                    una especie de contador o un espacio para justificar la posición del valor
+//                    a imprimir. Si vale 0 (chr(0)) no imprime nada (justificación a la izquierda)
+//
+//    Ejemplos:
+//    
+//    LCD_Print_Number(word(12354), 3, 5, chr(0));  -->  12,354
+//    LCD_Print_Number(word(354), 0, 5, chr(0));    -->  354
+//    LCD_Print_Number(word(354), 7, 5, chr(0));    -->  0,0000354     
+//    LCD_Print_Number(word(0), 0, 5, '0');         -->  00000
+//    LCD_Print_Number(word(55), 2, 5, chr(0));     -->  0,55
 //-----------------------------------------------------------------------------
 
 // =======================================================================
@@ -207,62 +226,6 @@ begin
     LCD_Command(LCD_SET_DISPLAY_ADDRESS + columna + LCD_ROW_3);  
   end;
 end;
-//-----------------------------------------------------------------------------
-{
-procedure Words_Comparar(dato1,dato2: word) : byte;
-begin
-  if (dato1.high = dato2.high) then
-    if (dato1.low = dato2.low) then exit(0) end;  // dato1=dato2
-    if (dato1.low > dato2.low) then exit(1) end;  // dato1>dato2
-  end;
-  if (dato1.high > dato2.high) then exit(1) end;  // dato1>dato2
-  exit(2);                                          // dato1<dato2 
-end;
-
-procedure Words_Restar(minuendo,sustraendo: word) : word;
-begin
-  if(sustraendo.low > minuendo.low) then inc(sustraendo.high) end;
-  minuendo.low := minuendo.low - sustraendo.low;
-  minuendo.high := minuendo.high - sustraendo.high;
-  exit(minuendo);
-end;
-
-procedure Resto_Dividir (dividendo, divisor : word) : word;
-var
-  auxiliar : word;
-begin
-  // comprueba division por cero
-  if((divisor.low = 0) AND (divisor.high = 0)) then
-    exit(word(0)); // devuelve Cero.
-  end;
-  while(Words_Comparar(dividendo,divisor) < 2) do  // mientras dividendo >= divisor
-    dividendo := Words_Restar(dividendo,divisor);
-  end;
-  exit(dividendo);
-end;
-
-procedure Dividir (dividendo, divisor : word) : word;
-var
-  cociente, auxiliar : word;
-begin
-  cociente := 0;
-  // comprueba division por cero
-  if((divisor.low OR divisor.high) = $00) then
-    exit($FFFF); // devuelve el numero mas alto posible (seria infinito)
-  end;
-  while(Words_Comparar(dividendo,divisor) < 2) do  // mientras dividendo >= divisor
-    dividendo := Words_Restar(dividendo,divisor);
-    inc(cociente);
-  end;
-  exit(cociente);
-end;
-
-procedure LCD_Print_Number(numero : word);
-var
-  digito : word;
-begin
-  digito := Dividir(numero,10000);
-end;}
 //-----------------------------------------------------------------------------
 procedure LCD_CursorHome;
 begin
@@ -405,5 +368,135 @@ begin
   LCD_Command(LCD_DISPLAY_AND_CURSOR_HOME);
 end;
 //-----------------------------------------------------------------------------
+procedure LCD_Print_Number(numero : word; decimales: byte; digitos: byte; caracter_derecha: char);
+var
+  digito              : word;      // Variable auxiliar que contien el digito a imprimir (decena millar, millar, centena, decena y unidad)
+  div_dec             : word;      // Variable auxiliar por la que dividir para obtener cada uno de los digitos.
+  contador            : byte;      // Contador de bucle.
+  parte_decimal       : boolean;   // flag que indica que se estan escribiendo la parte decimal del numero.
+  fin_ceros_izquierda : boolean;   // flag que indica que se han acabado los ceros a la izquierda del numero.
+begin
+  fin_ceros_izquierda := false;    // Escribir ceros a la izquierda del numero (valores ceros a la izquierda)
+  parte_decimal       := false;    // No estamos escribiendo la parte decimal del numero.
+  
+  if(decimales>=digitos) then      // Cualquier variable de tipo word esta compuesto como máximo por 5 números (decena millar, millar, centena, decena y unidad)
+    LCD_WriteChar('0');            // Si hay más de 5 decimales, es necesario escribir el cero inicial y la coma de separación decimal.
+    LCD_WriteChar(',');  
+    parte_decimal := true;         // Estamos escribiendo la parte decimal de número.
+    while(decimales>digitos) do    // Escribe todos los ceros decimales necesarios antes de empezar a escribir los valores del número.
+      dec(decimales);
+      LCD_WriteChar('0');
+    end;      
+  end;
+    
+  digito := 0;
+  contador := digitos;             // Cualquier variable de tipo word esta compuesto como máximo por 5 números (decena millar, millar, centena, decena y unidad)
 
+  div_dec := 1;
+  repeat                           // Genera un número 10, 100, 1000 o 10000 en función de la variable de entrada con los digitos a imprimir.
+    Dec(digitos);
+    div_dec := Multiplicar(div_dec,10);    
+  until(digitos=1);
+  
+  while(contador>0) do             // Inicia LOOP    
+    // COMPRUEBA SI ES NECESARIO E IMPRIME SEPARADOR DE PARTE DECIMAL DEL NUMERO.     
+    if((decimales = contador) AND NOT parte_decimal) then  // Si estamos en la posición de inicio de la parte decimal escribir la coma separadora. 
+      if(NOT fin_ceros_izquierda) then                     // Comprueba si es necesario escribir una cero antes de la coma separadora.
+        LCD_WriteChar('0');
+      end;
+      LCD_WriteChar(',');
+      parte_decimal := true; // A partir de aquí todos los dígitos son parte decimal del número.  
+    end;
+    
+    dec(contador);    // Se coloca aquí en vez de al final de bucle, como es habitual, para optimizar la comparación if(decimales<>contador) de más abajo.
+    
+    // CALCULA EL DIGITO DEL NUMERO A IMPRIMIR. 
+    digito := Dividir(numero,div_dec);  // Obtiene el valor de digito del número a imprimir.
+    
+    // IMPRIME EL DIGITO SI ES DISTINTO DE CERO.
+    if(digito.low > 0) then        // Comprueba si el dígito del número es cero 
+      LCD_WriteChar(chr(digito.low+$30));  // Si es distinto de cero lo imprime en el display.
+      fin_ceros_izquierda := true;         // Si se imprime un primer dígito distinto de cero es que ya no existen ceros no a la izquierda del número.
+    // SI EL DIGITO ES CERO, DEPENDIENDO DE LA SITUACION SE IMPRIMIRAN DISTINTOS TIPOS DE CARACTERES O NO SE IMPRIMIRA NINGUNO.
+    else
+      if(parte_decimal OR fin_ceros_izquierda OR (contador = 0)) then  // Si el dígito de valor cero está en la parte decimal, no es un cero a la izquierda, el  lo imprime.
+        LCD_WriteChar('0');
+      elsif(caracter_derecha <> chr(0)) then  // Si se trata de un cero a la izquierda (en la parte no decimal) y se ha indicado que se desea escribir        
+        if(decimales<>contador) then          // algún caracter como el propio cero o un espacio de justificación, lo imprime.
+          LCD_WriteChar(caracter_derecha)     // La comprobación (decimales<>contador) es necesaria para evitar conflicto con la impresión de valores 0,XX
+        end; 
+      end;                                    // Si no, no imprime nada.   
+    end;
+    
+    // CALCULO DE VARIABLES NECESARIAS PARA OBTENER EL SIGUIENTE DIGITO A IMPRIMIR.
+    numero := Resto_Dividir(numero,div_dec);  // Realiza calculo de resto de división, eliminando el valor de dígito ya impreso.
+    div_dec := Dividir(div_dec,word(10));     // Calcula el nuevo divisor para extraer el siguiente dígito del número.
+  end;    
+end;
+{
+PRIMERA VERSION DE LA FUNCION. MEJORADA AÑADIENDO LA OPCION DE IMPRIMIR UN NUMERO DE DIGITOS DETERMINADO
+PARA PODER COMBINARLO E IMPRIMIR NUMEROS CON MENOS DE 5 DIGITOS.
+procedure LCD_Print_Number(numero : word; decimales: byte; caracter_derecha: char);
+var
+  digito              : word;      // Variable auxiliar que contien el digito a imprimir (decena millar, millar, centena, decena y unidad)
+  div_dec             : word;      // Variable auxiliar por la que dividir para obtener cada uno de los digitos.
+  contador            : byte;      // Contador de bucle.
+  parte_decimal       : boolean;   // flag que indica que se estan escribiendo la parte decimal del numero.
+  fin_ceros_izquierda : boolean;   // flag que indica que se han acabado los ceros a la izquierda del numero.
+begin
+  fin_ceros_izquierda := false;    // Escribir ceros a la izquierda del numero (valores ceros a la izquierda)
+  parte_decimal       := false;    // No estamos escribiendo la parte decimal del numero.
+  
+  if(decimales>=5) then            // Cualquier variable de tipo word esta compuesto como máximo por 5 números (decena millar, millar, centena, decena y unidad)
+    LCD_WriteChar('0');            // Si hay más de 5 decimales, es necesario escribir el cero inicial y la coma de separación decimal.
+    LCD_WriteChar(',');  
+    parte_decimal := true;         // Estamos escribiendo la parte decimal de número.
+    while(decimales>5) do          // Escribe todos los ceros decimales necesarios antes de empezar a escribir los valores del número.
+      dec(decimales);
+      LCD_WriteChar('0');
+    end;      
+  end;
+  
+  digito := 0;
+  contador := 5;                   // Cualquier variable de tipo word esta compuesto como máximo por 5 números (decena millar, millar, centena, decena y unidad)
+  div_dec := 10000;                // Primer valor del divisor para obtener las decenas de millar.
+  while(contador>0) do             // Inicia LOOP
+    
+    // COMPRUEBA SI ES NECESARIO E IMPRIME SEPARADOR DE PARTE DECIMAL DEL NUMERO.     
+    if((decimales = contador) AND NOT parte_decimal) then  // Si estamos en la posición de inicio de la parte decimal escribir la coma separadora. 
+      if(NOT fin_ceros_izquierda) then                     // Comprueba si es necesario escribir una cero antes de la coma separadora.
+        LCD_WriteChar('0');
+      end;
+      LCD_WriteChar(',');
+      parte_decimal := true; // A partir de aquí todos los dígitos son parte decimal del número.  
+    end;
+    
+    dec(contador);    // Se coloca aquí en vez de al final de bucle, como es habitual, para optimizar la comparación if(decimales<>contador) de más abajo.
+    
+    // CALCULA EL DIGITO DEL NUMERO A IMPRIMIR. 
+    digito := Dividir(numero,div_dec);  // Obtiene el valor de digito del número a imprimir.
+    
+    // IMPRIME EL DIGITO SI ES DISTINTO DE CERO.
+    if(digito.low > 0) then        // Comprueba si el dígito del número es cero 
+      LCD_WriteChar(chr(digito.low+$30));  // Si es distinto de cero lo imprime en el display.
+      fin_ceros_izquierda := true;         // Si se imprime un primer dígito distinto de cero es que ya no existen ceros no a la izquierda del número.
+    // SI EL DIGITO ES CERO, DEPENDIENDO DE LA SITUACION SE IMPRIMIRAN DISTINTOS TIPOS DE CARACTERES O NO SE IMPRIMIRA NINGUNO.
+    else
+      if(parte_decimal OR fin_ceros_izquierda OR (contador = 0)) then  // Si el dígito de valor cero está en la parte decimal, no es un cero a la izquierda, el  lo imprime.
+        LCD_WriteChar('0');
+      elsif(caracter_derecha <> chr(0)) then  // Si se trata de un cero a la izquierda (en la parte no decimal) y se ha indicado que se desea escribir        
+        if(decimales<>contador) then          // algún caracter como el propio cero o un espacio de justificación, lo imprime.
+          LCD_WriteChar(caracter_derecha)     // La comprobación (decimales<>contador) es necesaria para evitar conflicto con la impresión de valores 0,XX
+        end; 
+      end;                                    // Si no, no imprime nada.   
+    end;
+    
+    // CALCULO DE VARIABLES NECESARIAS PARA OBTENER EL SIGUIENTE DIGITO A IMPRIMIR.
+    numero := Resto_Dividir(numero,div_dec);  // Realiza calculo de resto de división, eliminando el valor de dígito ya impreso.
+    div_dec := Dividir(div_dec,word(10));     // Calcula el nuevo divisor para extraer el siguiente dígito del número.
+  end; 
+ 
+end;
+}
+//-----------------------------------------------------------------------------
 end.
