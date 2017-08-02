@@ -17,9 +17,13 @@
 
 program cadenas_String;
 
-uses PIC16F84A;
+uses PIC16F84A, UARTSoftLib_8MHz_4800bps;
 
-
+var
+  // Es encesario definirlo aquí y en el programa que use esta librería.
+  UART_RX : bit absolute PORTB_RB7;
+  UART_TX : bit absolute PORTB_RB6;
+  // --------------------------------------------
 
 const
   HOLA_MUNDO         = 1;
@@ -27,6 +31,7 @@ const
   MUY_BIEN           = 3;
   MAL                = 4;
   GRACIAS            = 5;
+  RETORNO_DE_CARRO   = 6;
 
 // El programa no utiliza interruptciones, pero definiendo esta función como
 // de interrupción me aseguro de que la parte alta del contador de programa
@@ -95,6 +100,10 @@ begin
     RETLW 'i'
     RETLW 'a'
     RETLW 's'
+    ;------------------------- 
+    RETLW  2    ; Cadena 6  
+    RETLW  10
+    RETLW  13    
   END
 end;
 
@@ -140,12 +149,18 @@ begin
     inc(contador);
     // Llamar aquí a la función que debe enviar el caracter al puerto serie,
     // a la pantalla LCD, o en general, al dispositivo de salida deseado.
+    UARTSoft_SendChar(caracter);
   until(contador > String_Length(cadena));
 end;
 
-begin 
+begin
+  UARTSoft_Init;
+  
   String_Print(HOLA_MUNDO);
+  String_Print(RETORNO_DE_CARRO);
   String_Print(COMO_ESTAN_USTEDES);
+  String_Print(RETORNO_DE_CARRO);
   String_Print(MUY_BIEN);
+  String_Print(RETORNO_DE_CARRO);
   String_Print(GRACIAS);
 end. 

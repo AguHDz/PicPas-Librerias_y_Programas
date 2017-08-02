@@ -13,13 +13,11 @@
 }
 
 {$FREQUENCY 8 MHZ }
-{$PROCESSOR PIC16F84A}
+{$PROCESSOR PIC16F877A}
 
 program cadenas_String;
 
-uses PIC16F84A;
-
-
+uses PIC16F877A, LCDLib_4bits;
 
 const
   HOLA_MUNDO         = 1;
@@ -140,12 +138,18 @@ begin
     inc(contador);
     // Llamar aquí a la función que debe enviar el caracter al puerto serie,
     // a la pantalla LCD, o en general, al dispositivo de salida deseado.
+    LCD_WriteChar(caracter);
   until(contador > String_Length(cadena));
 end;
 
-begin 
+begin
+  LCD_Init(20,4);
+  
   String_Print(HOLA_MUNDO);
+  LCD_GotoXY(1,0);
   String_Print(COMO_ESTAN_USTEDES);
+  LCD_GotoXY(2,0);
   String_Print(MUY_BIEN);
+  LCD_GotoXY(3,0);  
   String_Print(GRACIAS);
 end. 
