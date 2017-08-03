@@ -5,6 +5,9 @@
 *  Compilador PicPas v.0.7.2 (https://github.com/t-edson/PicPas)
 *
 *  LIBRERIA DE FUNCIONES MATEMATICAS NO IMPLEMENTADAS
+*  (Solo las funciones que tratan con datos tipo word. Estraidas de la
+*   librería más general Math.pas debido a que Picpas no siempre admite
+*   sobrecarga de datos en los procedimientos importados desde librerías)
 *  ==================================================
 *  Para poder avanzar en el uso y prueba de PicPas se hace necesario
 *  contar con ciertas operaciones mantematicas basicas como la multiplicacion
@@ -48,10 +51,6 @@ procedure Words_Comparar(dato1,dato2: word) : byte;
 //  PicPas v.0.7.2 no resta variables tipo word.
 //  Esta funcion en ensamblador lo soluciona de la manera más efectiva.
 //***********************************************************************
-{procedure Words_Restar(minuendo: byte; register sustraendo: byte) : word;
-procedure Words_Restar_ASM(minuendo: word; register sustraendo: byte) : word;
-procedure Words_Restar_ASM(minuendo,sustraendo: word) : word;
-procedure Words_Restar(minuendo: word; sustraendo: byte) : word;}
 procedure Words_Restar(minuendo,sustraendo: word) : word;
 
 //***********************************************************************
@@ -60,9 +59,7 @@ procedure Words_Restar(minuendo,sustraendo: word) : word;
 //  Divide dos datos numericos de tipo byte y word.
 //  Devuelve el resultado en variable tipo word de 16 bits.
 //***********************************************************************
-//procedure Dividir (dividendo, divisor : byte) : word;
 procedure Dividir (dividendo, divisor : word) : word;
-//procedure Dividir (dividendo : word; divisor : byte) : word;
 
 //***********************************************************************
 //  FUNCION: Resto_Dividir
