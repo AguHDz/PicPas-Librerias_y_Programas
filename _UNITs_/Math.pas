@@ -1,6 +1,6 @@
 {
 *  (C) AguHDz 18-JUL-2017
-*  Ultima Actualizacion: 20-JUL-2017
+*  Ultima Actualizacion: 03-AGO-2017
 *
 *  Compilador PicPas v.0.7.2 (https://github.com/t-edson/PicPas)
 *
@@ -41,6 +41,7 @@ interface
 //        2 si el dato2 es mayor que el dato1.
 //        Menor que 2 si el dato1 es mayor o igual que el dato 2.
 //***********************************************************************
+procedure Words_Comparar(dato1: word; dato2: byte) : byte;
 procedure Words_Comparar(dato1,dato2: word) : byte;
 
 //***********************************************************************
@@ -82,6 +83,7 @@ procedure Resto_Dividir (dividendo : word; divisor : byte) : word;
 //***********************************************************************
 procedure Multiplicar (multiplicando, multiplicador : byte) : word;
 procedure Multiplicar (multiplicando : word; multiplicador : byte) : word;
+procedure Multiplicar_ASM (multiplicando : word; multiplicador : byte) : word;
 
 
 implementation
@@ -89,14 +91,20 @@ implementation
 //***********************************************************************
 // W O R D S _ C O M P A R A R ******************************************
 //***********************************************************************
+procedure Words_Comparar(dato1: word; dato2: byte) : byte;
+begin
+  if (dato1.high > 0)  then exit(1) end;          // dato1>dato2
+  if (dato1.low > dato2) then exit(1) end;        // dato1>dato2
+  if (dato1.low < dato2) then exit(2) end;        // dato1<dato2
+  exit(0);                                        // dato1=dato2 
+end;
 procedure Words_Comparar(dato1,dato2: word) : byte;
 begin
-  if (dato1.high = dato2.high) then
-    if (dato1.low = dato2.low) then exit(0) end;  // dato1=dato2
-    if (dato1.low > dato2.low) then exit(1) end;  // dato1>dato2
-  end;
   if (dato1.high > dato2.high) then exit(1) end;  // dato1>dato2
-  exit(2);                                          // dato1<dato2 
+  if (dato1.high < dato2.high) then exit(2) end;  // dato1<dato2
+  if (dato1.low > dato2.low) then exit(1) end;    // dato1>dato2
+  if (dato1.low < dato2.low) then exit(2) end;    // dato1<dato2
+  exit(0);                                        // dato1=dato2  
 end;
 
 //***********************************************************************
@@ -200,11 +208,19 @@ procedure Dividir (dividendo, divisor : word) : word;
 var
   cociente, auxiliar : word;
 begin
-  cociente := 0;
-  // comprueba division por cero
-  if((divisor.low OR divisor.high) = $00) then
-    exit($FFFF); // devuelve el numero mas alto posible (seria infinito)
+  if(divisor.high=0) then
+    // Evita error de división por cero
+    if(divisor.low=0) then exit($FFFF) end;      // Máximo resultado posible.
+    // Acelerar resultado en caso particulares.
+    if(divisor.low=1) then exit(dividendo) end;  // Division por 1.
+    if(divisor.low=2) then                       // Division por 2.
+      cociente.low:=dividendo.low>>1;
+      cociente.low.7:=dividendo.high.0;
+      cociente.high:=dividendo.high>>1;
+      exit(cociente);
+    end;
   end;
+  cociente := 0;
   while(Words_Comparar(dividendo,divisor) < 2) do  // mientras dividendo >= divisor
     dividendo := Words_Restar(dividendo,divisor);
     inc(cociente);
@@ -305,6 +321,36 @@ begin
     repeat 
       auxiliar := multiplicacion;
 	    multiplicacion := auxiliar + multiplicando;
+      dec(multiplicador);
+    until(multiplicador = 0);
+  end; 
+  exit(multiplicacion);
+end;
+
+procedure Multiplicar_ASM (multiplicando : word; multiplicador : byte) : word;
+var
+  multiplicacion : word;
+  STATUS_C : bit  absolute $0003.0;  // Deberia ser un dato heredado del programa
+                                      // que haga uso de la libreria. En PicPas v.0.7.2
+                                      // todavia no esta implementado.
+                                      // De cualquier modo la posicion STATUS en el SFR
+                                      // de los distintos PIC suelo ser la $0003
+                                      // Si no se define, toma la direccion en el SFR
+                                      // del microcontroaldor por defecto (PIC16F84A)
+begin
+  multiplicacion := 0;
+  if multiplicador <> 0 then
+    repeat 
+//      auxiliar := multiplicacion;
+//	    multiplicacion := auxiliar + multiplicando; 
+      ASM
+        MOVF    multiplicando.low,w
+        ADDWF   multiplicacion.low,f
+        BTFSC   STATUS_C
+        INCF    multiplicacion.high,f
+        MOVF    multiplicando.high,w
+        ADDWF   multiplicacion.high,f             
+      END
       dec(multiplicador);
     until(multiplicador = 0);
   end; 
