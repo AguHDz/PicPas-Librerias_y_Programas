@@ -70,18 +70,18 @@ begin
   
   overflows_TMR1 := 0;  // Inicializa e imprime contador de desbordamientos del Timer 1.
   LCD_GotoXY(1,11);
-  LCD_Print_Number(overflows_TMR1, 0, '0');
+  LCD_Print_Number(overflows_TMR1, 0, 5, '0');
   
   repeat                                        // Bucle infinito.  
     LCD_GotoXY(0,11);                           // Mueve cursor de display.
     pulsos_TMR1.low  := TMR1L;                  // Guarda valor de Timer 1 en variable pulsos_TMR1
     pulsos_TMR1.high := TMR1H;
-    LCD_Print_Number(pulsos_TMR1, 0, '0');      // Imprime el número de pulsos externos contado por el Timer 1.
+    LCD_Print_Number(pulsos_TMR1, 0, 5, '0');   // Imprime el número de pulsos externos contado por el Timer 1.
     if(PIR1_TMR1IF = 1) then                    // Comprueba se se ha producido el desbordamiento del Timer 1.
       PIR1_TMR1IF := 0;                         // Restaura valor de flag de desbordamiento. 
       Inc(overflows_TMR1);                      // Incrementa la parte alta del contador de 4 bytes.
       LCD_GotoXY(1,11);
-      LCD_Print_Number(overflows_TMR1, 0, '0'); // Imprime el numero de overflows (desbordamientos) del Timer 1.
+      LCD_Print_Number(overflows_TMR1, 0, 5, '0'); // Imprime el numero de overflows (desbordamientos) del Timer 1.
       OverFlow_Pin := 1;                        // Pulso de salida para indicar del desbordamiento del Timer 1.
       OverFlow_Pin := 0;
     end;
