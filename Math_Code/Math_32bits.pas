@@ -31,7 +31,7 @@
 *  Tanto las variables de entrada como las de la salida se consideran variables
 *  globales de sistema. Siempre el operador 1 de la operación se cargará en 
 *  SYS_MATH_NUM_A (4 bytes), el operador 2 en SYS_MATH_NUM_B (4 bytes) y el resultado
-*  se obtendrá en SYS_MATH_NUM_X (4 bites). Al ser variables tratadas exclusivamente
+*  se obtendrá en SYS_MATH_NUM_X (4 bytes). Al ser variables tratadas exclusivamente
 *  desde código ensamblador se declaran como globales y absolutas, aunque la
 *  posición y orden que ocupen en la memoria es indiferente para su funcionamiento.
 *
