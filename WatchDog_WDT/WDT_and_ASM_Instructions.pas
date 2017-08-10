@@ -1,6 +1,7 @@
 // (C) AguHDz 13-05-2017
-// Ultima Actualizacion: 13-05-2017
-// Prueba para compilador PicPas v.0.6.1
+// Ultima Actualizacion: 10-08-2017
+// Prueba para compilador PicPas v.0.7.3
+//
 // WatchDog Timer en microcontrolador PIC 16F84A.
 // Enciende y apaga led conectado a pin RB0 usando el timer WatchDog para
 // reiniciar el microcontrolador en cada ciclo de encendido y apagado.
@@ -15,21 +16,22 @@
 
   Resultado FUSES de esta configuracion; $3FFE
   En el PIC 16F84A se graba en la posicion de memoria $2007
-
-  IMPORTANTE:
-  PicPas en su version 0.6.1 aun no permite incluir los fuses en el 
-  fichero HEX generado, por lo que hay que configurar manualmente el 
-  grabador o emulador de PIC con este valor de FUSES. O también se
-  puede anadir la linea :02400E00FE3F73 en la penultima linea del
-  fichero HEX que general PicPas (insertar antes de la linea 
-  :00000001FF que indica el final de los datos a grabar.
+  Es el :02400E00FE3F73 en la penultima linea del fichero HEX generado.
  *}
 
-{$PROCESSOR PIC16F84}
+{$PROCESSOR PIC16F84A}
+
 {$FREQUENCY 8Mhz}
+
+// A partir de la versión 0.7.3 PicPas admite la inclusión de
+// texto externo y e incluir en el fichero HEX los FUSES
+// o Palabra de Configuración del Microcontrolador.
+{$INCLUDE .\INCLUDE\FUSES_16F84A.inc}
+{$CONFIG _CP_OFF, _PWRT_OFF, _HS_OSC, _WDT_ON }
+
 program WatchDog_Timer;
 
-uses PIC16F84A; 
+uses PIC16F84A;
 
 begin
   // Asigna preescala al WDT (PSA=1) con valor 1:64 (PS2:PS0=110).
@@ -40,6 +42,7 @@ begin
 
   // Inicio de codigo ensamblador insertado en programa
   asm
+    org 100
     CLRWDT    ; clear WatchDog Timer
   end
   // Fin de codigo ensamblador
