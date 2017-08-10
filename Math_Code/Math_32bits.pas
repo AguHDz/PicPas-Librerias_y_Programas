@@ -1,6 +1,6 @@
 {
 *  (C) AguHDz 08-AGO-2017
-*  Ultima Actualizacion: 09-AGO-2017
+*  Ultima Actualizacion: 10-AGO-2017
 *
 *  Compilador PicPas v.0.7.2 (https://github.com/t-edson/PicPas)
 *
@@ -356,6 +356,162 @@ begin
 end;
 
 
+procedure Math_32bits_Print_ACUMULADOR_DEC;
+const
+  CONV_CHR_NUMERO = $30;  // ASCII '0' ($30) menos $00 = $30
+var
+  ACUM_BK_L, ACUM_BK_H : word;  // Usada para salvar el valor de la variable ACUMULADOR y restaurarla antes de salir de la función.
+  VALOR_L, VALOR_H     : word;  // Para operar con el valor de 32 bits a imprimir.
+  DIV10_L, DIV10_H     : word;  // Para dividir por multiplos de 10 el valor a imprimir
+  digito               : byte;  // Contiene un digito del valor a imprimir.
+  contador             : byte;  // Contador de bucle.
+begin
+  ACUM_BK_H := ACUMULADOR_H;    // Salvamos el valor la la variable global ACUMULADOR.
+  ACUM_BK_L := ACUMULADOR_L;
+  
+  VALOR_H := ACUMULADOR_H;      // Valor a imprimir
+  VALOR_L := ACUMULADOR_L;
+  DIV10_H := $3B9A;             // Numero 10000000000 en hexadecimal ($3B9ACA00) 
+  DIV10_L := $CA00;
+
+   // ******** Bucle en el que se calculan e imprimen los 10 digitos de la variable.
+   //           Se calcula por divisiones sucesivas de multiplos de 10.
+   //           Se utilizan las funciones de cálculo de MODULO y DIVISION para variables de 32 bits.
+  contador := 0;
+  repeat                       
+    // DIGITO = TEMP / DIV10     
+    ACUMULADOR_H := VALOR_H;
+    ACUMULADOR_L := VALOR_L;
+    Math_32bits_CARGA_A;
+  {$IFDEF DEBUG_ON}
+  LCD_GotoXY(0,0);
+  Math_32bits_Print_ACUMULADOR;
+  {$ENDIF}
+      ACUMULADOR_H := DIV10_H;
+    ACUMULADOR_L := DIV10_L;
+    Math_32bits_CARGA_B;
+  {$IFDEF DEBUG_ON}
+  LCD_GotoXY(1,0);
+  Math_32bits_Print_ACUMULADOR;
+  delay_ms(1000);
+  {$ENDIF}
+    Math_32bits_MODULO;  
+    // TEMP = TEMP % DIV10
+    VALOR_L.low  := SYS_MATH_NUM_X;
+    VALOR_L.high := SYS_MATH_NUM_X_H;
+    VALOR_H.low  := SYS_MATH_NUM_X_U;
+    VALOR_H.high := SYS_MATH_NUM_X_E;
+    
+    digito := SYS_MATH_NUM_A AND $0F;
+    digito := digito + CONV_CHR_NUMERO;
+    LCD_WriteChar(chr(digito));  
+
+    // DIV10 = DIV10 / 10
+    ACUMULADOR_H := DIV10_H;
+    ACUMULADOR_L := DIV10_L;
+    Math_32bits_CARGA_A;
+    ACUMULADOR_H := 0;
+    ACUMULADOR_L := 10;
+    Math_32bits_CARGA_B;
+    Math_32bits_DIVIDIR;
+    DIV10_L.low  := SYS_MATH_NUM_X;
+    DIV10_L.high := SYS_MATH_NUM_X_H;
+    DIV10_H.low  := SYS_MATH_NUM_X_U;
+    DIV10_H.high := SYS_MATH_NUM_X_E;    
+    
+    inc(contador);
+  until(contador=10);
+  // ************************** fin de bucle.
+    
+  ACUMULADOR_H := ACUM_BK_H;       // Se restaura el valor de la variable global ACUMULADOR.
+  ACUMULADOR_L := ACUM_BK_L;
+end;
+
+procedure prueba_Math_32bits_Print_ACUMULADOR_DEC;
+var
+  Contador_L, Contador_H : word;
+begin
+//  ACUMULADOR_H := $0B9A;
+//  ACUMULADOR_L := $CA01; // 194693633
+
+  LCD_GotoXY(0,0);
+  LCD_WriteChar('H');
+  LCD_WriteChar('e');
+  LCD_WriteChar('x');
+  LCD_WriteChar('a');
+  LCD_WriteChar('d');
+  LCD_WriteChar('e');
+  LCD_WriteChar('c');
+  LCD_WriteChar('i');
+  LCD_WriteChar('m');
+  LCD_WriteChar('a');
+  LCD_WriteChar('l');
+  LCD_WriteChar(' ');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_GotoXY(1,0);
+  LCD_WriteChar('3');
+  LCD_WriteChar('2');
+  LCD_WriteChar(' ');
+  LCD_WriteChar('b');
+  LCD_WriteChar('i');
+  LCD_WriteChar('t');
+  LCD_WriteChar('s');
+  LCD_WriteChar(':');
+  LCD_GotoXY(2,0);
+  LCD_WriteChar('D');
+  LCD_WriteChar('e');
+  LCD_WriteChar('c');
+  LCD_WriteChar('i');
+  LCD_WriteChar('m');
+  LCD_WriteChar('a');
+  LCD_WriteChar('l');  
+  LCD_WriteChar(' '); 
+  LCD_WriteChar(' '); 
+  LCD_WriteChar(' ');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_WriteChar('-');
+  LCD_GotoXY(3,0);
+  LCD_WriteChar('3');
+  LCD_WriteChar('2');
+  LCD_WriteChar(' ');
+  LCD_WriteChar('b');
+  LCD_WriteChar('i');
+  LCD_WriteChar('t');
+  LCD_WriteChar('s');
+  LCD_WriteChar(':');
+  
+  Contador_H := $0000;
+  Contador_L := $0000;
+  repeat
+    repeat
+      ACUMULADOR_H := Contador_H;
+      ACUMULADOR_L := Contador_L;
+      LCD_GotoXY(1,12);
+      Math_32bits_Print_ACUMULADOR;
+      LCD_GotoXY(3,10);
+      Math_32bits_Print_ACUMULADOR_DEC;
+      Contador_L := Contador_L + $FFF;
+    until(Contador_L.high > $FE);
+    Contador_L := $0000;
+    Contador_H := Contador_H + 1;
+  until(false);
+end; 
+
 begin
   LCD_Init(4,20);
   
@@ -505,5 +661,10 @@ begin
   LCD_GotoXY(3,6);
   LCD_WriteChar('=');
   Math_32bits_Print_ACUMULADOR; 
+ 
+  delay_ms(3000);
+  LCD_Clear;
+    
+  prueba_Math_32bits_Print_ACUMULADOR_DEC;
  
 end.
