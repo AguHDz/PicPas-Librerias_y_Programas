@@ -42,7 +42,6 @@ begin
 
   // Inicio de codigo ensamblador insertado en programa
   asm
-    org 100
     CLRWDT    ; clear WatchDog Timer
   end
   // Fin de codigo ensamblador
