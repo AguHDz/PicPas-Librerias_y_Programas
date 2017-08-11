@@ -27,6 +27,8 @@
 // texto externo y e incluir en el fichero HEX los FUSES
 // o Palabra de Configuración del Microcontrolador.
 // =======================================
+// CONFIGURATION WORD PIC16F84A
+// =======================================
 // CP : FLASH Program Memory Code Protection bit.
 {$define _CP_ON       =     $000F}
 {$define _CP_OFF      =     $3FFF}
