@@ -24,7 +24,7 @@
 {$FREQUENCY 8Mhz}
 
 // A partir de la versión 0.7.3 PicPas admite la inclusión de
-// texto externo y e incluir en el fichero HEX los FUSES
+// texto externo e incluir en el fichero HEX los FUSES
 // o Palabra de Configuración del Microcontrolador.
 // =======================================
 // CONFIGURATION WORD PIC16F84A
