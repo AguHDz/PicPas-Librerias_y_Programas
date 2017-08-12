@@ -104,8 +104,8 @@ begin
 	  movwf	  _H
 	  movf	  SYS_MATH_NUM_B_L,W
     subwf	  SYS_MATH_NUM_A_L,W
-	  btfsc	  STATUS_C
-	  incf	  _H,f     
+	  btfss	  STATUS_C
+	  decf	  _H,f     
   END
 end;
 // ------------------------------------------------------------------
@@ -456,10 +456,10 @@ begin
   LCD_GotoXY(3,14);
   LCD_WriteChar('=');
   Math_16bits_Print_ACUMULADOR;
-  
-  delay_ms(3000);
+
+  delay_ms(1000);
   LCD_Clear;
-  
+
   LCD_WriteChar('R');
   LCD_WriteChar('e');
   LCD_WriteChar('s');
@@ -480,7 +480,7 @@ begin
   LCD_GotoXY(3,14);
   LCD_WriteChar('=');
   Math_16bits_Print_ACUMULADOR;
-
+  
   delay_ms(3000);
   LCD_Clear;
  
@@ -571,5 +571,5 @@ begin
   LCD_Clear;  
 
   prueba_Math_16bits_Print_ACUMULADOR_DEC;
- 
+
 end.
