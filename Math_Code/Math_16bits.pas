@@ -88,7 +88,7 @@ begin
 	  movf	  SYS_MATH_NUM_B_L,W
     addwf	  SYS_MATH_NUM_A_L,W
 	  btfsc	  STATUS_C
-	  incf	  _H,f   
+	  incf	  _H,f  
   END
 end;
 // ------------------------------------------------------------------
@@ -145,7 +145,6 @@ begin
   ;Si SYS_MATH_NUM_B > 0 entonces goto MUL16LOOP
     movf    SYS_MATH_NUM_B_L,w
     iorwf   SYS_MATH_NUM_B_H,w 
-    sublw   $00
     btfss   STATUS_Z
     goto    MUL16LOOP     ; SYS_MATH_NUM_B > 0
     
@@ -171,7 +170,6 @@ begin
 	;*** Comprueba de divisor = 0 ***
 		movf    SYS_MATH_NUM_B_L,w
 		iorwf   SYS_MATH_NUM_B_H,w 
-		sublw   $00
 		btfss   STATUS_Z
 		goto    SEGUIR   ; divisor > 0
 	;Si divisor = 0 divuelve el número maximo posible ($FFFF=infinito)
@@ -181,7 +179,7 @@ begin
 		movwf   SYS_MATH_NUM_A_L
 		movwf   SYS_MATH_NUM_A_H
 		return
-		
+      
   SEGUIR:
 		movlw   16             ;Número de 16 bits.
 		movwf   SYSBYTETEMP_02

@@ -176,7 +176,6 @@ begin
     iorwf   SYS_MATH_NUM_B_H,w 
     iorwf   SYS_MATH_NUM_B_U,w
     iorwf   SYS_MATH_NUM_B_E,w
-    sublw   $00
     btfss   STATUS_Z
     goto    MUL32LOOP     ; SYS_MATH_NUM_B > 0
   
@@ -204,7 +203,6 @@ begin
 		iorwf   SYS_MATH_NUM_B_H,w 
 		iorwf   SYS_MATH_NUM_B_U,w
 		iorwf   SYS_MATH_NUM_B_E,w
-		sublw   $00
 		btfss   STATUS_Z
 		goto    SEGUIR   ; divisor > 0
 	;Si divisor = 0 divuelve el número maximo posible ($FFFF=infiniro)
