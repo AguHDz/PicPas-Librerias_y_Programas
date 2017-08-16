@@ -66,8 +66,8 @@ procedure Math_8bits_RESTAR_VAR_VAR  : byte;
 begin
   ASM
   ;W = OPVAR_A - OPVAR_B  
- 	  MOVF    OPVAR_A,W
-	  SUBWF   OPVAR_B,W
+    MOVF    OPVAR_A,W
+    SUBWF   OPVAR_B,W
   END
 end;
 // ... VARIABLE - CONSTANTE ...
@@ -75,8 +75,8 @@ procedure Math_8bits_RESTAR_VAR_CON  : byte;
 begin
   ASM
   ;W = OPVAR_A - OPCON_B
- 	  MOVF    OPVAR_A,W
-	  SUBLW   OPCON_B
+    MOVF    OPVAR_A,W
+    SUBLW   OPCON_B
   END
 end;
 // ... CONSTANTE - VARIABLE ...
@@ -84,8 +84,8 @@ procedure Math_8bits_RESTAR_CON_VAR  : byte;
 begin
   ASM
   ;W = OPCON_A - OPVAR_B  
- 	  MOVLW  OPCON_A
-	  SUBWF  OPVAR_B,W
+    MOVLW  OPCON_A
+    SUBWF  OPVAR_B,W
   END
 end;
 // ---------------------------------------------------------------------------
@@ -98,15 +98,15 @@ begin
   ASM
   ;W = OPVAR_A x OPVAR_B 
   ;SYSTMP00 variable temporal. Contiene el resultado de la multiplicación. 
-	  clrf	  SYSTMP00
+    clrf	  SYSTMP00
   MUL8_LOOP:
-	  btfss	  OPVAR_B,0   ;Si OPVAR_B.0 = 1 entonces SYSTMP00 += OPVAR_A
-	  goto	  END_IF_1
-	  movf	  OPVAR_A,W
-	  addwf	  SYSTMP00,F
+    btfss	  OPVAR_B,0   ;Si OPVAR_B.0 = 1 entonces SYSTMP00 += OPVAR_A
+    goto	  END_IF_1
+    movf	  OPVAR_A,W
+    addwf	  SYSTMP00,F
   END_IF_1:
-	  bcf	    STATUS,0    ;STATUS.C := 0
-	  rrf	    OPVAR_B,F
+    bcf	    STATUS,0    ;STATUS.C := 0
+    rrf	    OPVAR_B,F
     bcf	    STATUS,0    ;STATUS.C := 0
 	  rlf	    OPVAR_A,F  
     MOVF    OPVAR_B,F   ;Si OPVAR_B > 0 entonces goto MUL_LOOP
@@ -122,19 +122,19 @@ begin
   ;W = OPVAR_A x OPCON_B
   ;SYSTMP00 variable temporal. Contiene el resultado de la multiplicación.
   ;SYSTMP01 variable temporal. Contiene el operando constante OPCON_B.    
-	  clrf	  SYSTMP00
+    clrf	  SYSTMP00
     MOVLW   OPCON_B
     MOVWF   SYSTMP01
   MUL8_LOOP:
-	  btfss	  SYSTMP01,0  ;Si OPCON_B.0 = 1 entonces SYSTMP00 += OPVAR_A
-	  goto	  END_IF_1
-	  movf	  OPVAR_A,W
-	  addwf	  SYSTMP00,F
+    btfss	  SYSTMP01,0  ;Si OPCON_B.0 = 1 entonces SYSTMP00 += OPVAR_A
+    goto	  END_IF_1
+    movf	  OPVAR_A,W
+    addwf	  SYSTMP00,F
   END_IF_1:
-	  bcf	    STATUS,0    ;STATUS.C := 0
-	  rrf	    SYSTMP01,F
     bcf	    STATUS,0    ;STATUS.C := 0
-	  rlf	    OPVAR_A,F  
+    rrf	    SYSTMP01,F
+    bcf	    STATUS,0    ;STATUS.C := 0
+    rlf	    OPVAR_A,F  
     MOVF    SYSTMP01,F  ;Si OPCON_B > 0 entonces goto MUL_LOOP
     btfss   STATUS,2
     goto    MUL8_LOOP    
@@ -148,19 +148,19 @@ begin
   ;W = OPCON_A x OPVAR_B  
   ;SYSTMP00 variable temporal. Contiene el resultado de la multiplicación. 
   ;SYSTMP01 variable temporal. Contiene el operando constante OPCON_A.
-	  clrf	  SYSTMP00
+    clrf	  SYSTMP00
     MOVLW   OPCON_A
     MOVWF   SYSTMP01
   MUL8_LOOP:
-	  btfss	  OPVAR_B,0   ;Si OPVAR_B.0 = 1 entonces SYSTMP00 += OPVAR_A
-	  goto	  END_IF_1
-	  movf	  SYSTMP01,W
-	  addwf	  SYSTMP00,F
+    btfss	  OPVAR_B,0   ;Si OPVAR_B.0 = 1 entonces SYSTMP00 += OPVAR_A
+    goto	  END_IF_1
+    movf	  SYSTMP01,W
+    addwf	  SYSTMP00,F
   END_IF_1:
-	  bcf	    STATUS,0    ;STATUS.C := 0
-	  rrf	    OPVAR_B,F
     bcf	    STATUS,0    ;STATUS.C := 0
-	  rlf	    SYSTMP01,F  
+    rrf	    OPVAR_B,F
+    bcf	    STATUS,0    ;STATUS.C := 0
+    rlf	    SYSTMP01,F  
     MOVF    OPVAR_B,F   ;Si OPVAR_B > 0 entonces goto MUL_LOOP
     btfss   STATUS,2
     goto    MUL8_LOOP    
