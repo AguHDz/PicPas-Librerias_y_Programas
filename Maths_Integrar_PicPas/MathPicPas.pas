@@ -16,6 +16,9 @@ En la versión 0.7.3:
 Para los bytes, bits y boolean, prácticamente, están implementadas todas las operaciones básicas
 (salvo algunos casos puntuales), incluyendo +, -, =, <>, >, >=, <, <=, AND OR, XOR, NOT, >>, <<. 
 Para los word, están implementados las operaciones de suma (salvo algunos casos), y comparaciones = , <>, >
+
+Los resultados bits y boolean se devuelve en el bit Z, del STATUS. Aunque por optimización,
+en algunos casos, se puede usar el bit C.
 }
 
 program Math_8bits_PicPas;
