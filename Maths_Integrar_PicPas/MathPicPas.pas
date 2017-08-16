@@ -11,6 +11,11 @@ y SYSTMP00, SYSTMP01,...SYSTMP?? para las variables temporales y contadores dent
 Esta primera implementación solo incluye la posibilidad de insertar el código ensamblado INLINE.
 En futuras versiones se podrá considerar la posibilidad de realizar llamadas a funciones de cálculo
 optimizando el tamaño del código generado.
+
+En la versión 0.7.3:
+Para los bytes, bits y boolean, prácticamente, están implementadas todas las operaciones básicas
+(salvo algunos casos puntuales), incluyendo +, -, =, <>, >, >=, <, <=, AND OR, XOR, NOT, >>, <<. 
+Para los word, están implementados las operaciones de suma (salvo algunos casos), y comparaciones = , <>, >
 }
 
 program Math_8bits_PicPas;
@@ -18,8 +23,14 @@ program Math_8bits_PicPas;
 uses PIC16F877A, LCDLib_4bits;
 
 const
-OPCON_A = $01;
-OPCON_B = $02; 
+OPCON_A   = $01;
+OPCON_A_H = $00;
+OPCON_A_E = $00;
+OPCON_A_U = $00;
+OPCON_B   = $02;
+OPCON_B_H = $00;
+OPCON_B_E = $00;
+OPCON_B_U = $00; 
 
 var
 OPVAR_A : byte;
