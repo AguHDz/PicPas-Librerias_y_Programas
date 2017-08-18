@@ -1,6 +1,6 @@
 {  
 *  (C) AguHDz 15-AGO-2017
-*  Ultima Actualizacion: 16-AGO-2017
+*  Ultima Actualizacion: 18-AGO-2017
 *  
 *  Compilador PicPas v.0.7.3 (https://github.com/t-edson/PicPas)
 *
