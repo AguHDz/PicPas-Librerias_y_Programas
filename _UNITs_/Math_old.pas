@@ -19,7 +19,7 @@
 *  nunca se implementaran como funciones de sistema.
 *  
 *  NOTA: En un principio, los algoritmos de las funciones implementadas
-*  en esta libreria para funciones básicas, no se han optimizado para
+*  en esta libreria para funciones bÃ¡sicas, no se han optimizado para
 *  ser muy veloces, simplemente realizan su funcion y ocupan poca memoria,
 *  ya que en su momento se eliminaran de aqui y quedaran integradas como 
 *  operaciones del sistema en PicPas, donde se es posible que se trate
@@ -47,7 +47,7 @@ procedure Words_Comparar(dato1,dato2: word) : byte;
 //***********************************************************************
 //  FUNCION: Words_Restar
 //  PicPas v.0.7.2 no resta variables tipo word.
-//  Esta funcion en ensamblador lo soluciona de la manera más efectiva.
+//  Esta funcion en ensamblador lo soluciona de la manera mÃ¡s efectiva.
 //***********************************************************************
 procedure Words_Restar(minuendo: byte; register sustraendo: byte) : word;
 procedure Words_Restar_ASM(minuendo: word; register sustraendo: byte) : word;
@@ -209,8 +209,8 @@ var
   cociente, auxiliar : word;
 begin
   if(divisor.high=0) then
-    // Evita error de división por cero
-    if(divisor.low=0) then exit($FFFF) end;      // Máximo resultado posible.
+    // Evita error de divisiÃ³n por cero
+    if(divisor.low=0) then exit($FFFF) end;      // MÃ¡ximo resultado posible.
     // Acelerar resultado en caso particulares.
     if(divisor.low=1) then exit(dividendo) end;  // Division por 1.
     if(divisor.low=2) then                       // Division por 2.
