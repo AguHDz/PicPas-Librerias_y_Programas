@@ -15,15 +15,18 @@
   
   OBJETIVOS
   --------- 
-  1.- Suplir la falta de implementación de cierta funciones mátemáticas o
+  1.- Suplir la falta de implementación de cierta funciones matemáticas o
       Tipos de datos en PicPas. Y si ya están implementadas, igualar o
       superar los tiempos de cálculo aunque para ello se consuma más
       memoria de programa o de datos.
+      
+  2.- Servir de base para la implementación de nuevas funciones matemáticas
+      que se incluyan en PicPas.
     
-  2.- Fines didácticos para conocer como realizan las operaciones matemáticas
+  3.- Fines didácticos para conocer como realizan las operaciones matemáticas
       en los sistemas digitales.
   
-  3.- Que cada usuario pueda personalizar sus propias operaciones matemáticas
+  4.- Que cada usuario pueda personalizar sus propias operaciones matemáticas
       en PicPas modificando los algoritmos de cálculo matemático para
       adaptarlos a sus propias necesidades de velocidad, espacio de memoria
       usado, contemplar casos especiales, etc.
