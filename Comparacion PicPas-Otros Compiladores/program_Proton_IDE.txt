@@ -12,6 +12,7 @@
 '****************************************************************
 Device = 16F84A
 Declare Xtal = 4
+Config XT_OSC, PWRTE_ON, CP_OFF, WDT_OFF
 
 TRISA = $F0   ' RA0 to RA4 Outputs. 
 INTCON.7 = 0  ' Global Interrupt off.
