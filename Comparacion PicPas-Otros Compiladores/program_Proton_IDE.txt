@@ -1,0 +1,46 @@
+'****************************************************************
+'*  Name    : COMPARATIVA_CON_PICPAS.BAS                        *
+'*  Author  : AguHDz                                            *
+'*  Notice  : Copyright (c) 2017                                *
+'*          : All Rights Reserved                               *
+'*  Date    : 29/08/2017                                        *
+'*  Version : 1.0                                               *
+'*  Notes   : PROGRAMA DE MUESTRA QUE COMPARA EL CODIGO         *
+'*          : COMPILADO CON PICPAS.                             *
+'*          : Proton Compiler. Ver 3.6.0.0                      *
+'*          : RAM: 4 bytes   FLASH: 90 words                    *
+'****************************************************************
+Device = 16F84A
+Declare Xtal = 4
+
+TRISA = $F0   ' RA0 to RA4 Outputs. 
+INTCON.7 = 0  ' Global Interrupt off.
+
+Inicio:        // bucle
+  GoSub derecha
+  GoSub izquierda
+GoTo Inicio    // infinito
+
+derecha: 
+   PORTA.0 = 1
+   DelayMS 300
+   PORTA.0 = 0
+   PORTA.1 = 1
+   DelayMS 300
+   PORTA.1 = 0
+   PORTA.2 = 1
+   DelayMS 300
+   PORTA.2 = 0
+   PORTA.3 = 1
+   DelayMS 300
+Return
+
+izquierda:
+   PORTA.3 = 0
+   PORTA.2 = 1
+   DelayMS 300
+   PORTA.2 = 0
+   PORTA.1 = 1
+   DelayMS 300
+   PORTA.1 = 0
+Return
