@@ -1,0 +1,37 @@
+;Chip Settings
+#chip 16F84A,4
+#config OSC=XT, WDTE=OFF, PWRTE=ON, CP=OFF
+
+;EN GCBASIC NO ES NECERARIO. CONFIGURA LOS PUERTOS AUTOMATICAMENTE.
+;TRISA = $F0   ' RA0 to RA4 Outputs.
+
+IntOff  ' Global Interrupt off.
+
+Do Forever   ; bucle
+  derecha
+  izquierda
+Loop         ; infinito
+
+Sub derecha
+   Set PORTA.0 On
+   Wait 300 ms
+   Set PORTA.0 Off
+   Set PORTA.1 On
+   Wait 300 ms
+   Set PORTA.1 Off
+   Set PORTA.2 On
+   Wait 300 ms
+   Set PORTA.2 Off
+   Set PORTA.3 On
+   Wait 300 ms
+End Sub
+
+Sub izquierda
+   Set PORTA.3 Off
+   Set PORTA.2 On
+   Wait 300 ms
+   Set PORTA.2 Off
+   Set PORTA.1 On
+   Wait 300 ms
+   Set PORTA.1 Off
+End Sub

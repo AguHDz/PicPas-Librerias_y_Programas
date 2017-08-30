@@ -6,24 +6,28 @@ RAM: 18 bytes   FLASH: 126 words
 
 CCS 4.104
 =========
-RAM: 7 bytes   FLASH: 135 words
+RAM:  7 bytes   FLASH: 135 words
 
 PicPas 0.7.5
 ============
-RAM: 2 bytes   FLASH: 64 words
+RAM:  2 bytes   FLASH: 64 words
 
 Pic Micro Pacal 2.1.4
 =====================
-RAM: 4 bytes   FLASH: 104 words
+RAM:  4 bytes   FLASH: 104 words
 
 JAL 0.9.0
 =========
-RAM: 9 bytes   FLASH: 116 words
+RAM:  9 bytes   FLASH: 116 words
 
 Proton IDE 3.6.0.0
 =============
-RAM: 4 bytes   Flash: 90 words
+RAM:  4 bytes   FLASH: 90 words
 
 XC8 v1.42
 =======
-RAM: 5 bytes   Flash: 102 words
+RAM:  5 bytes   FLASH: 102 words
+
+GCBASIC 0.97.01
+============
+RAM:  4 bytes   FLASH: 74 words
