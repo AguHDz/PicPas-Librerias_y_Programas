@@ -31,3 +31,7 @@ RAM:  5 bytes   FLASH: 102 words
 GCBASIC 0.97.01
 ============
 RAM:  4 bytes   FLASH: 74 words
+
+PicPas 0.7.5 (ENSAMBLADOR)
+=====================
+RAM:  2 bytes   FLASH: 41 words

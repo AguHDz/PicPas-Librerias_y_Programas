@@ -1,0 +1,96 @@
+////////////////////////////////////////////////////////////////////////////////////
+//                     VsZeNeR"04
+//                     7/Agosto/05
+//
+//   Programa:   Coche Fantastico
+//   Version:   0.0
+//
+//   Notas: Barrido de led"s simulando la iluminacion del coche fantastico por el
+//         puerto A
+//
+//            RA0 -> 1º Led
+//            RA1 -> 2º Led
+//            RA2 -> 3º Led
+//            RA3 -> 4º Led
+//  Fuente: http://www.todopic.com.ar/foros/index.php?topic=4530.msg38857#msg38857
+//////////////////////////////////////////////////////////////////////////////////
+program Coche;
+
+{$PROCESSOR PIC16F84}
+{$FREQUENCY 4Mhz}
+
+uses PIC16F84A;
+  
+procedure delay_300ms;
+var
+  d1,d2 : byte;
+begin
+  ASM
+    ; Delay = 0.3 seconds
+    ; Clock frequency = 4 MHz
+    ; Actual delay = 0.3 seconds = 300000 cycles
+    ; Error = 0 %
+
+    ;299993 cycles
+    MOVLW   $5E
+    MOVWF   d1
+    MOVLW   $EB
+    MOVWF   d2
+    Delay_0:
+      DECFSZ  d1,F
+      GOTO    $+2
+      DECFSZ  d2,F
+    GOTO  Delay_0
+    
+    ;3 cycles
+    GOTO	  $+1
+    NOP
+    
+    ;4 cycles (including call)    
+  END
+end;
+
+procedure derecha;
+begin
+  ASM
+    BSF PORTA,0
+    CALL delay_300ms
+    BCF PORTA,0
+    BSF PORTA,1
+    CALL delay_300ms
+    BCF PORTA,1
+    BSF PORTA,2
+    CALL delay_300ms
+    BCF PORTA,2
+    BSF PORTA,3
+    CALL delay_300ms
+  END
+end;
+
+procedure izquierda;
+begin
+  ASM
+    BCF PORTA,3
+    BSF PORTA,2
+    CALL delay_300ms
+    BCF PORTA,2
+    BSF PORTA,1
+    CALL delay_300ms
+    BCF PORTA,1
+  END
+end;
+
+begin
+  ASM
+    MOVLW   $F0
+    BSF     STATUS, 5   ;Bank 1
+    MOVWF   TRISA       ;porta como salida menos RA4(desactivado)
+    BCF     STATUS, 5   ;Bank 0
+    BCF     INTCON,7    ;todas las interrupciones desactivadas
+    
+    LOOP:               ;bucle...
+      CALL   derecha
+      CALL   izquierda
+    GOTO LOOP           ;...infinito
+  END
+end.
