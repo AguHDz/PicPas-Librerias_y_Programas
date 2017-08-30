@@ -21,17 +21,17 @@ JAL 0.9.0
 RAM:  9 bytes   FLASH: 116 words
 
 Proton IDE 3.6.0.0
-=============
+==================
 RAM:  4 bytes   FLASH: 90 words
 
 XC8 v1.42
-=======
+=========
 RAM:  5 bytes   FLASH: 102 words
 
 GCBASIC 0.97.01
-============
+===============
 RAM:  4 bytes   FLASH: 74 words
 
 PicPas 0.7.5 (ASM)
-=============
+==================
 RAM:  2 bytes   FLASH: 41 words
