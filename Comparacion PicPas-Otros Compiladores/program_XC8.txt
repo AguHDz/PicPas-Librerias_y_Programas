@@ -1,0 +1,50 @@
+
+// CONFIG
+#pragma config FOSC = XT        // Oscillator Selection bits (XT oscillator)
+#pragma config WDTE = ON        // Watchdog Timer (WDT enabled)
+#pragma config PWRTE = OFF      // Power-up Timer Enable bit (Power-up Timer is disabled)
+#pragma config CP = OFF         // Code Protection bit (Code protection disabled)
+
+#include <xc.h>
+#define _XTAL_FREQ 4000000
+
+///DECLARACIONES DE FUNCIONES
+void derecha(void); //ilumina led"s derecha a izquierda 
+void izquierda(void); //ilumina led"s izquierda a derecha 
+
+void main(void) {
+    TRISA = 0xF0; //porta como salida menos RA4(desactivado)
+    INTCONbits.GIE = 1;
+
+    do{        //bucle...
+        derecha();
+        izquierda(); 
+    }while(1); //...infinito
+    return;
+}
+
+void derecha(void)
+{
+    PORTAbits.RA0 = 1;
+    __delay_ms(300);
+    PORTAbits.RA0 = 0;
+    PORTAbits.RA1 = 1;
+    __delay_ms(300);
+    PORTAbits.RA1 = 0;
+    PORTAbits.RA2 = 1;
+    __delay_ms(300);
+    PORTAbits.RA2 = 0;
+    PORTAbits.RA3 = 1;
+    __delay_ms(300);
+}
+
+void izquierda(void) 
+{
+    PORTAbits.RA3 = 0;
+    PORTAbits.RA2 = 1;
+    __delay_ms(300);
+    PORTAbits.RA2 = 0;
+    PORTAbits.RA1 = 1;
+    __delay_ms(300);
+    PORTAbits.RA1 = 0;
+}

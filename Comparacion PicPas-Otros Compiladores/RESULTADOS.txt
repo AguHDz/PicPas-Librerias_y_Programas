@@ -23,3 +23,7 @@ RAM: 9 bytes   FLASH: 116 words
 Proton IDE 3.6.0.0
 =============
 RAM: 4 bytes   Flash: 90 words
+
+XC8 v1.42
+=======
+RAM: 5 bytes   Flash: 102 words
