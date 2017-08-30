@@ -8,10 +8,10 @@
 //   Notas: Barrido de led"s simulando la iluminacion del coche fantastico por el
 //         puerto A
 //
-//            RA0 -> 1บ Led
-//            RA1 -> 2บ Led
-//            RA2 -> 3บ Led
-//            RA3 -> 4บ Led
+//            RA0 -> 1ยบ Led
+//            RA1 -> 2ยบ Led
+//            RA2 -> 3ยบ Led
+//            RA3 -> 4ยบ Led
 //  Fuente: http://www.todopic.com.ar/foros/index.php?topic=4530.msg38857#msg38857
 //////////////////////////////////////////////////////////////////////////////////
 program Coche;
@@ -83,9 +83,9 @@ end;
 begin
   ASM
     MOVLW   $F0
-    BSF     STATUS, 5   ;Bank 1
+    BSF     STATUS,5    ;Bank 1
     MOVWF   TRISA       ;porta como salida menos RA4(desactivado)
-    BCF     STATUS, 5   ;Bank 0
+    BCF     STATUS,5    ;Bank 0
     BCF     INTCON,7    ;todas las interrupciones desactivadas
     
     LOOP:               ;bucle...
