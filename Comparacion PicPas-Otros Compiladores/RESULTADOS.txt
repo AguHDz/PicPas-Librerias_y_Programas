@@ -35,3 +35,5 @@ RAM:  4 bytes   FLASH: 74 words
 PicPas 0.7.5 (ASM)
 ==================
 RAM:  2 bytes   FLASH: 41 words
+
+Link gráfico y comentarios: https://www.facebook.com/groups/electronicaymicrocontroladores/permalink/1749995278362554/
