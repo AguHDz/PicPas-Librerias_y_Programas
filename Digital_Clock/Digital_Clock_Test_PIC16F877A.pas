@@ -4,12 +4,12 @@
 *
 *  Compilador PicPas v.0.8.0 (https://github.com/t-edson/PicPas)
 *
-*  Microcontrolador: PIC16F84A
+*  Microcontrolador: PIC16F877A
 *
 *  RELOJ DIGITAL (TEST COMPARACION COMPILADORES)
 *  =============================================
 *  Este proyecto es una demostración del uso del compilador PicPas con
-*  el microcontrolador PIC16F84A para hacer un reloj de tiempo real con
+*  el microcontrolador PIC16F877A para hacer un reloj de tiempo real con
 *  el integrado DS1307.
 *  
 *  Se trata de un reloj totalmente funcional con tres botones de ajuste
@@ -57,7 +57,7 @@
 *    más de 10 años sin necesidad de suministro eléctrico exterior.
 }
 
-{$PROCESSOR PIC16F84A}
+{$PROCESSOR PIC16F877A}
 {$FREQUENCY 4Mhz}
 {$MODE PICPAS}
 
@@ -162,26 +162,52 @@ var
 // Menú edición de fecha y hora.
   editMenuState    : byte;      // Posición o estado dentro del menú de edición.
 
-// CONFIGURATION WORD PIC16F84A
+// CONFIGURATION WORD PIC16F87XA
+// PIC16F873A
+// PIC16F874A
+// PIC16F876A
+// PIC16F877A
 // =======================================
 // CP : FLASH Program Memory Code Protection bit.
-{$DEFINE _CP_ON         =     $000F}   // All program memory is code protected
-{$DEFINE _CP_OFF        =     $3FFF}   // Code protection disabled
+{$DEFINE _CP_ON         =    $1FFF}      // All program memory code-protected
+{$DEFINE _CP_ALL        =    $1FFF}      // All program memory code-protected
+{$DEFINE _CP_OFF        =    $3FFF}      // Code protection off
+// DEBUG : In-Circuit Debugger Mode bit
+// RB6-RB7 are dedicaded to the debugger.
+{$DEFINE _DEBUG_ON      =    $37FF}      // In-Circuit Debugger enabled, RB6 and RB7 are dedicated to the debugger
+{$DEFINE _DEBUG_OFF     =    $3FFF}      // In-Circuit Debugger disabled, RB6 and RB7 are general purpose I/O pins
+// WRT1:WRT0 : Flash Program Memory Write Enable bits.
+{$DEFINE _WRT_HALF      =    $39FF}      // 0000h to 0FFFh write-protected; 1000h to 1FFFh may be written to by EECON control
+{$DEFINE _WRT_1FOURTH   =    $3BFF}      // 0000h to 07FFh write-protected; 0800h to 1FFFh may be written to by EECON control
+{$DEFINE _WRT_256       =    $3DFF}      // 0000h to 00FFh write-protected; 0100h to 1FFFh may be written to by EECON control
+{$DEFINE _WRT_OFF       =    $3FFF}      // Write protection off; all program memory may be written to by EECON control
+// CPD : Data EEPROM Memory Code Protection bit.
+{$DEFINE _CPD_ON        =    $3EFF}      // Data EEPROM code-protected
+{$DEFINE _CPD_OFF       =    $3FFF}      // Data EEPROM code protection off
+// LVP : Low-Voltage (Single-Supply) In-Circuit Serial Programming Enable bit.
+{$DEFINE _LVP_OFF       =    $3F7F}      // RB3 is digital I/O, HV on MCLR must be used for programming
+{$DEFINE _LVP_ON        =    $3FFF}      // RB3/PGM pin has PGM function; low-voltage programming enabled
+// BOREN : Brown-out Reset Enable bit.
+// Enable BOREN automatically enable PWRTEN, regardless of the
+// value of bit PWRTEN. Ensure the PWRTEN is enable any time
+// BOREN is enable.
+{$DEFINE _BOREN_OFF     =    $3FBF}      // BOR disabled
+{$DEFINE _BOREN_ON      =    $3FFF}      // BOR enabled
 // /PWRTEN : Power-up Timer Enable bit.
-{$DEFINE _PWRTEN_ON     =     $3FF7}   // Power-up Timer is enabled
-{$DEFINE _PWRTEN_OFF    =     $3FFF}   // Power-up Timer is disabled
+{$DEFINE _PWRTEN_ON     =    $3FF7}      // PWRT enabled
+{$DEFINE _PWRTEN_OFF    =    $3FFF}      // PWRT disabled
 // WDTEN : Watchdog Timer Eneble bit.
-{$DEFINE _WDT_OFF       =     $3FFB}   // WDT disabled
-{$DEFINE _WDT_ON        =     $3FFF}   // WDT enabled
+{$DEFINE _WDT_OFF       =    $3FFB}      // WDT disabled
+{$DEFINE _WDT_ON        =    $3FFF}      // WDT enabled
 // FOSC1:FOSC2 : Oscilator Seleccion bits.
-{$DEFINE _LP_OSC        =     $3FFC}   // LP oscillator
-{$DEFINE _XT_OSC        =     $3FFD}   // XT oscillator
-{$DEFINE _HS_OSC        =     $3FFE}   // HS oscillator
-{$DEFINE _RC_OSC        =     $3FFF}   // RC oscillator
+{$DEFINE _LP_OSC        =    $3FFC}      // LP oscillator
+{$DEFINE _XT_OSC        =    $3FFD}      // XT oscillator
+{$DEFINE _HS_OSC        =    $3FFE}      // HS oscillator
+{$DEFINE _RC_OSC        =    $3FFF}      // RC oscillator
 // =======================================
 // The erased (unprogrammed) value of the configuration word is 3FFFFh.
 // Configuration Word Address : 2007h.
-{$CONFIG _CP_OFF, _PWRTEN_ON, _HS_OSC, _WDT_OFF }
+{$CONFIG _CP_OFF, _DEBUG_OFF, _WRT_OFF, _CPD_OFF, _LVP_ON, _BOREN_ON, _PWRTEN_ON, _WDT_OFF, _HS_OSC }
 
 //************************************************************************************************//
 //********************************** F U N C I O N E S *******************************************//
@@ -323,6 +349,7 @@ begin
     end;
 
     SetAsOutput(SDA);
+    SetBank(0);      // BUG DE COMPILADOR PICPAS HACE NECESARIO FORZAR EL CAMBIO DE BANK. <<<<
     if (ACKBit) then SDA := LOW_ST;
     else SDA := HIGH_ST; end;
     SCL := HIGH_ST;
@@ -416,7 +443,7 @@ begin
   I2C_start;      // Inicia comunicación I2C
   I2C_send($D0);  // Dirección I2C del DS1307.
   I2C_send($00);  // Primera dirección a leer/escribir. 
-  I2C_send(0);  // Siempre que se ajusta la fecha y hora los Segundos comienzan en cero.
+  I2C_send(0);  // Siempre que se ajusta la fecha y hora los Segundos=0
   aux :=decimalToBCD(DS1307_Minuto);
   I2C_send(aux);
   aux := (decimalToBCD(DS1307_Hora));
@@ -682,6 +709,11 @@ end;
 //*****************************************************************************
 procedure setup;
 begin
+    CMCON  := $07;         // Deshabilita comparadores.
+    ADCON1 := $06;         // Todos los pines configurados como digitales.
+    ADCON0 := $00;         // Desactiva conversor A/D.
+    INTCON_GIE := 0;       // Todas las interrupciones desactivadas.
+    
     SetAsInput(P_INC);     // Configura Pulsadores como Entradas.
     SetAsInput(P_DEC);
     SetAsInput(P_SET);

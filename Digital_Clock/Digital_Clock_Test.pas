@@ -5,13 +5,13 @@
   base de tiempos utiliza el integrado DS1307.
 }
 
-{$PROCESSOR PIC16F84A}
+{$PROCESSOR PIC16F877A}
 {$FREQUENCY 4Mhz}
 
 program Digital_Clock;
 
 uses
-  PIC16F84A;
+  PIC16F877A;
 
 const
   HIGH_ST    = 1;           // Estado digital alto (HIGH)
@@ -91,9 +91,9 @@ var
   LCD_EN     : bit absolute  PORTB.3;  // Pin Enable
 
 // Pulsadores
-  P_INC : bit absolute PORTA.2;            // Pulsador INC
+  P_INC : bit absolute PORTA.0;            // Pulsador INC
   P_DEC : bit absolute PORTA.1;            // Pulsador DEC
-  P_SET : bit absolute PORTA.0;            // Pulsador SET
+  P_SET : bit absolute PORTA.2;            // Pulsador SET
 
 // RTC DS1307
   DS1307_DiaSemana : byte;      // Día de la semana (formato numérico 1..7)
@@ -243,6 +243,7 @@ begin
     i := 0;
     while(i<8) do
         SCL := HIGH_ST;
+    delay_ms(1);
         dato := dato<<1;
         if(SDA=HIGH_ST) then dato.0:=1 end;
         SCL := LOW_ST;
@@ -250,9 +251,11 @@ begin
     end;
 
     SetAsOutput(SDA);
+    SetBank(0);
     if (ACKBit) then SDA := LOW_ST;
     else SDA := HIGH_ST; end;
     SCL := HIGH_ST;
+    while(i<9) do inc(i) end;  // Proporciona anchura al pulso.
     SCL := LOW_ST;
     exit(dato);
 end;
@@ -609,10 +612,21 @@ end;
 //*****************************************************************************
 procedure setup;
 begin
-//    ADCON1 = $07;          // Todos los pines configurados como digitales.
-//    ADCON0 = $00;          // Desactiva conversor A/D.
-//    INTCON = 0;         // Todas las interrupciones desactivadas.
+//ADCON1_ADFM := 0;
+//ADCON0_ADON := 0;
+//ADCON1_PCFG3 := 0;
+//ADCON1_PCFG2 := 1;
+//ADCON1_PCFG1 := 1;
+//ADCON1_PCFG0 := 0;
+//CMCON = $07;
 
+    CMCON  := $07;
+    ADCON1 := $06;          // Todos los pines configurados como digitales.
+    ADCON0 := $00;          // Desactiva conversor A/D.
+    INTCON_GIE := 0;         // Todas las interrupciones desactivadas.
+//OPTION_REG_RBPU := 1;
+//INTCON_RBIF := 1;
+    
     SetAsInput(P_INC);  // Configura Pulsadores como Entradas.
     SetAsInput(P_DEC);
     SetAsInput(P_SET);
@@ -644,8 +658,9 @@ begin
         DS1307_timeRead;
 
         timeShow;         // Actualiza display LCD con fecha y hora.
-        inc(DS1307_Segundo);
 
+//inc(DS1307_Ano);
+//DS1307_timeWrite;
         // Espera 1 segundo usando salida SOUT del DS1307 (1 Hz)
         repeat until(SOUT=LOW_ST);        // Espera durante pulso alto.
         repeat until(SOUT=HIGH_ST);       // Espera durante pulso bajo.

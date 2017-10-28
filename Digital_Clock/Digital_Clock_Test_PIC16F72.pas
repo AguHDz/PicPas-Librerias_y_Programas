@@ -4,12 +4,12 @@
 *
 *  Compilador PicPas v.0.8.0 (https://github.com/t-edson/PicPas)
 *
-*  Microcontrolador: PIC16F84A
+*  Microcontrolador: PIC16F72
 *
 *  RELOJ DIGITAL (TEST COMPARACION COMPILADORES)
 *  =============================================
 *  Este proyecto es una demostración del uso del compilador PicPas con
-*  el microcontrolador PIC16F84A para hacer un reloj de tiempo real con
+*  el microcontrolador PIC16F72 para hacer un reloj de tiempo real con
 *  el integrado DS1307.
 *  
 *  Se trata de un reloj totalmente funcional con tres botones de ajuste
@@ -57,7 +57,7 @@
 *    más de 10 años sin necesidad de suministro eléctrico exterior.
 }
 
-{$PROCESSOR PIC16F84A}
+{$PROCESSOR PIC16F72}
 {$FREQUENCY 4Mhz}
 {$MODE PICPAS}
 
@@ -162,26 +162,33 @@ var
 // Menú edición de fecha y hora.
   editMenuState    : byte;      // Posición o estado dentro del menú de edición.
 
-// CONFIGURATION WORD PIC16F84A
+// CONFIGURATION WORD PIC16F72
 // =======================================
+// BOREN : Brown-out Reset Enable bit.
+// Enable BOREN automatically enable PWRTEN, regardless of the
+// value of bit PWRTEN. Ensure the PWRTEN is enable any time
+// BOREN is enable.
+{$DEFINE _BOREN_OFF    =     $3FBF}    // BOR disabled
+{$DEFINE _BOREN_ON     =     $3FFF}    // BOR enabled
 // CP : FLASH Program Memory Code Protection bit.
-{$DEFINE _CP_ON         =     $000F}   // All program memory is code protected
-{$DEFINE _CP_OFF        =     $3FFF}   // Code protection disabled
-// /PWRTEN : Power-up Timer Enable bit.
-{$DEFINE _PWRTEN_ON     =     $3FF7}   // Power-up Timer is enabled
-{$DEFINE _PWRTEN_OFF    =     $3FFF}   // Power-up Timer is disabled
+{$DEFINE _CP_ON        =     $3FEF}    // All Memory locations code protected
+{$DEFINE _CP_ALL       =     $3FEF}    // All Memory locations code protected
+{$DEFINE _CP_OFF       =     $3FFF}    // Code protection off
+// PWRTEN : Power-up Timer Enable bit.
+{$DEFINE _PWRTEN_ON    =     $3FF7}    // PWRT enabled
+{$DEFINE _PWRTEN_OFF   =     $3FFF}    // PWRT disabled
 // WDTEN : Watchdog Timer Eneble bit.
-{$DEFINE _WDT_OFF       =     $3FFB}   // WDT disabled
-{$DEFINE _WDT_ON        =     $3FFF}   // WDT enabled
+{$DEFINE _WDT_OFF      =     $3FFB}    // WDT disabled
+{$DEFINE _WDT_ON       =     $3FFF}    // WDT enabled
 // FOSC1:FOSC2 : Oscilator Seleccion bits.
-{$DEFINE _LP_OSC        =     $3FFC}   // LP oscillator
-{$DEFINE _XT_OSC        =     $3FFD}   // XT oscillator
-{$DEFINE _HS_OSC        =     $3FFE}   // HS oscillator
-{$DEFINE _RC_OSC        =     $3FFF}   // RC oscillator
+{$DEFINE _LP_OSC       =     $3FFC}    // LP oscillator
+{$DEFINE _XT_OSC       =     $3FFD}    // XT oscillator
+{$DEFINE _HS_OSC       =     $3FFE}    // HS oscillator
+{$DEFINE _RC_OSC       =     $3FFF}    // RC oscillator
 // =======================================
 // The erased (unprogrammed) value of the configuration word is 3FFFFh.
 // Configuration Word Address : 2007h.
-{$CONFIG _CP_OFF, _PWRTEN_ON, _HS_OSC, _WDT_OFF }
+{$CONFIG _BOREN_ON, _CP_OFF, _WDT_OFF, _HS_OSC}
 
 //************************************************************************************************//
 //********************************** F U N C I O N E S *******************************************//
@@ -323,6 +330,7 @@ begin
     end;
 
     SetAsOutput(SDA);
+    SetBank(0);      // BUG DE COMPILADOR PICPAS HACE NECESARIO FORZAR EL CAMBIO DE BANK. <<<<
     if (ACKBit) then SDA := LOW_ST;
     else SDA := HIGH_ST; end;
     SCL := HIGH_ST;
@@ -682,6 +690,10 @@ end;
 //*****************************************************************************
 procedure setup;
 begin
+    ADCON1 := $07;         // Todos los pines configurados como digitales.
+    ADCON0 := $00;         // Desactiva conversor A/D.
+    INTCON_GIE := 0;       // Todas las interrupciones desactivadas.
+    
     SetAsInput(P_INC);     // Configura Pulsadores como Entradas.
     SetAsInput(P_DEC);
     SetAsInput(P_SET);
