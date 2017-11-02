@@ -1,9 +1,10 @@
 2ª Prueba de compiladores microcontroladores PIC
 ====================================
 VENCEDOR: PICPAS 0.8.0 (https://github.com/t-edson/PicPas - GRATUITO)
-2º PUESTO: GCBASIC v.0.97.01 (http://gcbasic.sourceforge.net - GRATUITO)
-3º PUESTO: XC8 v.1.43 (http://www.microchip.com - GRATUITO)
-4º PUESTO: Compilador SDCC v.3.6.0 (http://sdcc.sourceforge.net - GRATUITO)
+2º  GCBASIC v.0.97.01 (http://gcbasic.sourceforge.net - GRATUITO)
+3º  MIKROC V.7.0.0 (https://www.mikroe.com/mikroc/ - DE PAGO)
+4º  XC8 v.1.43 (http://www.microchip.com - GRATUITO)
+4º  Compilador SDCC v.3.6.0 (http://sdcc.sourceforge.net - GRATUITO)
 
 TABLAS DE RESULTADOS:
 
@@ -11,6 +12,7 @@ PIC16F877A
 =========
 PICPAS ->  RAM: 34 bytes   FLASH: 877 words
 GCBASIC ->  RAM: 45 bytes   FLASH: 953 words 
+MIKROC -> RAM: 36 bytes FLASH: 1013 words.
 XC8 ->  RAM: 36 bytes   FLASH: 1586 words
 SDCC  ->  RAM: 42 bytes   FLASH: 1834 words
 
@@ -18,6 +20,7 @@ PIC16F84A
 =========
 PICPAS ->  RAM: 34 bytes   FLASH: 838 words
 GCBASIC ->  RAM: 45 bytes   FLASH: 925 words
+MIKROC ->  No válido. FLASH > 1000 words
 XC8 ->  No válido. FLASH > 1000 words
 SDCC  ->  No válido. FLASH > 1000 words
 
