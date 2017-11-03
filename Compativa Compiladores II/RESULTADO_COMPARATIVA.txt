@@ -1,7 +1,7 @@
 2ª Prueba de compiladores microcontroladores PIC
 ====================================
 VENCEDOR: PICPAS 0.8.0 (https://github.com/t-edson/PicPas - GRATUITO)
-2º  CCS C v.5.0.74 (http://www.ccsinfo.com/)
+2º  CCS C v.5.0.74 (http://www.ccsinfo.com/ - DE PAGO)
 3º  GCBASIC v.0.97.01 (http://gcbasic.sourceforge.net - GRATUITO)
 4º  MIKROC V.7.0.0 (https://www.mikroe.com/mikroc/ - DE PAGO)
 5º  XC8 v.1.43 (http://www.microchip.com - GRATUITO)
