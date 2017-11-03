@@ -267,6 +267,41 @@ void LCD_gotoXY(uint8_t columna, uint8_t fila)
     LCD_command(LCD_CMD_SET_DISPLAY_ADDRESS + columna + LCD_CMD_ROW_1);
 }
 
+void LCD_init(void)
+{
+//    LCD_DATA_4_DIR = OUTPUT_PIN;   // Pines iniciados como Salidas.
+//    LCD_DATA_5_DIR = OUTPUT_PIN;
+//    LCD_DATA_6_DIR = OUTPUT_PIN;
+//    LCD_DATA_7_DIR = OUTPUT_PIN;
+//    LCD_RS_DIR     = OUTPUT_PIN;
+//    LCD_EN_DIR     = OUTPUT_PIN;
+    
+
+    delay_ms(200);   // Espera para asegurar tensión estable tras inicio.
+    output_bit(LCD_RS, LOW_ST);
+    output_bit(LCD_EN, LOW_ST);
+
+    // INICIALIZACION POR SOFTWARE DE DISPLAY LCD.
+    // Los tiempos de espera y secuencia de datos son los indicados en todos los
+    // datasheets de los displays compatibles con el estándar Hitachi HD44780.
+    delay_ms(30);    // Espera >= 15 ms
+    // INICIACION DE DISPLAY MODO 4 BITS DE DATOS.
+    LCD_send4Bits(0b00110000);
+    delay_ms(5);    // Espera >= 4.1 ms
+    LCD_send4Bits(0b00110000);
+    delay_ms(1);    // Espera >= 100 us
+    LCD_send4Bits(0b00110000);
+    LCD_send4Bits(0b00100000);
+    LCD_command(LCD_CMD_FUNCTION_SET + LCD_CMD_4BIT_INTERFACE + LCD_CMD_2LINES + LCD_CMD_F_FONT_5_8);
+    // FIN DE INICIALIZACION POR SOFTWARE DEL DISPLAY LCD.
+
+    // CONFIGURACION DE DISPLAY LCD.
+    LCD_command(LCD_OFF);
+    LCD_command(LCD_CMD_CHARACTER_ENTRY_MODE + LCD_CMD_INCREMENT + LCD_CMD_DISPLAY_SHIFT_OFF);
+    LCD_command(LCD_ON);
+    LCD_command(LCD_CLEAR);
+}
+
 /****************************************************************************
   Funciones de comunicación I2C mediante software.
 *****************************************************************************/
@@ -320,41 +355,6 @@ uint8_t I2C__readByte(bool ACKByte)   // Receive data from I2C
     SCL_HIGH;
     SCL_LOW;
     return dato;
-}
-
-void LCD_init(void)
-{
-//    LCD_DATA_4_DIR = OUTPUT_PIN;   // Pines iniciados como Salidas.
-//    LCD_DATA_5_DIR = OUTPUT_PIN;
-//    LCD_DATA_6_DIR = OUTPUT_PIN;
-//    LCD_DATA_7_DIR = OUTPUT_PIN;
-//    LCD_RS_DIR     = OUTPUT_PIN;
-//    LCD_EN_DIR     = OUTPUT_PIN;
-    
-
-    delay_ms(200);   // Espera para asegurar tensión estable tras inicio.
-    output_bit(LCD_RS, LOW_ST);
-    output_bit(LCD_EN, LOW_ST);
-
-    // INICIALIZACION POR SOFTWARE DE DISPLAY LCD.
-    // Los tiempos de espera y secuencia de datos son los indicados en todos los
-    // datasheets de los displays compatibles con el estándar Hitachi HD44780.
-    delay_ms(30);    // Espera >= 15 ms
-    // INICIACION DE DISPLAY MODO 4 BITS DE DATOS.
-    LCD_send4Bits(0b00110000);
-    delay_ms(5);    // Espera >= 4.1 ms
-    LCD_send4Bits(0b00110000);
-    delay_ms(1);    // Espera >= 100 us
-    LCD_send4Bits(0b00110000);
-    LCD_send4Bits(0b00100000);
-    LCD_command(LCD_CMD_FUNCTION_SET + LCD_CMD_4BIT_INTERFACE + LCD_CMD_2LINES + LCD_CMD_F_FONT_5_8);
-    // FIN DE INICIALIZACION POR SOFTWARE DEL DISPLAY LCD.
-
-    // CONFIGURACION DE DISPLAY LCD.
-    LCD_command(LCD_OFF);
-    LCD_command(LCD_CMD_CHARACTER_ENTRY_MODE + LCD_CMD_INCREMENT + LCD_CMD_DISPLAY_SHIFT_OFF);
-    LCD_command(LCD_ON);
-    LCD_command(LCD_CLEAR);
 }
 
 /****************************************************************************
