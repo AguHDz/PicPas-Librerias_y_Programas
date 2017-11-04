@@ -1,6 +1,6 @@
 /*
 *  (C) AguHDz 20-OCT-2017
-*  Ultima Actualizacion: 01-NOV-2017
+*  Ultima Actualizacion: 04-NOV-2017
 *
 *  Compilador XC8 v.1.43 (http://www.microchip.com)
 *
@@ -583,8 +583,9 @@ uint8_t diasDelMes(void)
 *****************************************************************************/
 void LCDPrintNumero(uint8_t numero)
 {
-    LCD_putChar((numero/10)+48);   // Imprime dígito decena.
-    LCD_putChar((numero%10)+48);   // Imprime dígito unidad.
+    numero = decimalToBCD(numero);
+    LCD_putChar((numero>>4) + 48);       // Imprime dígito decena.
+    LCD_putChar((numero & 0x0F) + 48);   // Imprime dígito unidad.
 }
 
 /****************************************************************************
