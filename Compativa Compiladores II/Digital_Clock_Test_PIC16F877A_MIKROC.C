@@ -1,5 +1,5 @@
 /*
-*  CÛdigo de comparaciÛn adaptado por Tito Hinostroza, para compilar con
+*  C√≥digo de comparaci√≥n adaptado por Tito Hinostroza, para compilar con
 *  MikroC. Se han tenido que cambiar los tipos boolean a "unsigned char"
 *  en los puntos donde devuelven valores de funciones.
 *
@@ -12,7 +12,7 @@
 *
 *  RELOJ DIGITAL (TEST COMPARACION COMPILADORES)
 *  =============================================
-*  Este proyecto es una demostraciÛn del uso del compilador XC8 con
+*  Este proyecto es una demostraci√≥n del uso del compilador XC8 con
 *  el microcontrolador PIC16F877A para hacer un reloj de tiempo real con
 *  el integrado DS1307.
 *
@@ -22,43 +22,43 @@
 *  Ajuste:
 *
 *  1. Pulsar SET durante 1 segundo.
-*  2. Aparece el cursor bajo los dÌgitos de aÒo. Pulsar INC para
-*     incremetar el aÒo o DEC para decrementarlo. Cada pulsaciÛn
+*  2. Aparece el cursor bajo los d√≠gitos de a√±o. Pulsar INC para
+*     incremetar el a√±o o DEC para decrementarlo. Cada pulsaci√≥n
 *     produce el avance o retroceso de una unidad del digito
-*     editado. La pulsaciÛn larga permite un avance o retroceso
-*     repetitivo haciendo m·s cÛmodo el ajuste.
-*  3. Pulsar SET para pasar a la ediciÛn del mes y proceder del
-*     mismo modo que en el ajuste del aÒo pulsando INC o DEC.
-*  4. Pulsar SET para ajustar del mismo modo el dÌa del mes, hora,
-*     y minutos. (los segundos siempre se inIcian a cero despuÈs
+*     editado. La pulsaci√≥n larga permite un avance o retroceso
+*     repetitivo haciendo m√°s c√≥modo el ajuste.
+*  3. Pulsar SET para pasar a la edici√≥n del mes y proceder del
+*     mismo modo que en el ajuste del a√±o pulsando INC o DEC.
+*  4. Pulsar SET para ajustar del mismo modo el d√≠a del mes, hora,
+*     y minutos. (los segundos siempre se inIcian a cero despu√©s
 *     de cada ajuste)
-*  5. Tras ajustar minutos y pulsar SET se pasa a la ediciÛn del
-*     dÌa de la semana (LUN...DOM). Proceder de igual manera
+*  5. Tras ajustar minutos y pulsar SET se pasa a la edici√≥n del
+*     d√≠a de la semana (LUN...DOM). Proceder de igual manera
 *     pulsando INC o DEC.
 *  6. Pulsar SET para finalizar ajuste. El reloj comienza a funcionar
-*     con la nueva hora y dÌa.
+*     con la nueva hora y d√≠a.
 *
 *  NOTAS:
-*  - Durante la ediciÛn, llegado al lÌmete inferior o superior del
-*    dÌgito editado se pasa autom·ticamente al valor inferior o
-*    superior. LÌmites:
-*        - AÒo: 00..99
+*  - Durante la edici√≥n, llegado al l√≠mete inferior o superior del
+*    d√≠gito editado se pasa autom√°ticamente al valor inferior o
+*    superior. L√≠mites:
+*        - A√±o: 00..99
 *        - Mes: 01..12
-*        - DÌa: 01..31 (28, 29 o 30 dependiendo del mes)
+*        - D√≠a: 01..31 (28, 29 o 30 dependiendo del mes)
 *        - Hora: 00..23
 *        - Minuto: 00..59
-*        - DÌa de Semana: LUN..DOM
-*  - El lÌmite superior del mes de febrero para aÒos bisiestos
-*    y los meses de 30 y 31 dÌas los ajusta el programa de manera
-*    autom·tica. En caso de error en la ediciÛn, corrige el valor
-*    de manera autom·tica al lÌmite superior v·lido para el mes.
+*        - D√≠a de Semana: LUN..DOM
+*  - El l√≠mite superior del mes de febrero para a√±os bisiestos
+*    y los meses de 30 y 31 d√≠as los ajusta el programa de manera
+*    autom√°tica. En caso de error en la edici√≥n, corrige el valor
+*    de manera autom√°tica al l√≠mite superior v√°lido para el mes.
 *  - El integrado DS1307 es un reloj de tiempo real que funciona
-*    de manera autÛnoma, y que sigue funcionando gracias a su baterÌa
-*    sin necesidad de suministro elÈctrico exterior, por lo que no es
+*    de manera aut√≥noma, y que sigue funcionando gracias a su bater√≠a
+*    sin necesidad de suministro el√©ctrico exterior, por lo que no es
 *    necesario ajustar el reloj cada vez que se desconecta la
-*    alimentaciÛn. Gracias a su bajo consumo, con una baterÌa
-*    tipo botÛn est·ndar de 48mAh puede seguir funcionando durante
-*    m·s de 10 aÒos sin necesidad de suministro elÈctrico exterior.
+*    alimentaci√≥n. Gracias a su bajo consumo, con una bater√≠a
+*    tipo bot√≥n est√°ndar de 48mAh puede seguir funcionando durante
+*    m√°s de 10 a√±os sin necesidad de suministro el√©ctrico exterior.
 */
 
 // CONFIG is defined in Project Properties
@@ -89,7 +89,7 @@
 #define SOUT                PORTA.F3         // Pin que lee la salida SOUT
 #define SOUT_DIR            TRISA.F3
 //
-// __ComunicaciÛn I2C__________________________________________________________
+// __Comunicaci√≥n I2C__________________________________________________________
 #define SDA                 PORTB.F0         // Pin SDA del bus I2C
 #define SCL                 PORTB.F1         // Pin SCL del bus I2C
 #define SDA_DIR             TRISB.F0
@@ -109,10 +109,10 @@
 #define P_INC_DIR           TRISA.F0
 #define P_DEC_DIR           TRISA.F1
 #define P_SET_DIR           TRISA.F2
-#define TIEMPO_ANTIREBOTE   10     // Milisegundos espera evitar rebote mec·nico de pulsador.
-#define TIEMPO_REPETICION   500    // Milisegundos pulsaciÛn continua que equivale a otra pulsaciÛn.
+#define TIEMPO_ANTIREBOTE   10     // Milisegundos espera evitar rebote mec√°nico de pulsador.
+#define TIEMPO_REPETICION   500    // Milisegundos pulsaci√≥n continua que equivale a otra pulsaci√≥n.
 //
-//__Men˙ de ediciÛn de fecha y hora____________________________________________
+//__Men√∫ de edici√≥n de fecha y hora____________________________________________
 #define SET_ANO             1
 #define SET_MES             2
 #define SET_DIA             3
@@ -136,8 +136,8 @@
 #define LCD_RS_DIR          TRISB.F2
 #define LCD_EN_DIR          TRISB.F3
 // Valores de RS.
-#define LCD_CmdMode   0    // Indicador envÌo de Comando (instrucciÛn de configuraciÛn)
-#define LCD_CharMode  1    // Indicador envÌo de Dato (car·cter)
+#define LCD_CmdMode   0    // Indicador env√≠o de Comando (instrucci√≥n de configuraci√≥n)
+#define LCD_CharMode  1    // Indicador env√≠o de Dato (car√°cter)
 // ---------------------------------------------------------------------------
 // COMANDOS PARA DISPLAY LCD COMPATIBLE CON ESTANDAR HITACHI HD44780
 // ---------------------------------------------------------------------------
@@ -228,16 +228,16 @@
 /************************************************************************************************/
 
 // RTC DS1307
-unsigned char DS1307_DiaSemana;      // DÌa de la semana (formato numÈrico 1..7)
-unsigned char DS1307_Dia;            // DÌa del mes.
-unsigned char DS1307_Mes;            // Mes del aÒo.
-unsigned char DS1307_Ano;            // AÒo (solo dos dÌgitos)
-unsigned char DS1307_Hora;           // Hora del dÌa.
+unsigned char DS1307_DiaSemana;      // D√≠a de la semana (formato num√©rico 1..7)
+unsigned char DS1307_Dia;            // D√≠a del mes.
+unsigned char DS1307_Mes;            // Mes del a√±o.
+unsigned char DS1307_Ano;            // A√±o (solo dos d√≠gitos)
+unsigned char DS1307_Hora;           // Hora del d√≠a.
 unsigned char DS1307_Minuto;         // Minuto de la hora.
 unsigned char DS1307_Segundo;        // Segundo del minuto.
 
-// Men˙ ediciÛn de fecha y hora.
-unsigned char editMenuState;          // PosiciÛn o estado dentro del men˙ de ediciÛn.
+// Men√∫ edici√≥n de fecha y hora.
+unsigned char editMenuState;          // Posici√≥n o estado dentro del men√∫ de edici√≥n.
 
 
 /************************************************************************************************/
@@ -294,13 +294,13 @@ void LCD_init2(void)
     LCD_RS_DIR     = OUTPUT_PIN;
     LCD_EN_DIR     = OUTPUT_PIN;
 
-    delay_ms(200);   // Espera para asegurar tensiÛn estable tras inicio.
+    delay_ms(200);   // Espera para asegurar tensi√≥n estable tras inicio.
     LCD_RS = LOW_ST;
     LCD_EN = LOW_ST;
 
     // INICIALIZACION POR SOFTWARE DE DISPLAY LCD.
     // Los tiempos de espera y secuencia de datos son los indicados en todos los
-    // datasheets de los displays compatibles con el est·ndar Hitachi HD44780.
+    // datasheets de los displays compatibles con el est√°ndar Hitachi HD44780.
     delay_ms(30);    // Espera >= 15 ms
     // INICIACION DE DISPLAY MODO 4 BITS DE DATOS.
     LCD_send4Bits(0b00110000);
@@ -320,7 +320,7 @@ void LCD_init2(void)
 }
 
 /****************************************************************************
-  Funciones de comunicaciÛn I2C mediante software.
+  Funciones de comunicaci√≥n I2C mediante software.
 *****************************************************************************/
 void I2C_start(void)     // START function for communicate I2C
 {
@@ -346,7 +346,7 @@ unsigned char I2C_writeByte(unsigned char dato)     // Send data to I2C
 
     for(LoopCounter=0; LoopCounter<8; LoopCounter++)
     {
-        SDA = (dato & 0x80) == 0x80;    // SDA = bit de m·s peso del valor dato.
+        SDA = (dato & 0x80) == 0x80;    // SDA = bit de m√°s peso del valor dato.
         SCL_HIGH;
         dato<<=1;
         SCL_LOW;
@@ -357,9 +357,9 @@ unsigned char I2C_writeByte(unsigned char dato)     // Send data to I2C
     ACKbit = SDA;
     SCL_LOW;
     SDA_OUTPUT;
-    return (ACKbit);  //*************************  ConversiÛn bit->byte ************************
+    return (ACKbit);  //*************************  Conversi√≥n bit->byte ************************
 }
-unsigned char I2C_readByte(unsigned char ACKByte)   // Receive data from I2C  //*************************  ConversiÛn bit->byte ************************
+unsigned char I2C_readByte(unsigned char ACKByte)   // Receive data from I2C  //*************************  Conversi√≥n bit->byte ************************
 {
     unsigned char LoopCounter;
     unsigned char dato=0;
@@ -381,11 +381,11 @@ unsigned char I2C_readByte(unsigned char ACKByte)   // Receive data from I2C  //
 }
 
 /****************************************************************************
-  - FunciÛn: BCDToDecimal
-  - DescripciÛn: Transforma un n˙mero en formato BCD a Decimal.
+  - Funci√≥n: BCDToDecimal
+  - Descripci√≥n: Transforma un n√∫mero en formato BCD a Decimal.
   - Entrada:
-      > bcdByte: N˙mero en formato BCD
-  - Salida: N˙mero en formato Decimal.
+      > bcdByte: N√∫mero en formato BCD
+  - Salida: N√∫mero en formato Decimal.
 *****************************************************************************/
 unsigned char BCDToDecimal(unsigned char bcdByte)
 {
@@ -401,11 +401,11 @@ unsigned char BCDToDecimal(unsigned char bcdByte)
 }
 
 /****************************************************************************
-  - FunciÛn: decimalToBCD
-  - DescripciÛn: Transforma un n˙mero en formato Decimal a BCD.
+  - Funci√≥n: decimalToBCD
+  - Descripci√≥n: Transforma un n√∫mero en formato Decimal a BCD.
   - Entrada:
-      > decimalByte: N˙mero en formato Decimal
-  - Salida: N˙mero en formato BCD.
+      > decimalByte: N√∫mero en formato Decimal
+  - Salida: N√∫mero en formato BCD.
 *****************************************************************************/
 unsigned char decimalToBCD (unsigned char decimalByte)
 {
@@ -421,17 +421,17 @@ unsigned char decimalToBCD (unsigned char decimalByte)
 }
 
 /****************************************************************************
-  - FunciÛn: DS1307_timeRead
-  - DescripciÛn: Lee fecha y hora del DS1307 a travÈs del bus I2C.
+  - Funci√≥n: DS1307_timeRead
+  - Descripci√≥n: Lee fecha y hora del DS1307 a trav√©s del bus I2C.
   - Entrada: Ninguna.
   - Salida: Ninguna.
 *****************************************************************************/
 void DS1307_timeRead(void)
 {
-    I2C_start();          // Inicia comunicaciÛn I2C.
-    I2C_writeByte(0xD0);  // DirecciÛn I2C del DS1307.
-    I2C_writeByte(0x00);  // Primera direcciÛn a leer/escribir.
-    I2C_start();          // Reinicia comunicaciÛn I2C.
+    I2C_start();          // Inicia comunicaci√≥n I2C.
+    I2C_writeByte(0xD0);  // Direcci√≥n I2C del DS1307.
+    I2C_writeByte(0x00);  // Primera direcci√≥n a leer/escribir.
+    I2C_start();          // Reinicia comunicaci√≥n I2C.
     I2C_writeByte(0xD1);  // DS1307 en Modo Escritura.
     DS1307_Segundo   = BCDToDecimal(I2C_readByte(1)); // ASK = 1
     DS1307_Minuto    = BCDToDecimal(I2C_readByte(1));
@@ -440,21 +440,21 @@ void DS1307_timeRead(void)
     DS1307_Dia       = BCDToDecimal(I2C_readByte(1));
     DS1307_Mes       = BCDToDecimal(I2C_readByte(1));
     DS1307_Ano       = BCDToDecimal(I2C_readByte(1)); // ASK = 0
-            // El ˙ltimo ASK antes del Stop debe ser sea cero (/ASK).
+            // El √∫ltimo ASK antes del Stop debe ser sea cero (/ASK).
     I2C_stop();
 }
 
 /****************************************************************************
-  - FunciÛn: DS1307_timeWrite
-  - DescripciÛn: Escribe fecha y hora en el DS1307 a travÈs del bus I2C.
+  - Funci√≥n: DS1307_timeWrite
+  - Descripci√≥n: Escribe fecha y hora en el DS1307 a trav√©s del bus I2C.
   - Entrada: Ninguna.
   - Salida: Ninguna.
 *****************************************************************************/
 void DS1307_timeWrite(void)
 {
-    I2C_start();          // Inicia comunicaciÛn I2C
-    I2C_writeByte(0xD0);  // DirecciÛn I2C del DS1307.
-    I2C_writeByte(0x00);  // Primera direcciÛn a leer/escribir.
+    I2C_start();          // Inicia comunicaci√≥n I2C
+    I2C_writeByte(0xD0);  // Direcci√≥n I2C del DS1307.
+    I2C_writeByte(0x00);  // Primera direcci√≥n a leer/escribir.
     I2C_writeByte(0);     // Siempre que se ajusta la fecha y hora los Segundos=0.
     I2C_writeByte(decimalToBCD(DS1307_Minuto));
     I2C_writeByte(decimalToBCD(DS1307_Hora));
@@ -466,11 +466,11 @@ void DS1307_timeWrite(void)
 }
 
 /****************************************************************************
-  - FunciÛn: LCDPrintDiaSemana
-  - DescripciÛn: Muesta en display LCD el dÌa de la semana actual en
+  - Funci√≥n: LCDPrintDiaSemana
+  - Descripci√≥n: Muesta en display LCD el d√≠a de la semana actual en
     formato texto.
   - Variables Entrada:
-      > dia: DÌa de la semana en formato numÈrico (0:Domingo... 6:S·bado)
+      > dia: D√≠a de la semana en formato num√©rico (0:Domingo... 6:S√°bado)
   - Variables Salida: Ninguna.
 *****************************************************************************/
 void LCDPrintDiaSemana(void)
@@ -516,22 +516,22 @@ void LCDPrintDiaSemana(void)
 }
 
 /****************************************************************************
-  - FunciÛn: bisiesto
-  - DescripciÛn: Comprueba si el aÒo actual es bisiesto [margen de 2000 a 2099].
-      Para otros m·rgenes de aÒos, habrÌa que aplicar el algoritmo genÈrico
-      teniendo en cuenta los aÒos m˙ltiplos de 100 o 400.
-  - NOTAS: Detalle curioso. Para siglos anteriores al XX, habrÌa que tener en
-      cuenta que en EspaÒa y otros paÌses catolicos el mes de octubre de 1582
-      sÛlo tuvo 20 dÌas. Ese mes, el dÌa siguiente al jueves 4 fue viernes 15.
+  - Funci√≥n: bisiesto
+  - Descripci√≥n: Comprueba si el a√±o actual es bisiesto [margen de 2000 a 2099].
+      Para otros m√°rgenes de a√±os, habr√≠a que aplicar el algoritmo gen√©rico
+      teniendo en cuenta los a√±os m√∫ltiplos de 100 o 400.
+  - NOTAS: Detalle curioso. Para siglos anteriores al XX, habr√≠a que tener en
+      cuenta que en Espa√±a y otros pa√≠ses catolicos el mes de octubre de 1582
+      s√≥lo tuvo 20 d√≠as. Ese mes, el d√≠a siguiente al jueves 4 fue viernes 15.
       En el resto del mundo, el cambio fue produciendose en los siguientes
       siglos (hasta el XX). Por ejemplo, en Inglaterra y colonias fue en 1752
-      (el dÌa siguiente al 03/09/1752 fue 14/091782). Este cambio introdujo
-      las reglas actuales para los aÒos multiplos de 100 y 400.
+      (el d√≠a siguiente al 03/09/1752 fue 14/091782). Este cambio introdujo
+      las reglas actuales para los a√±os multiplos de 100 y 400.
   - Entrada: Ninguna.
   - Salida:
-      > Devuelve 1 si el aÒo es bisiesto, y 0 si no lo es.
+      > Devuelve 1 si el a√±o es bisiesto, y 0 si no lo es.
 *****************************************************************************/
-unsigned char bisiesto(void)   //*************************  ConversiÛn bit->byte ************************
+unsigned char bisiesto(void)   //*************************  Conversi√≥n bit->byte ************************
 {
     // Devuelve 0 si (DS1307_timeAno%4)!=0, y 1 si (DS1307_timeAno%4)==0
     unsigned char dato = DS1307_Ano;
@@ -548,11 +548,11 @@ unsigned char bisiesto(void)   //*************************  ConversiÛn bit->byte
 }
 
 /****************************************************************************
-  - FunciÛn: diasDelMes
-  - DescripciÛn: Devuelve el n˙mero de dÌas de cualquier mes del aÒo actual.
+  - Funci√≥n: diasDelMes
+  - Descripci√≥n: Devuelve el n√∫mero de d√≠as de cualquier mes del a√±o actual.
   - Entrada: Ninguna.
   - Salida:
-      > N˙mero en dÌas del mes.
+      > N√∫mero en d√≠as del mes.
 *****************************************************************************/
 unsigned char diasDelMes(void)
 {
@@ -561,33 +561,34 @@ unsigned char diasDelMes(void)
         if(bisiesto())
             return 29;
         else
-            return 28;           // Bisiesto: 29 dÌas / No bisiesto: 28 dÌas.
+            return 28;           // Bisiesto: 29 d√≠as / No bisiesto: 28 d√≠as.
     }
     else
     {
         if((DS1307_Mes==4) || (DS1307_Mes==6) || (DS1307_Mes==9) || (DS1307_Mes==11))
-            return 30;            // Meses de 30 dÌas.
+            return 30;            // Meses de 30 d√≠as.
         else
-            return 31;            // Meses de 31 dÌas.
+            return 31;            // Meses de 31 d√≠as.
     }
 }
 
 /****************************************************************************
-  - FunciÛn: LCDPrintNumero
-  - DescripciÛn: Imprime en la pantalla LCD un n˙mero de 2 dÌgitos.
+  - Funci√≥n: LCDPrintNumero
+  - Descripci√≥n: Imprime en la pantalla LCD un n√∫mero de 2 d√≠gitos.
   - Entrada:
-      > numero: N˙mero entre 0 y 99 a imprimir.
+      > numero: N√∫mero entre 0 y 99 a imprimir.
   - Salida: Ninguna.
 *****************************************************************************/
 void LCDPrintNumero(unsigned char numero)
 {
-    LCD_putChar((numero/10)+48);   // Imprime dÌgito decena.
-    LCD_putChar((numero%10)+48);   // Imprime dÌgito unidad.
+    numero = decimalToBCD(numero);
+    LCD_putChar((numero>>4) + 48);       // Imprime d√≠gito decena.
+    LCD_putChar((numero & 0x0F) + 48);   // Imprime d√≠gito unidad.
 }
 
 /****************************************************************************
-  - FunciÛn: timeShow
-  - DescripciÛn: Muestra en el display LCD la fecha y hora.
+  - Funci√≥n: timeShow
+  - Descripci√≥n: Muestra en el display LCD la fecha y hora.
   - Entrada: Ninguna.
   - Salida: Ninguna.
 *****************************************************************************/
@@ -612,14 +613,14 @@ void timeShow(void)
 }
 
 /****************************************************************************
-  - FunciÛn: cicloTimeSet
-  - DescripciÛn: SubfunciÛn de la funciÛn timeRead() que edita las variables
-    del dÌa y hora del reloj.
+  - Funci√≥n: cicloTimeSet
+  - Descripci√≥n: Subfunci√≥n de la funci√≥n timeRead() que edita las variables
+    del d√≠a y hora del reloj.
   - Entrada:
-      > limInf : LÌmite Inferior de la variable editada.
-      > limSup : LÌmite Superior de la variable editada.
-      > lcdX   : PosiciÛn X del display en la que se muestra la variable.
-      > lcdY   : PosiciÛn Y (fila) del display en la que se muestra la variable.
+      > limInf : L√≠mite Inferior de la variable editada.
+      > limSup : L√≠mite Superior de la variable editada.
+      > lcdX   : Posici√≥n X del display en la que se muestra la variable.
+      > lcdY   : Posici√≥n Y (fila) del display en la que se muestra la variable.
       > dato   : Dato editado.
   - Salida: El valor editado.
 *****************************************************************************/
@@ -632,7 +633,7 @@ unsigned char cicloTimeSet(unsigned char limInf, unsigned char limSup,
         if(P_INC==LOW_ST)            // Se ha pulsado INC.
         {
             editDato++;
-            if(editDato>limSup) editDato=limInf;  // Controla que no se supere el lÌmite superior.
+            if(editDato>limSup) editDato=limInf;  // Controla que no se supere el l√≠mite superior.
         }
         else                    // Se ha pulsado DEC.
         {
@@ -640,26 +641,26 @@ unsigned char cicloTimeSet(unsigned char limInf, unsigned char limSup,
             if((editDato<limInf)||(editDato==0xFF)) editDato=limSup; // Si limInf==0 (*Dato)-- puede ser 0xFF.
 
         }
-        LCD_gotoXY(lcdX, lcdY);          // Coloca el cursor en la posiciÛn de inicio de impresiÛn del dato editado.
-        if(editMenuState==SET_DIA_SEM)   // Si se est· editando del dÌa de la semana, se imprime el texto.
+        LCD_gotoXY(lcdX, lcdY);          // Coloca el cursor en la posici√≥n de inicio de impresi√≥n del dato editado.
+        if(editMenuState==SET_DIA_SEM)   // Si se est√° editando del d√≠a de la semana, se imprime el texto.
         {
             DS1307_DiaSemana = editDato;
             LCDPrintDiaSemana();
         }
-        else LCDPrintNumero(editDato);   // El resto son variables numÈricas de 2 dÌgitos.
-        delay_ms(TIEMPO_REPETICION);   // Espera el tiempo de autorepeticiÛn de la tecla pulsada.
+        else LCDPrintNumero(editDato);   // El resto son variables num√©ricas de 2 d√≠gitos.
+        delay_ms(TIEMPO_REPETICION);   // Espera el tiempo de autorepetici√≥n de la tecla pulsada.
     }
 
     if(P_SET==LOW_ST)                // Si se pulsa SET.
     {
         editMenuState++;
-        while(P_SET==LOW_ST) delay_ms(TIEMPO_ANTIREBOTE);  // Espera antirebote mec·nico del pulsador.
-        if(editDato>limSup) editDato=limSup;  // Evita posible bug al modificar el aÒo o el mes, si
-                                              // no se modifica el dÌa y en ese aÒo o mes ya no es v·lido.
+        while(P_SET==LOW_ST) delay_ms(TIEMPO_ANTIREBOTE);  // Espera antirebote mec√°nico del pulsador.
+        if(editDato>limSup) editDato=limSup;  // Evita posible bug al modificar el a√±o o el mes, si
+                                              // no se modifica el d√≠a y en ese a√±o o mes ya no es v√°lido.
     }
 
-    if(editMenuState==SET_DIA_SEM) lcdX++;  // Si se est· editando el dÌa de la semana, se desplaza el cursor
-                                            // una posiciÛn m·s, ya que el texto ocupa 3 posiciones, en lugar
+    if(editMenuState==SET_DIA_SEM) lcdX++;  // Si se est√° editando el d√≠a de la semana, se desplaza el cursor
+                                            // una posici√≥n m√°s, ya que el texto ocupa 3 posiciones, en lugar
                                             // de dos como el resto de variables.
     LCD_gotoXY(++lcdX, lcdY);          // Coloca el cursor en la parte izquierda de la variable editada.
     LCD_command(LCD_CURSOR_UNDELINE);  // Cursor On
@@ -667,40 +668,40 @@ unsigned char cicloTimeSet(unsigned char limInf, unsigned char limSup,
 }
 
 /****************************************************************************
-  - FunciÛn: timeRead
-  - DescripciÛn: Set fecha y hora mediante pulsadores y cursor en display LCD.
-    Programado seg˙n la lÛgica de una "m·quina de estado". La variable global
-    editMenuState indica la posiciÛn del cursor dentro del bucle de fijaciÛn de fecha y
+  - Funci√≥n: timeRead
+  - Descripci√≥n: Set fecha y hora mediante pulsadores y cursor en display LCD.
+    Programado seg√∫n la l√≥gica de una "m√°quina de estado". La variable global
+    editMenuState indica la posici√≥n del cursor dentro del bucle de fijaci√≥n de fecha y
     hora.
   - Entrada: Ninguna.
   - Salida: Ninguna.
 *****************************************************************************/
 void timeSet(void)
 {
-    LCD_gotoXY(7,1);           // Goto posiciÛn de Segundos en display.
-    LCDPrintNumero(0);         // 00 en posiciÛn de Segundos del display.
+    LCD_gotoXY(7,1);           // Goto posici√≥n de Segundos en display.
+    LCDPrintNumero(0);         // 00 en posici√≥n de Segundos del display.
     LCD_command(LCD_CURSOR_UNDELINE);       // Cursor On
     while(editMenuState<SALIR_SET_TIME)
     {
         while(editMenuState==SET_ANO)
-            DS1307_Ano = cicloTimeSet(0,99,7,0,DS1307_Ano);               // Set aÒo.
+            DS1307_Ano = cicloTimeSet(0,99,7,0,DS1307_Ano);               // Set a√±o.
         while(editMenuState==SET_MES)
             DS1307_Mes = cicloTimeSet(1,12,4,0,DS1307_Mes);               // Set mes.
         while(editMenuState==SET_DIA)
-            DS1307_Dia= cicloTimeSet(1,diasDelMes(),1,0,DS1307_Dia);      // Set dÌa.
+            DS1307_Dia= cicloTimeSet(1,diasDelMes(),1,0,DS1307_Dia);      // Set d√≠a.
         while(editMenuState==SET_HORA)
             DS1307_Hora = cicloTimeSet(0,23,1,1,DS1307_Hora);             // Set hora.
         while(editMenuState==SET_MINUTO)
             DS1307_Minuto = cicloTimeSet(0,59,4,1,DS1307_Minuto);         // Set minutos.
         while(editMenuState==SET_DIA_SEM)
-            DS1307_DiaSemana = cicloTimeSet(1,7,12,0,DS1307_DiaSemana);   // Set dÌa de la semana.
+            DS1307_DiaSemana = cicloTimeSet(1,7,12,0,DS1307_DiaSemana);   // Set d√≠a de la semana.
     }
     LCD_command(LCD_CURSOR_OFF);            // Cursor Off
 }
 
 /****************************************************************************
-  - FunciÛn: Setup
-  - DescripciÛn: Inicializa Microcontrolador y Hardware externo conectado.
+  - Funci√≥n: Setup
+  - Descripci√≥n: Inicializa Microcontrolador y Hardware externo conectado.
   - Entrada: Ninguna.
   - Salida: Ninguna.
 *****************************************************************************/
@@ -716,9 +717,9 @@ void setup(void)
     P_SET_DIR = INPUT_PIN;
     SOUT_DIR  = INPUT_PIN;
 
-    I2C_start();                 // Inicia comunicaciÛn I2C
-    I2C_writeByte(0xD0);         // DirecciÛn I2C del DS1307.
-    I2C_writeByte(0x07);         // Escribe en la direcciÛn 07h.
+    I2C_start();                 // Inicia comunicaci√≥n I2C
+    I2C_writeByte(0xD0);         // Direcci√≥n I2C del DS1307.
+    I2C_writeByte(0x07);         // Escribe en la direcci√≥n 07h.
     I2C_writeByte(DS1307_CONF);  // Configura 1 Hz en salida SOUT del DS1307
     I2C_stop();
 
@@ -726,8 +727,8 @@ void setup(void)
 }
 
 /****************************************************************************
-  - FunciÛn: main
-  - DescripciÛn: Programa Principal.
+  - Funci√≥n: main
+  - Descripci√≥n: Programa Principal.
   - Entrada: Ninguna.
   - Salida: Ninguna.
 *****************************************************************************/
@@ -740,10 +741,10 @@ void main(void)
         if(P_SET==LOW_ST)   // Comprueba si se ha pulsado SET
         {
             editMenuState = SET_ANO;
-            // Espera fin pulsaciÛn y antirebote mec·nico.
+            // Espera fin pulsaci√≥n y antirebote mec√°nico.
             while(P_SET==LOW_ST) delay_ms(TIEMPO_ANTIREBOTE);
             timeSet();            // Ajuste de reloj.
-            DS1307_timeWrite();   // EnvÌa datos editados.
+            DS1307_timeWrite();   // Env√≠a datos editados.
         }
 
         DS1307_timeRead();  // Lee la fecha y hora en el DS1307.
