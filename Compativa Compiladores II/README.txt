@@ -1,5 +1,9 @@
 2ª PRUEBA DE COMPILADORES PARA MICROCONTROLADORES PIC DE GAMA MEDIA
 ==========================================================
+[Ultima Edición: 06/11/2017: Resultados Definitivos]
+Esta 2ª comparativa utiliza un "programa patrón" mucho más complejo que el usado en al 1ª comparativa, que era demasiado básico.
+Se trata de un reloj de tiempo real usando el microcontrolador PIC16F877A (y el PIC16F84A cuando el compilador es capaz de generar un ejecutanle de menos de 1K) todas las funciones de reloj las realiza el integrado DS1307 que se comunica mediante protocolo I2C, 3 botones de entrada y un display LCD de salida.
+La comunicación I2C es por software por lo que es aplicable a cualquier PIC y se han utilizado instrucciones básicas para optimizar el tamaño del código, huyendo de las librerías estándar que puedan acompañar a los compiladores y que invalidarían la prueba. Cuando el compilador dispone de ella, la única instrucción o librería usada ha sido delay_ms() por estar siempre muy optimizada y más o menos estandarizada en todos los compiladores.
 
 PUESTO OBTENIDO POR CADA COMPILADOR TRAS PRUEBA:
 1ª  PICPAS 0.8.0 (https://github.com/t-edson/PicPas - GRATUITO) - 1722 (MEJOR)
@@ -49,3 +53,7 @@ PicPas v.0.8.1 ha resultado ganador, aunque a mínima distancia de otros compilad
 Otra conclusión importante XC8 en su versión gratuita, tal y como anuncia el fabricante, es una mala opción para trabajos profesionales. si quieres obtener buenos resultados tendrás que registrarlo y pagar.
 
 NOTA: Los autores del compilador SDCC para PIC, ya advierten de que se trata de una versión preliminar, con el único objetivo de que funcione, y de momento, sin haber tenido muy en cuenta la optimización de código generado.
+
+------
+Si alguien se anima a compilarlo con otros compiladores, añadiría sus resultados.
+Pero debes recordar que se trata de hacer exactamente lo mismo con las correcciones particulares de cada compilador en el código fuente, pero sin tratar de optimizar nada, el código deber ser lo más parecido al "programa patrón" para que se puedan comparar los resultados. No se trata de una prueba de programadores, es una prueba de compiladores.
