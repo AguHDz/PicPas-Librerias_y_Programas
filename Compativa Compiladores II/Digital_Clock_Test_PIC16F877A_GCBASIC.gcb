@@ -60,7 +60,7 @@
 
 ' ----- Configuration
 #chip 16f877A,4           ' uC , Clock = 4 MHz
-#config OSC=HS, WDTE=OFF, PWRTE=ON, BOREN=ON, LVP=ON, CPD=OFF, WRT=OFF, DEBUG=OFF, CP=OFF
+#config OSC=HS, WDTE=OFF, PWRTE=ON, BOREN=OFF, LVP=OFF, CPD=OFF, WRT=OFF, DEBUG=OFF, CP=OFF
 
 #option explicit        ' Todas las variables deben ser declaradas antes de usarse.
 

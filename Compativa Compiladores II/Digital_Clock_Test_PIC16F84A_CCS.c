@@ -62,8 +62,11 @@
 #FUSES NOPROTECT, PUT, NOWDT, HS
 
 #use delay(crystal=4000000,restart_wdt)
+#use fast_io(A)
+#use fast_io(B)
 #include <stdint.h>
 #define bool int1
+
 
 /************************************************************************************************/
 /******************************** D E F I N I C I O N E S ***************************************/
@@ -89,6 +92,8 @@
 #define SDA_LOW             output_low(SDA)     // SDA nivel bajo. (LOW)
 #define SCL_HIGH            output_high(SCL)    // SCL nivel alto.
 #define SCL_LOW             output_low(SCL)     // SCL nivel bajo.
+#define SDA_OUTPUT          Set_Tris_B(0b00000000)
+#define SDA_INPUT           Set_Tris_B(0b00000001)
 //
 // __Pulsadores________________________________________________________________
 #define P_INC               input_state(PIN_A0)    // Pulsador INC
@@ -333,10 +338,11 @@ bool I2C__writeByte(uint8_t dato)     // Send data to I2C
         SCL_LOW;
     }
 
-
+    SDA_INPUT;
     SCL_HIGH;
     ACKbit = input(SDA);
     SCL_LOW;
+    SDA_OUTPUT;
     return ACKbit;
 }
 uint8_t I2C__readByte(bool ACKByte)   // Receive data from I2C
@@ -344,6 +350,7 @@ uint8_t I2C__readByte(bool ACKByte)   // Receive data from I2C
     uint8_t LoopCounter;
     uint8_t dato=0; 
 
+    SDA_INPUT;
     for(LoopCounter=0; LoopCounter<8; LoopCounter++)
     {
         SCL_HIGH;
@@ -351,6 +358,7 @@ uint8_t I2C__readByte(bool ACKByte)   // Receive data from I2C
         if(input(SDA)) dato|=1;
         SCL_LOW;
     }
+    SDA_OUTPUT;
     output_bit(SDA, !ACKByte);
     SCL_HIGH;
     SCL_LOW;
@@ -699,6 +707,9 @@ void setup(void)
     //P_DEC_DIR = INPUT_PIN;
     //P_SET_DIR = INPUT_PIN;
     //SOUT_DIR  = INPUT_PIN;
+    
+    Set_Tris_A(0b11111111);
+    Set_Tris_B(0b00000000);
 
     I2C__start();                 // Inicia comunicación I2C
     I2C__writeByte(0xD0);         // Dirección I2C del DS1307.

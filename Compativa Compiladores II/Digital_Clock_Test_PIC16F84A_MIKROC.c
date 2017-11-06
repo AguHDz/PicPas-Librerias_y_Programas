@@ -8,7 +8,7 @@
 *
 *  Compilador MikroC v.7.0.0
 *
-*  Microcontrolador: PIC16F877A
+*  Microcontrolador: PIC16F84A
 *
 *  RELOJ DIGITAL (TEST COMPARACION COMPILADORES)
 *  =============================================
@@ -707,9 +707,9 @@ void timeSet(void)
 *****************************************************************************/
 void setup(void)
 {
-    CMCON  = 0x07;          // Deshabilita comparadores.
-    ADCON1 = 0x06;          // Todos los pines configurados como digitales.
-    ADCON0 = 0x00;          // Desactiva conversor A/D.
+ //   CMCON  = 0x07;          // Deshabilita comparadores.
+ //   ADCON1 = 0x06;          // Todos los pines configurados como digitales.
+ //   ADCON0 = 0x00;          // Desactiva conversor A/D.
     GIE_bit = 0;         // Todas las interrupciones desactivadas.
 
     P_INC_DIR = INPUT_PIN;  // Configura Pulsadores como Entradas.
