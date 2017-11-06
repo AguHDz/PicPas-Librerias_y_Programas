@@ -54,6 +54,7 @@ Otra conclusión importante XC8 en su versión gratuita, tal y como anuncia el fab
 
 NOTA: Los autores del compilador SDCC para PIC, ya advierten de que se trata de una versión preliminar, con el único objetivo de que funcione, y de momento, sin haber tenido muy en cuenta la optimización de código generado.
 
+Mas información y comentarios en : https://www.facebook.com/groups/electronicaymicrocontroladores/permalink/1812269192135162/
 ------
 Si alguien se anima a compilarlo con otros compiladores, añadiría sus resultados.
 Pero debes recordar que se trata de hacer exactamente lo mismo con las correcciones particulares de cada compilador en el código fuente, pero sin tratar de optimizar nada, el código deber ser lo más parecido al "programa patrón" para que se puedan comparar los resultados. No se trata de una prueba de programadores, es una prueba de compiladores.
