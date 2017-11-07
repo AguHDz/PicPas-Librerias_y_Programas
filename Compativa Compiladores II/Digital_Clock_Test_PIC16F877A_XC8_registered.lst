@@ -1,0 +1,3037 @@
+
+
+Microchip Technology PIC PRO Macro Assembler V1.35 build -356382666 
+                                                                                               Mon Nov  6 23:55:22 2017
+
+Microchip Technology Omniscient Code Generator v1.35 (PRO mode) build 201507080246
+     1                           	processor	16F877A
+     2                           	opt	pw 120
+     3                           	opt	pm
+     4                           	psect	cinit,global,class=CODE,merge=1,delta=2
+     5                           	psect	bssBANK0,global,class=BANK0,space=1,delta=1
+     6                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1
+     7                           	psect	cstackBANK0,global,class=BANK0,space=1,delta=1
+     8                           	psect	maintext,global,class=CODE,split=1,delta=2
+     9                           	psect	text2,local,class=CODE,merge=1,delta=2
+    10                           	psect	pa_nodes,global,class=CODE,delta=2
+    11                           	dabs	1,0x7E,2
+    12  0000                     	;# 
+    13  0001                     	;# 
+    14  0002                     	;# 
+    15  0003                     	;# 
+    16  0004                     	;# 
+    17  0005                     	;# 
+    18  0006                     	;# 
+    19  0007                     	;# 
+    20  0008                     	;# 
+    21  0009                     	;# 
+    22  000A                     	;# 
+    23  000B                     	;# 
+    24  000C                     	;# 
+    25  000D                     	;# 
+    26  000E                     	;# 
+    27  000E                     	;# 
+    28  000F                     	;# 
+    29  0010                     	;# 
+    30  0011                     	;# 
+    31  0012                     	;# 
+    32  0013                     	;# 
+    33  0014                     	;# 
+    34  0015                     	;# 
+    35  0015                     	;# 
+    36  0016                     	;# 
+    37  0017                     	;# 
+    38  0018                     	;# 
+    39  0019                     	;# 
+    40  001A                     	;# 
+    41  001B                     	;# 
+    42  001B                     	;# 
+    43  001C                     	;# 
+    44  001D                     	;# 
+    45  001E                     	;# 
+    46  001F                     	;# 
+    47  0081                     	;# 
+    48  0085                     	;# 
+    49  0086                     	;# 
+    50  0087                     	;# 
+    51  0088                     	;# 
+    52  0089                     	;# 
+    53  008C                     	;# 
+    54  008D                     	;# 
+    55  008E                     	;# 
+    56  0091                     	;# 
+    57  0092                     	;# 
+    58  0093                     	;# 
+    59  0094                     	;# 
+    60  0098                     	;# 
+    61  0099                     	;# 
+    62  009C                     	;# 
+    63  009D                     	;# 
+    64  009E                     	;# 
+    65  009F                     	;# 
+    66  010C                     	;# 
+    67  010D                     	;# 
+    68  010E                     	;# 
+    69  010F                     	;# 
+    70  018C                     	;# 
+    71  018D                     	;# 
+    72  001F                     _ADCON0	set	31
+    73  005F                     _GIE	set	95
+    74  0028                     _RA0	set	40
+    75  0029                     _RA1	set	41
+    76  002A                     _RA2	set	42
+    77  002B                     _RA3	set	43
+    78  0030                     _RB0	set	48
+    79  0031                     _RB1	set	49
+    80  0032                     _RB2	set	50
+    81  0033                     _RB3	set	51
+    82  0034                     _RB4	set	52
+    83  0035                     _RB5	set	53
+    84  0036                     _RB6	set	54
+    85  0037                     _RB7	set	55
+    86  009F                     _ADCON1	set	159
+    87  009C                     _CMCON	set	156
+    88  0428                     _TRISA0	set	1064
+    89  0429                     _TRISA1	set	1065
+    90  042A                     _TRISA2	set	1066
+    91  042B                     _TRISA3	set	1067
+    92  0430                     _TRISB0	set	1072
+    93  0431                     _TRISB1	set	1073
+    94  0432                     _TRISB2	set	1074
+    95  0433                     _TRISB3	set	1075
+    96  0434                     _TRISB4	set	1076
+    97  0435                     _TRISB5	set	1077
+    98  0436                     _TRISB6	set	1078
+    99  0437                     _TRISB7	set	1079
+   100                           
+   101                           ; #config settings
+   102  0000                     
+   103                           	psect	cinit
+   104  07F4                     start_initialization:	
+   105  07F4                     __initialization:	
+   106                           
+   107                           ; Clear objects allocated to BANK0
+   108  07F4  01A0               	clrf	__pbssBANK0& (0+127)
+   109  07F5  01A1               	clrf	(__pbssBANK0+1)& (0+127)
+   110  07F6  01A2               	clrf	(__pbssBANK0+2)& (0+127)
+   111  07F7  01A3               	clrf	(__pbssBANK0+3)& (0+127)
+   112  07F8  01A4               	clrf	(__pbssBANK0+4)& (0+127)
+   113  07F9  01A5               	clrf	(__pbssBANK0+5)& (0+127)
+   114  07FA  01A6               	clrf	(__pbssBANK0+6)& (0+127)
+   115  07FB  01A7               	clrf	(__pbssBANK0+7)& (0+127)
+   116  07FC                     end_of_initialization:	
+   117                           ;End of C runtime variable initialization code
+   118                           
+   119  07FC                     __end_of__initialization:	
+   120  07FC  0183               	clrf	3
+   121  07FD  120A  118A  2C2E   	ljmp	_main	;jump to C main() function
+   122                           
+   123                           	psect	bssBANK0
+   124  0020                     __pbssBANK0:	
+   125  0020                     _DS1307_Ano:	
+   126  0020                     	ds	1
+   127  0021                     _DS1307_Dia:	
+   128  0021                     	ds	1
+   129  0022                     _DS1307_DiaSemana:	
+   130  0022                     	ds	1
+   131  0023                     _DS1307_Hora:	
+   132  0023                     	ds	1
+   133  0024                     _DS1307_Mes:	
+   134  0024                     	ds	1
+   135  0025                     _DS1307_Minuto:	
+   136  0025                     	ds	1
+   137  0026                     _DS1307_Segundo:	
+   138  0026                     	ds	1
+   139  0027                     _editMenuState:	
+   140  0027                     	ds	1
+   141                           
+   142                           	psect	cstackCOMMON
+   143  0070                     __pcstackCOMMON:	
+   144  0070                     ?_LCD_send4Bits:	
+   145  0070                     ??_LCD_send4Bits:	
+   146                           ; 0 bytes @ 0x0
+   147                           
+   148  0070                     ?_LCD_send:	
+   149                           ; 0 bytes @ 0x0
+   150                           
+   151  0070                     ?_LCD_command:	
+   152                           ; 0 bytes @ 0x0
+   153                           
+   154  0070                     ?_LCD_putChar:	
+   155                           ; 0 bytes @ 0x0
+   156                           
+   157  0070                     ?_LCD_init:	
+   158                           ; 0 bytes @ 0x0
+   159                           
+   160  0070                     ?_I2C_start:	
+   161                           ; 0 bytes @ 0x0
+   162                           
+   163  0070                     ??_I2C_start:	
+   164                           ; 0 bytes @ 0x0
+   165                           
+   166  0070                     ?_I2C_stop:	
+   167                           ; 0 bytes @ 0x0
+   168                           
+   169  0070                     ??_I2C_stop:	
+   170                           ; 0 bytes @ 0x0
+   171                           
+   172  0070                     ??_I2C_writeByte:	
+   173                           ; 0 bytes @ 0x0
+   174                           
+   175  0070                     ??_I2C_readByte:	
+   176                           ; 0 bytes @ 0x0
+   177                           
+   178  0070                     ??_BCDToDecimal:	
+   179                           ; 0 bytes @ 0x0
+   180                           
+   181  0070                     ??_decimalToBCD:	
+   182                           ; 0 bytes @ 0x0
+   183                           
+   184  0070                     ?_DS1307_timeRead:	
+   185                           ; 0 bytes @ 0x0
+   186                           
+   187  0070                     ?_DS1307_timeWrite:	
+   188                           ; 0 bytes @ 0x0
+   189                           
+   190  0070                     ?_LCDPrintDiaSemana:	
+   191                           ; 0 bytes @ 0x0
+   192                           
+   193  0070                     ??_bisiesto:	
+   194                           ; 0 bytes @ 0x0
+   195                           
+   196  0070                     ?_LCDPrintNumero:	
+   197                           ; 0 bytes @ 0x0
+   198                           
+   199  0070                     ?_timeShow:	
+   200                           ; 0 bytes @ 0x0
+   201                           
+   202  0070                     ?_timeSet:	
+   203                           ; 0 bytes @ 0x0
+   204                           
+   205  0070                     ?_setup:	
+   206                           ; 0 bytes @ 0x0
+   207                           
+   208  0070                     ?_main:	
+   209                           ; 0 bytes @ 0x0
+   210                           
+   211  0070                     ?_I2C_writeByte:	
+   212                           ; 0 bytes @ 0x0
+   213                           
+   214  0070                     ?_I2C_readByte:	
+   215                           ; 1 bytes @ 0x0
+   216                           
+   217  0070                     ?_BCDToDecimal:	
+   218                           ; 1 bytes @ 0x0
+   219                           
+   220  0070                     ?_decimalToBCD:	
+   221                           ; 1 bytes @ 0x0
+   222                           
+   223  0070                     ?_bisiesto:	
+   224                           ; 1 bytes @ 0x0
+   225                           
+   226  0070                     ?_diasDelMes:	
+   227                           ; 1 bytes @ 0x0
+   228                           
+   229  0070                     I2C_readByte@ACKByte:	
+   230                           ; 1 bytes @ 0x0
+   231                           
+   232  0070                     BCDToDecimal@decimal:	
+   233                           ; 1 bytes @ 0x0
+   234                           
+   235  0070                     decimalToBCD@BCDByte:	
+   236                           ; 1 bytes @ 0x0
+   237                           
+   238  0070                     bisiesto@dato:	
+   239                           ; 1 bytes @ 0x0
+   240                           
+   241                           
+   242                           ; 1 bytes @ 0x0
+   243  0070                     	ds	1
+   244  0071                     ??_diasDelMes:	
+   245  0071                     I2C_writeByte@dato:	
+   246                           ; 0 bytes @ 0x1
+   247                           
+   248  0071                     I2C_readByte@dato:	
+   249                           ; 1 bytes @ 0x1
+   250                           
+   251  0071                     BCDToDecimal@bcdByte:	
+   252                           ; 1 bytes @ 0x1
+   253                           
+   254  0071                     decimalToBCD@decimalByte:	
+   255                           ; 1 bytes @ 0x1
+   256                           
+   257                           
+   258                           ; 1 bytes @ 0x1
+   259  0071                     	ds	1
+   260  0072                     LCD_send4Bits@date:	
+   261  0072                     I2C_writeByte@LoopCounter:	
+   262                           ; 1 bytes @ 0x2
+   263                           
+   264  0072                     I2C_readByte@LoopCounter:	
+   265                           ; 1 bytes @ 0x2
+   266                           
+   267                           
+   268                           ; 1 bytes @ 0x2
+   269  0072                     	ds	1
+   270  0073                     ??_LCD_send:	
+   271  0073                     ??_DS1307_timeRead:	
+   272                           ; 0 bytes @ 0x3
+   273                           
+   274  0073                     ??_DS1307_timeWrite:	
+   275                           ; 0 bytes @ 0x3
+   276                           
+   277  0073                     LCD_send@date:	
+   278                           ; 0 bytes @ 0x3
+   279                           
+   280                           
+   281                           ; 1 bytes @ 0x3
+   282  0073                     	ds	1
+   283  0074                     ??_LCD_command:	
+   284  0074                     ??_LCD_putChar:	
+   285                           ; 0 bytes @ 0x4
+   286                           
+   287  0074                     LCD_command@comm:	
+   288                           ; 0 bytes @ 0x4
+   289                           
+   290  0074                     LCD_putChar@date:	
+   291                           ; 1 bytes @ 0x4
+   292                           
+   293                           
+   294                           ; 1 bytes @ 0x4
+   295  0074                     	ds	1
+   296  0075                     ?_LCD_gotoXY:	
+   297  0075                     ??_LCD_init:	
+   298                           ; 0 bytes @ 0x5
+   299                           
+   300  0075                     ??_LCDPrintDiaSemana:	
+   301                           ; 0 bytes @ 0x5
+   302                           
+   303  0075                     ??_LCDPrintNumero:	
+   304                           ; 0 bytes @ 0x5
+   305                           
+   306  0075                     LCD_gotoXY@fila:	
+   307                           ; 0 bytes @ 0x5
+   308                           
+   309  0075                     LCDPrintNumero@numero:	
+   310                           ; 1 bytes @ 0x5
+   311                           
+   312                           
+   313                           ; 1 bytes @ 0x5
+   314  0075                     	ds	1
+   315  0076                     ??_LCD_gotoXY:	
+   316  0076                     LCD_gotoXY@columna:	
+   317                           ; 0 bytes @ 0x6
+   318                           
+   319                           
+   320                           ; 1 bytes @ 0x6
+   321  0076                     	ds	1
+   322  0077                     ??_timeShow:	
+   323  0077                     ?_cicloTimeSet:	
+   324                           ; 0 bytes @ 0x7
+   325                           
+   326  0077                     cicloTimeSet@limSup:	
+   327                           ; 1 bytes @ 0x7
+   328                           
+   329                           
+   330                           ; 1 bytes @ 0x7
+   331  0077                     	ds	1
+   332  0078                     ??_setup:	
+   333  0078                     cicloTimeSet@lcdX:	
+   334                           ; 0 bytes @ 0x8
+   335                           
+   336                           
+   337                           ; 1 bytes @ 0x8
+   338  0078                     	ds	1
+   339  0079                     cicloTimeSet@lcdY:	
+   340                           
+   341                           ; 1 bytes @ 0x9
+   342  0079                     	ds	1
+   343  007A                     cicloTimeSet@editDato:	
+   344                           
+   345                           ; 1 bytes @ 0xA
+   346  007A                     	ds	1
+   347  007B                     ??_cicloTimeSet:	
+   348                           
+   349                           ; 0 bytes @ 0xB
+   350  007B                     	ds	3
+   351  007E                     ??_timeSet:	
+   352                           
+   353                           	psect	cstackBANK0
+   354  0028                     __pcstackBANK0:	
+   355                           ; 0 bytes @ 0xE
+   356                           
+   357  0028                     cicloTimeSet@limInf:	
+   358                           
+   359                           ; 1 bytes @ 0x0
+   360  0028                     	ds	1
+   361  0029                     ??_main:	
+   362                           
+   363                           ; 0 bytes @ 0x1
+   364  0029                     	ds	2
+   365                           
+   366                           	psect	maintext
+   367  042E                     __pmaintext:	
+   368 ;;
+   369 ;;Main: autosize = 0, tempsize = 2, incstack = 0, save=0
+   370 ;;
+   371 ;; *************** function _main *****************
+   372 ;; Defined at:
+   373 ;;		line 731 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+   374 ;; Parameters:    Size  Location     Type
+   375 ;;		None
+   376 ;; Auto vars:     Size  Location     Type
+   377 ;;		None
+   378 ;; Return value:  Size  Location     Type
+   379 ;;		None               void
+   380 ;; Registers used:
+   381 ;;		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+   382 ;; Tracked objects:
+   383 ;;		On entry : B00/0
+   384 ;;		On exit  : 300/0
+   385 ;;		Unchanged: 0/0
+   386 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   387 ;;      Params:         0       0       0       0       0
+   388 ;;      Locals:         0       0       0       0       0
+   389 ;;      Temps:          0       2       0       0       0
+   390 ;;      Totals:         0       2       0       0       0
+   391 ;;Total ram usage:        2 bytes
+   392 ;; Hardware stack levels required when called:    6
+   393 ;; This function calls:
+   394 ;;		_DS1307_timeRead
+   395 ;;		_DS1307_timeWrite
+   396 ;;		_setup
+   397 ;;		_timeSet
+   398 ;;		_timeShow
+   399 ;; This function is called by:
+   400 ;;		Startup code after reset
+   401 ;; This function uses a non-reentrant model
+   402 ;;
+   403                           
+   404                           
+   405                           ;psect for function _main
+   406  042E                     _main:	
+   407                           
+   408                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 733: setup();
+   409                           
+   410                           ;incstack = 0
+   411                           ; Regs used in _main: [wreg-fsr0h+status,2+status,0+pclath+cstack]
+   412  042E  120A  118A  26BB  120A  118A  	fcall	_setup
+   413  0433                     l1443:	
+   414                           
+   415                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 736: {
+   416                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 737: if(RA2==0)
+   417  0433  1283               	bcf	3,5	;RP0=0, select bank0
+   418  0434  1303               	bcf	3,6	;RP1=0, select bank0
+   419  0435  1905               	btfsc	5,2	;volatile
+   420  0436  2C51               	goto	l1455
+   421                           
+   422                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 738: {
+   423                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 739: editMenuState = 1;
+   424  0437  01A7               	clrf	_editMenuState
+   425  0438  0AA7               	incf	_editMenuState,f
+   426  0439                     l1449:	
+   427                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 741: while(RA2==0) _delay((unsigned long)((10)*(40
+      +                          00000L/4000.0)));
+   428                           
+   429  0439  1283               	bcf	3,5	;RP0=0, select bank0
+   430  043A  1303               	bcf	3,6	;RP1=0, select bank0
+   431  043B  1905               	btfsc	5,2	;volatile
+   432  043C  2C47               	goto	l1451
+   433  043D  300D               	movlw	13
+   434  043E  00AA               	movwf	??_main+1
+   435  043F  30FB               	movlw	251
+   436  0440  00A9               	movwf	??_main
+   437  0441                     u977:	
+   438  0441  0BA9               	decfsz	??_main,f
+   439  0442  2C41               	goto	u977
+   440  0443  0BAA               	decfsz	??_main+1,f
+   441  0444  2C41               	goto	u977
+   442  0445  2C46               	nop2
+   443  0446  2C39               	goto	l1449
+   444  0447                     l1451:	
+   445                           
+   446                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 742: timeSet();
+   447  0447  120A  118A  2462  120A  118A  	fcall	_timeSet
+   448                           
+   449                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 743: DS1307_timeWrite();
+   450  044C  120A  118A  2753  120A  118A  	fcall	_DS1307_timeWrite
+   451  0451                     l1455:	
+   452                           
+   453                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 744: }
+   454                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 746: DS1307_timeRead();
+   455  0451  120A  118A  26DB  120A  118A  	fcall	_DS1307_timeRead
+   456                           
+   457                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 747: timeShow();
+   458  0456  120A  118A  25F2  120A  118A  	fcall	_timeShow
+   459  045B                     l221:	
+   460                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 750: while(RA3);
+   461                           
+   462  045B  1283               	bcf	3,5	;RP0=0, select bank0
+   463  045C  1303               	bcf	3,6	;RP1=0, select bank0
+   464  045D  1985               	btfsc	5,3	;volatile
+   465  045E  2C5B               	goto	l221
+   466  045F                     l224:	
+   467  045F  1985               	btfsc	5,3	;volatile
+   468  0460  2C33               	goto	l1443
+   469  0461  2C5F               	goto	l224
+   470  0462                     __end_of_main:	
+   471                           
+   472                           	psect	text2
+   473  0462                     __ptext2:	
+   474 ;; *************** function _timeSet *****************
+   475 ;; Defined at:
+   476 ;;		line 675 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+   477 ;; Parameters:    Size  Location     Type
+   478 ;;		None
+   479 ;; Auto vars:     Size  Location     Type
+   480 ;;		None
+   481 ;; Return value:  Size  Location     Type
+   482 ;;		None               void
+   483 ;; Registers used:
+   484 ;;		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+   485 ;; Tracked objects:
+   486 ;;		On entry : 300/0
+   487 ;;		On exit  : 0/0
+   488 ;;		Unchanged: 0/0
+   489 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   490 ;;      Params:         0       0       0       0       0
+   491 ;;      Locals:         0       0       0       0       0
+   492 ;;      Temps:          0       0       0       0       0
+   493 ;;      Totals:         0       0       0       0       0
+   494 ;;Total ram usage:        0 bytes
+   495 ;; Hardware stack levels used:    1
+   496 ;; Hardware stack levels required when called:    5
+   497 ;; This function calls:
+   498 ;;		_LCDPrintNumero
+   499 ;;		_LCD_command
+   500 ;;		_LCD_gotoXY
+   501 ;;		_cicloTimeSet
+   502 ;;		_diasDelMes
+   503 ;; This function is called by:
+   504 ;;		_main
+   505 ;; This function uses a non-reentrant model
+   506 ;;
+   507                           
+   508                           
+   509                           ;psect for function _timeSet
+   510  0462                     _timeSet:	
+   511                           
+   512                           ;incstack = 0
+   513                           ; Regs used in _timeSet: [wreg-fsr0h+status,2+status,0+pclath+cstack]
+   514  0462  3007               	movlw	7
+   515                           
+   516                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 677: LCD_gotoXY(7,1);
+   517  0463  01F5               	clrf	LCD_gotoXY@fila
+   518  0464  0AF5               	incf	LCD_gotoXY@fila,f
+   519  0465  25E8  120A  118A   	fcall	_LCD_gotoXY
+   520                           
+   521                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 678: LCDPrintNumero(0);
+   522  0468  3000               	movlw	0
+   523  0469  26A4  120A  118A   	fcall	_LCDPrintNumero
+   524                           
+   525                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 679: LCD_command(0x08 + 0x04 + 0x02);
+   526  046C  300E               	movlw	14
+   527  046D  25E2  120A  118A   	fcall	_LCD_command
+   528                           
+   529                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 680: while(editMenuState<7)
+   530  0470  2CE4               	goto	l1411
+   531  0471                     l1387:	
+   532                           
+   533                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 683: DS1307_Ano = cicloTimeSet(0,99,7,0,DS1307_Ano
+      +                          );
+   534  0471  3063               	movlw	99
+   535  0472  00F7               	movwf	cicloTimeSet@limSup
+   536  0473  3007               	movlw	7
+   537  0474  00F8               	movwf	cicloTimeSet@lcdX
+   538  0475  01F9               	clrf	cicloTimeSet@lcdY
+   539  0476  0820               	movf	_DS1307_Ano,w
+   540  0477  00FA               	movwf	cicloTimeSet@editDato
+   541  0478  3000               	movlw	0
+   542  0479  24EC  120A  118A   	fcall	_cicloTimeSet
+   543  047C  1283               	bcf	3,5	;RP0=0, select bank0
+   544  047D  1303               	bcf	3,6	;RP1=0, select bank0
+   545  047E  00A0               	movwf	_DS1307_Ano
+   546  047F                     l1389:	
+   547  047F  0B27               	decfsz	_editMenuState,w
+   548  0480  2C90               	goto	l1393
+   549  0481  2C71               	goto	l1387
+   550  0482                     l1391:	
+   551                           
+   552                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 685: DS1307_Mes = cicloTimeSet(1,12,4,0,DS1307_Mes
+      +                          );
+   553  0482  300C               	movlw	12
+   554  0483  00F7               	movwf	cicloTimeSet@limSup
+   555  0484  3004               	movlw	4
+   556  0485  00F8               	movwf	cicloTimeSet@lcdX
+   557  0486  01F9               	clrf	cicloTimeSet@lcdY
+   558  0487  0824               	movf	_DS1307_Mes,w
+   559  0488  00FA               	movwf	cicloTimeSet@editDato
+   560  0489  3001               	movlw	1
+   561  048A  24EC  120A  118A   	fcall	_cicloTimeSet
+   562  048D  1283               	bcf	3,5	;RP0=0, select bank0
+   563  048E  1303               	bcf	3,6	;RP1=0, select bank0
+   564  048F  00A4               	movwf	_DS1307_Mes
+   565  0490                     l1393:	
+   566  0490  3002               	movlw	2
+   567  0491  0627               	xorwf	_editMenuState,w
+   568  0492  1D03               	btfss	3,2
+   569  0493  2CA5               	goto	l1397
+   570  0494  2C82               	goto	l1391
+   571  0495                     l1395:	
+   572                           
+   573                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 687: DS1307_Dia= cicloTimeSet(1,diasDelMes(),1,0,D
+      +                          S1307_Dia);
+   574  0495  27CB  120A  118A   	fcall	_diasDelMes
+   575  0498  00F7               	movwf	cicloTimeSet@limSup
+   576  0499  01F8               	clrf	cicloTimeSet@lcdX
+   577  049A  0AF8               	incf	cicloTimeSet@lcdX,f
+   578  049B  01F9               	clrf	cicloTimeSet@lcdY
+   579  049C  0821               	movf	_DS1307_Dia,w
+   580  049D  00FA               	movwf	cicloTimeSet@editDato
+   581  049E  3001               	movlw	1
+   582  049F  24EC  120A  118A   	fcall	_cicloTimeSet
+   583  04A2  1283               	bcf	3,5	;RP0=0, select bank0
+   584  04A3  1303               	bcf	3,6	;RP1=0, select bank0
+   585  04A4  00A1               	movwf	_DS1307_Dia
+   586  04A5                     l1397:	
+   587  04A5  3003               	movlw	3
+   588  04A6  0627               	xorwf	_editMenuState,w
+   589  04A7  1D03               	btfss	3,2
+   590  04A8  2CB9               	goto	l1401
+   591  04A9  2C95               	goto	l1395
+   592  04AA                     l1399:	
+   593                           
+   594                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 689: DS1307_Hora = cicloTimeSet(0,23,1,1,DS1307_Ho
+      +                          ra);
+   595  04AA  3017               	movlw	23
+   596  04AB  00F7               	movwf	cicloTimeSet@limSup
+   597  04AC  01F8               	clrf	cicloTimeSet@lcdX
+   598  04AD  0AF8               	incf	cicloTimeSet@lcdX,f
+   599  04AE  01F9               	clrf	cicloTimeSet@lcdY
+   600  04AF  0AF9               	incf	cicloTimeSet@lcdY,f
+   601  04B0  0823               	movf	_DS1307_Hora,w
+   602  04B1  00FA               	movwf	cicloTimeSet@editDato
+   603  04B2  3000               	movlw	0
+   604  04B3  24EC  120A  118A   	fcall	_cicloTimeSet
+   605  04B6  1283               	bcf	3,5	;RP0=0, select bank0
+   606  04B7  1303               	bcf	3,6	;RP1=0, select bank0
+   607  04B8  00A3               	movwf	_DS1307_Hora
+   608  04B9                     l1401:	
+   609  04B9  3004               	movlw	4
+   610  04BA  0627               	xorwf	_editMenuState,w
+   611  04BB  1D03               	btfss	3,2
+   612  04BC  2CCD               	goto	l1405
+   613  04BD  2CAA               	goto	l1399
+   614  04BE                     l1403:	
+   615                           
+   616                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 691: DS1307_Minuto = cicloTimeSet(0,59,4,1,DS1307_
+      +                          Minuto);
+   617  04BE  303B               	movlw	59
+   618  04BF  00F7               	movwf	cicloTimeSet@limSup
+   619  04C0  3004               	movlw	4
+   620  04C1  00F8               	movwf	cicloTimeSet@lcdX
+   621  04C2  01F9               	clrf	cicloTimeSet@lcdY
+   622  04C3  0AF9               	incf	cicloTimeSet@lcdY,f
+   623  04C4  0825               	movf	_DS1307_Minuto,w
+   624  04C5  00FA               	movwf	cicloTimeSet@editDato
+   625  04C6  3000               	movlw	0
+   626  04C7  24EC  120A  118A   	fcall	_cicloTimeSet
+   627  04CA  1283               	bcf	3,5	;RP0=0, select bank0
+   628  04CB  1303               	bcf	3,6	;RP1=0, select bank0
+   629  04CC  00A5               	movwf	_DS1307_Minuto
+   630  04CD                     l1405:	
+   631  04CD  3005               	movlw	5
+   632  04CE  0627               	xorwf	_editMenuState,w
+   633  04CF  1D03               	btfss	3,2
+   634  04D0  2CE0               	goto	l1409
+   635  04D1  2CBE               	goto	l1403
+   636  04D2                     l1407:	
+   637                           
+   638                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 693: DS1307_DiaSemana = cicloTimeSet(1,7,12,0,DS13
+      +                          07_DiaSemana);
+   639  04D2  3007               	movlw	7
+   640  04D3  00F7               	movwf	cicloTimeSet@limSup
+   641  04D4  300C               	movlw	12
+   642  04D5  00F8               	movwf	cicloTimeSet@lcdX
+   643  04D6  01F9               	clrf	cicloTimeSet@lcdY
+   644  04D7  0822               	movf	_DS1307_DiaSemana,w
+   645  04D8  00FA               	movwf	cicloTimeSet@editDato
+   646  04D9  3001               	movlw	1
+   647  04DA  24EC  120A  118A   	fcall	_cicloTimeSet
+   648  04DD  1283               	bcf	3,5	;RP0=0, select bank0
+   649  04DE  1303               	bcf	3,6	;RP1=0, select bank0
+   650  04DF  00A2               	movwf	_DS1307_DiaSemana
+   651  04E0                     l1409:	
+   652  04E0  3006               	movlw	6
+   653  04E1  0627               	xorwf	_editMenuState,w
+   654  04E2  1903               	btfsc	3,2
+   655  04E3  2CD2               	goto	l1407
+   656  04E4                     l1411:	
+   657  04E4  3007               	movlw	7
+   658  04E5  1283               	bcf	3,5	;RP0=0, select bank0
+   659  04E6  1303               	bcf	3,6	;RP1=0, select bank0
+   660  04E7  0227               	subwf	_editMenuState,w
+   661  04E8  1C03               	skipc
+   662  04E9  2C7F               	goto	l1389
+   663                           
+   664                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 694: }
+   665                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 695: LCD_command(0x08 + 0x04 + 0x00 + 0x00);
+   666  04EA  300C               	movlw	12
+   667  04EB  2DE2               	ljmp	_LCD_command
+   668  04EC                     __end_of_timeSet:	
+   669  04EC                     __ptext5:	
+   670 ;; *************** function _cicloTimeSet *****************
+   671 ;; Defined at:
+   672 ;;		line 624 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+   673 ;; Parameters:    Size  Location     Type
+   674 ;;  limInf          1    wreg     unsigned char 
+   675 ;;  limSup          1    7[COMMON] unsigned char 
+   676 ;;  lcdX            1    8[COMMON] unsigned char 
+   677 ;;  lcdY            1    9[COMMON] unsigned char 
+   678 ;;  editDato        1   10[COMMON] unsigned char 
+   679 ;; Auto vars:     Size  Location     Type
+   680 ;;  limInf          1    0[BANK0 ] unsigned char 
+   681 ;; Return value:  Size  Location     Type
+   682 ;;                  1    wreg      unsigned char 
+   683 ;; Registers used:
+   684 ;;		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+   685 ;; Tracked objects:
+   686 ;;		On entry : 300/0
+   687 ;;		On exit  : 0/0
+   688 ;;		Unchanged: 0/0
+   689 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   690 ;;      Params:         4       0       0       0       0
+   691 ;;      Locals:         0       1       0       0       0
+   692 ;;      Temps:          3       0       0       0       0
+   693 ;;      Totals:         7       1       0       0       0
+   694 ;;Total ram usage:        8 bytes
+   695 ;; Hardware stack levels used:    1
+   696 ;; Hardware stack levels required when called:    4
+   697 ;; This function calls:
+   698 ;;		_LCDPrintDiaSemana
+   699 ;;		_LCDPrintNumero
+   700 ;;		_LCD_command
+   701 ;;		_LCD_gotoXY
+   702 ;; This function is called by:
+   703 ;;		_timeSet
+   704 ;; This function uses a non-reentrant model
+   705 ;;
+   706                           
+   707                           
+   708                           ;psect for function _cicloTimeSet
+   709  04EC                     _cicloTimeSet:	
+   710                           
+   711                           ;incstack = 0
+   712                           ; Regs used in _cicloTimeSet: [wreg-fsr0h+status,2+status,0+pclath+cstack]
+   713                           ;cicloTimeSet@limInf stored from wreg
+   714  04EC  00A8               	movwf	cicloTimeSet@limInf
+   715  04ED                     l1299:	
+   716                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 626: while((RA0 && RA1)==0)
+   717                           
+   718  04ED  1283               	bcf	3,5	;RP0=0, select bank0
+   719  04EE  1303               	bcf	3,6	;RP1=0, select bank0
+   720  04EF  1805               	btfsc	5,0	;volatile
+   721  04F0  2D2D               	goto	l1301
+   722  04F1                     l1269:	
+   723                           
+   724                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 627: {
+   725                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 628: LCD_command(0x08 + 0x04 + 0x00 + 0x00);
+   726  04F1  300C               	movlw	12
+   727  04F2  25E2  120A  118A   	fcall	_LCD_command
+   728                           
+   729                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 629: if(RA0==0)
+   730  04F5  1283               	bcf	3,5	;RP0=0, select bank0
+   731  04F6  1303               	bcf	3,6	;RP1=0, select bank0
+   732  04F7  1805               	btfsc	5,0	;volatile
+   733  04F8  2D00               	goto	l1279
+   734                           
+   735                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 630: {
+   736                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 631: editDato++;
+   737  04F9  0AFA               	incf	cicloTimeSet@editDato,f
+   738                           
+   739                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 632: if(editDato>limSup) editDato=limInf;
+   740  04FA  087A               	movf	cicloTimeSet@editDato,w
+   741  04FB  0277               	subwf	cicloTimeSet@limSup,w
+   742  04FC  1803               	skipnc
+   743  04FD  2D09               	goto	l1287
+   744  04FE  0828               	movf	cicloTimeSet@limInf,w
+   745  04FF  2D08               	goto	L1
+   746  0500                     l1279:	
+   747                           
+   748                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 634: else
+   749                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 635: {
+   750                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 636: editDato--;
+   751  0500  03FA               	decf	cicloTimeSet@editDato,f
+   752                           
+   753                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 637: if((editDato<limInf)||(editDato==0xFF)) editD
+      +                          ato=limSup;
+   754  0501  0828               	movf	cicloTimeSet@limInf,w
+   755  0502  027A               	subwf	cicloTimeSet@editDato,w
+   756  0503  1C03               	skipc
+   757  0504  2D07               	goto	l1285
+   758  0505  0F7A               	incfsz	cicloTimeSet@editDato,w
+   759  0506  2D09               	goto	l1287
+   760  0507                     l1285:	
+   761  0507  0877               	movf	cicloTimeSet@limSup,w
+   762  0508                     L1:	
+   763  0508  00FA               	movwf	cicloTimeSet@editDato
+   764  0509                     l1287:	
+   765                           
+   766                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 639: }
+   767                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 640: LCD_gotoXY(lcdX, lcdY);
+   768  0509  0879               	movf	cicloTimeSet@lcdY,w
+   769  050A  00F5               	movwf	LCD_gotoXY@fila
+   770  050B  0878               	movf	cicloTimeSet@lcdX,w
+   771  050C  25E8  120A  118A   	fcall	_LCD_gotoXY
+   772                           
+   773                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 641: if(editMenuState==6)
+   774  050F  3006               	movlw	6
+   775  0510  1283               	bcf	3,5	;RP0=0, select bank0
+   776  0511  1303               	bcf	3,6	;RP1=0, select bank0
+   777  0512  0627               	xorwf	_editMenuState,w
+   778  0513  1D03               	btfss	3,2
+   779  0514  2D1B               	goto	l1295
+   780                           
+   781                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 642: {
+   782                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 643: DS1307_DiaSemana = editDato;
+   783  0515  087A               	movf	cicloTimeSet@editDato,w
+   784  0516  00A2               	movwf	_DS1307_DiaSemana
+   785                           
+   786                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 644: LCDPrintDiaSemana();
+   787  0517  263E  120A  118A   	fcall	_LCDPrintDiaSemana
+   788                           
+   789                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 645: }
+   790  051A  2D1F               	goto	l1297
+   791  051B                     l1295:	
+   792                           
+   793                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 646: else LCDPrintNumero(editDato);
+   794  051B  087A               	movf	cicloTimeSet@editDato,w
+   795  051C  26A4  120A  118A   	fcall	_LCDPrintNumero
+   796  051F                     l1297:	
+   797                           
+   798                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 647: _delay((unsigned long)((500)*(4000000L/4000.0
+      +                          )));
+   799  051F  3003               	movlw	3
+   800  0520  00FD               	movwf	??_cicloTimeSet+2
+   801  0521  308A               	movlw	138
+   802  0522  00FC               	movwf	??_cicloTimeSet+1
+   803  0523  3056               	movlw	86
+   804  0524  00FB               	movwf	??_cicloTimeSet
+   805  0525                     u987:	
+   806  0525  0BFB               	decfsz	??_cicloTimeSet,f
+   807  0526  2D25               	goto	u987
+   808  0527  0BFC               	decfsz	??_cicloTimeSet+1,f
+   809  0528  2D25               	goto	u987
+   810  0529  0BFD               	decfsz	??_cicloTimeSet+2,f
+   811  052A  2D25               	goto	u987
+   812  052B  2D2C               	nop2
+   813  052C  2CED               	goto	l1299
+   814  052D                     l1301:	
+   815  052D  1C85               	btfss	5,1	;volatile
+   816  052E  2CF1               	goto	l1269
+   817                           
+   818                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 648: }
+   819                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 650: if(RA2==0)
+   820  052F  1905               	btfsc	5,2	;volatile
+   821  0530  2D46               	goto	l1313
+   822                           
+   823                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 651: {
+   824                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 652: editMenuState++;
+   825  0531  0AA7               	incf	_editMenuState,f
+   826  0532                     l1307:	
+   827                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 653: while(RA2==0) _delay((unsigned long)((10)*(40
+      +                          00000L/4000.0)));
+   828                           
+   829  0532  1283               	bcf	3,5	;RP0=0, select bank0
+   830  0533  1303               	bcf	3,6	;RP1=0, select bank0
+   831  0534  1905               	btfsc	5,2	;volatile
+   832  0535  2D40               	goto	l1309
+   833  0536  300D               	movlw	13
+   834  0537  00FC               	movwf	??_cicloTimeSet+1
+   835  0538  30FB               	movlw	251
+   836  0539  00FB               	movwf	??_cicloTimeSet
+   837  053A                     u997:	
+   838  053A  0BFB               	decfsz	??_cicloTimeSet,f
+   839  053B  2D3A               	goto	u997
+   840  053C  0BFC               	decfsz	??_cicloTimeSet+1,f
+   841  053D  2D3A               	goto	u997
+   842  053E  2D3F               	nop2
+   843  053F  2D32               	goto	l1307
+   844  0540                     l1309:	
+   845                           
+   846                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 654: if(editDato>limSup) editDato=limSup;
+   847  0540  087A               	movf	cicloTimeSet@editDato,w
+   848  0541  0277               	subwf	cicloTimeSet@limSup,w
+   849  0542  1803               	skipnc
+   850  0543  2D46               	goto	l1313
+   851  0544  0877               	movf	cicloTimeSet@limSup,w
+   852  0545  00FA               	movwf	cicloTimeSet@editDato
+   853  0546                     l1313:	
+   854                           
+   855                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 656: }
+   856                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 658: if(editMenuState==6) lcdX++;
+   857  0546  3006               	movlw	6
+   858  0547  0627               	xorwf	_editMenuState,w
+   859  0548  1903               	btfsc	3,2
+   860  0549  0AF8               	incf	cicloTimeSet@lcdX,f
+   861                           
+   862                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 661: LCD_gotoXY(++lcdX, lcdY);
+   863  054A  0879               	movf	cicloTimeSet@lcdY,w
+   864  054B  00F5               	movwf	LCD_gotoXY@fila
+   865  054C  0AF8               	incf	cicloTimeSet@lcdX,f
+   866  054D  0878               	movf	cicloTimeSet@lcdX,w
+   867  054E  25E8  120A  118A   	fcall	_LCD_gotoXY
+   868                           
+   869                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 662: LCD_command(0x08 + 0x04 + 0x02);
+   870  0551  300E               	movlw	14
+   871  0552  25E2               	fcall	_LCD_command
+   872                           
+   873                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 663: return editDato;
+   874  0553  087A               	movf	cicloTimeSet@editDato,w
+   875  0554  0008               	return
+   876  0555                     __end_of_cicloTimeSet:	
+   877  0555                     __ptext11:	
+   878 ;; *************** function _LCD_init *****************
+   879 ;; Defined at:
+   880 ;;		line 285 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+   881 ;; Parameters:    Size  Location     Type
+   882 ;;		None
+   883 ;; Auto vars:     Size  Location     Type
+   884 ;;		None
+   885 ;; Return value:  Size  Location     Type
+   886 ;;		None               void
+   887 ;; Registers used:
+   888 ;;		wreg, status,2, status,0, pclath, cstack
+   889 ;; Tracked objects:
+   890 ;;		On entry : 300/0
+   891 ;;		On exit  : 0/0
+   892 ;;		Unchanged: 0/0
+   893 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   894 ;;      Params:         0       0       0       0       0
+   895 ;;      Locals:         0       0       0       0       0
+   896 ;;      Temps:          3       0       0       0       0
+   897 ;;      Totals:         3       0       0       0       0
+   898 ;;Total ram usage:        3 bytes
+   899 ;; Hardware stack levels used:    1
+   900 ;; Hardware stack levels required when called:    3
+   901 ;; This function calls:
+   902 ;;		_LCD_command
+   903 ;;		_LCD_send4Bits
+   904 ;; This function is called by:
+   905 ;;		_setup
+   906 ;; This function uses a non-reentrant model
+   907 ;;
+   908                           
+   909                           
+   910                           ;psect for function _LCD_init
+   911  0555                     _LCD_init:	
+   912  0555                     l1147:	
+   913                           ;incstack = 0
+   914                           ; Regs used in _LCD_init: [wreg+status,2+status,0+pclath+cstack]
+   915                           
+   916                           
+   917                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 287: TRISB4 = 0;
+   918  0555  1683               	bsf	3,5	;RP0=1, select bank1
+   919  0556  1206               	bcf	6,4	;volatile
+   920                           
+   921                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 288: TRISB5 = 0;
+   922  0557  1286               	bcf	6,5	;volatile
+   923                           
+   924                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 289: TRISB6 = 0;
+   925  0558  1306               	bcf	6,6	;volatile
+   926                           
+   927                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 290: TRISB7 = 0;
+   928  0559  1386               	bcf	6,7	;volatile
+   929                           
+   930                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 291: TRISB2 = 0;
+   931  055A  1106               	bcf	6,2	;volatile
+   932                           
+   933                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 292: TRISB3 = 0;
+   934  055B  1186               	bcf	6,3	;volatile
+   935                           
+   936                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 294: _delay((unsigned long)((200)*(4000000L/4000.0
+      +                          )));
+   937  055C  3002               	movlw	2
+   938  055D  00F7               	movwf	??_LCD_init+2
+   939  055E  3004               	movlw	4
+   940  055F  00F6               	movwf	??_LCD_init+1
+   941  0560  30BA               	movlw	186
+   942  0561  00F5               	movwf	??_LCD_init
+   943  0562                     u1007:	
+   944  0562  0BF5               	decfsz	??_LCD_init,f
+   945  0563  2D62               	goto	u1007
+   946  0564  0BF6               	decfsz	??_LCD_init+1,f
+   947  0565  2D62               	goto	u1007
+   948  0566  0BF7               	decfsz	??_LCD_init+2,f
+   949  0567  2D62               	goto	u1007
+   950  0568  0000               	nop
+   951                           
+   952                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 295: RB2 = 0;
+   953  0569  1283               	bcf	3,5	;RP0=0, select bank0
+   954  056A  1303               	bcf	3,6	;RP1=0, select bank0
+   955  056B  1106               	bcf	6,2	;volatile
+   956                           
+   957                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 296: RB3 = 0;
+   958  056C  1186               	bcf	6,3	;volatile
+   959                           
+   960                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 301: _delay((unsigned long)((30)*(4000000L/4000.0)
+      +                          ));
+   961  056D  3027               	movlw	39
+   962  056E  00F6               	movwf	??_LCD_init+1
+   963  056F  30F5               	movlw	245
+   964  0570  00F5               	movwf	??_LCD_init
+   965  0571                     u1017:	
+   966  0571  0BF5               	decfsz	??_LCD_init,f
+   967  0572  2D71               	goto	u1017
+   968  0573  0BF6               	decfsz	??_LCD_init+1,f
+   969  0574  2D71               	goto	u1017
+   970                           
+   971                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 303: LCD_send4Bits(0b00110000);
+   972  0575  3030               	movlw	48
+   973  0576  25A6  120A  118A   	fcall	_LCD_send4Bits
+   974                           
+   975                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 304: _delay((unsigned long)((5)*(4000000L/4000.0))
+      +                          );
+   976  0579  3007               	movlw	7
+   977  057A  00F6               	movwf	??_LCD_init+1
+   978  057B  307D               	movlw	125
+   979  057C  00F5               	movwf	??_LCD_init
+   980  057D                     u1027:	
+   981  057D  0BF5               	decfsz	??_LCD_init,f
+   982  057E  2D7D               	goto	u1027
+   983  057F  0BF6               	decfsz	??_LCD_init+1,f
+   984  0580  2D7D               	goto	u1027
+   985                           
+   986                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 305: LCD_send4Bits(0b00110000);
+   987  0581  3030               	movlw	48
+   988  0582  25A6  120A  118A   	fcall	_LCD_send4Bits
+   989                           
+   990                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 306: _delay((unsigned long)((1)*(4000000L/4000.0))
+      +                          );
+   991  0585  30F9               	movlw	249
+   992  0586  00F5               	movwf	??_LCD_init
+   993  0587                     u1037:	
+   994  0587  0000               	nop
+   995  0588  0BF5               	decfsz	??_LCD_init,f
+   996  0589  2D87               	goto	u1037
+   997  058A  2D8B               	nop2	;nop
+   998  058B  0000               	nop
+   999                           
+  1000                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 307: LCD_send4Bits(0b00110000);
+  1001  058C  3030               	movlw	48
+  1002  058D  25A6  120A  118A   	fcall	_LCD_send4Bits
+  1003                           
+  1004                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 308: LCD_send4Bits(0b00100000);
+  1005  0590  3020               	movlw	32
+  1006  0591  25A6  120A  118A   	fcall	_LCD_send4Bits
+  1007                           
+  1008                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 309: LCD_command(0x20 + 0x00 + 0x08 + 0x00);
+  1009  0594  3028               	movlw	40
+  1010  0595  25E2  120A  118A   	fcall	_LCD_command
+  1011                           
+  1012                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 313: LCD_command(0x08 + 0x00);
+  1013  0598  3008               	movlw	8
+  1014  0599  25E2  120A  118A   	fcall	_LCD_command
+  1015                           
+  1016                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 314: LCD_command(0x04 + 0x02 + 0x00);
+  1017  059C  3006               	movlw	6
+  1018  059D  25E2  120A  118A   	fcall	_LCD_command
+  1019                           
+  1020                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 315: LCD_command(0x08 + 0x04);
+  1021  05A0  300C               	movlw	12
+  1022  05A1  25E2  120A  118A   	fcall	_LCD_command
+  1023                           
+  1024                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 316: LCD_command(0x01);
+  1025  05A4  3001               	movlw	1
+  1026  05A5  2DE2               	ljmp	_LCD_command
+  1027  05A6                     __end_of_LCD_init:	
+  1028  05A6                     __ptext14:	
+  1029 ;; *************** function _LCD_send4Bits *****************
+  1030 ;; Defined at:
+  1031 ;;		line 247 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  1032 ;; Parameters:    Size  Location     Type
+  1033 ;;  date            1    wreg     unsigned char 
+  1034 ;; Auto vars:     Size  Location     Type
+  1035 ;;  date            1    2[COMMON] unsigned char 
+  1036 ;; Return value:  Size  Location     Type
+  1037 ;;		None               void
+  1038 ;; Registers used:
+  1039 ;;		wreg
+  1040 ;; Tracked objects:
+  1041 ;;		On entry : 0/0
+  1042 ;;		On exit  : 0/0
+  1043 ;;		Unchanged: 0/0
+  1044 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1045 ;;      Params:         0       0       0       0       0
+  1046 ;;      Locals:         1       0       0       0       0
+  1047 ;;      Temps:          2       0       0       0       0
+  1048 ;;      Totals:         3       0       0       0       0
+  1049 ;;Total ram usage:        3 bytes
+  1050 ;; Hardware stack levels used:    1
+  1051 ;; This function calls:
+  1052 ;;		Nothing
+  1053 ;; This function is called by:
+  1054 ;;		_LCD_send
+  1055 ;;		_LCD_init
+  1056 ;; This function uses a non-reentrant model
+  1057 ;;
+  1058                           
+  1059                           
+  1060                           ;psect for function _LCD_send4Bits
+  1061  05A6                     _LCD_send4Bits:	
+  1062                           
+  1063                           ;incstack = 0
+  1064                           ; Regs used in _LCD_send4Bits: [wreg]
+  1065                           ;LCD_send4Bits@date stored from wreg
+  1066  05A6  00F2               	movwf	LCD_send4Bits@date
+  1067                           
+  1068                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 249: RB4 = (date & 0x10) == 0x10;
+  1069  05A7  1E72               	btfss	LCD_send4Bits@date,4
+  1070  05A8  2DAD               	goto	u490
+  1071  05A9  1283               	bcf	3,5	;RP0=0, select bank0
+  1072  05AA  1303               	bcf	3,6	;RP1=0, select bank0
+  1073  05AB  1606               	bsf	6,4	;volatile
+  1074  05AC  2DB0               	goto	u504
+  1075  05AD                     u490:	
+  1076  05AD  1283               	bcf	3,5	;RP0=0, select bank0
+  1077  05AE  1303               	bcf	3,6	;RP1=0, select bank0
+  1078  05AF  1206               	bcf	6,4	;volatile
+  1079  05B0                     u504:	
+  1080                           
+  1081                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 250: RB5 = (date & 0x20) == 0x20;
+  1082  05B0  1EF2               	btfss	LCD_send4Bits@date,5
+  1083  05B1  2DB6               	goto	u510
+  1084  05B2  1283               	bcf	3,5	;RP0=0, select bank0
+  1085  05B3  1303               	bcf	3,6	;RP1=0, select bank0
+  1086  05B4  1686               	bsf	6,5	;volatile
+  1087  05B5  2DB9               	goto	u524
+  1088  05B6                     u510:	
+  1089  05B6  1283               	bcf	3,5	;RP0=0, select bank0
+  1090  05B7  1303               	bcf	3,6	;RP1=0, select bank0
+  1091  05B8  1286               	bcf	6,5	;volatile
+  1092  05B9                     u524:	
+  1093                           
+  1094                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 251: RB6 = (date & 0x40) == 0x40;
+  1095  05B9  1F72               	btfss	LCD_send4Bits@date,6
+  1096  05BA  2DBF               	goto	u530
+  1097  05BB  1283               	bcf	3,5	;RP0=0, select bank0
+  1098  05BC  1303               	bcf	3,6	;RP1=0, select bank0
+  1099  05BD  1706               	bsf	6,6	;volatile
+  1100  05BE  2DC2               	goto	u544
+  1101  05BF                     u530:	
+  1102  05BF  1283               	bcf	3,5	;RP0=0, select bank0
+  1103  05C0  1303               	bcf	3,6	;RP1=0, select bank0
+  1104  05C1  1306               	bcf	6,6	;volatile
+  1105  05C2                     u544:	
+  1106                           
+  1107                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 252: RB7 = (date & 0x80) == 0x80;
+  1108  05C2  1FF2               	btfss	LCD_send4Bits@date,7
+  1109  05C3  2DC8               	goto	u550
+  1110  05C4  1283               	bcf	3,5	;RP0=0, select bank0
+  1111  05C5  1303               	bcf	3,6	;RP1=0, select bank0
+  1112  05C6  1786               	bsf	6,7	;volatile
+  1113  05C7  2DCB               	goto	u564
+  1114  05C8                     u550:	
+  1115  05C8  1283               	bcf	3,5	;RP0=0, select bank0
+  1116  05C9  1303               	bcf	3,6	;RP1=0, select bank0
+  1117  05CA  1386               	bcf	6,7	;volatile
+  1118  05CB                     u564:	
+  1119                           
+  1120                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 253: RB3 = 1;
+  1121  05CB  1586               	bsf	6,3	;volatile
+  1122                           
+  1123                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 254: _delay((unsigned long)((2)*(4000000L/4000.0))
+      +                          );
+  1124  05CC  3003               	movlw	3
+  1125  05CD  00F1               	movwf	??_LCD_send4Bits+1
+  1126  05CE  3097               	movlw	151
+  1127  05CF  00F0               	movwf	??_LCD_send4Bits
+  1128  05D0                     u1047:	
+  1129  05D0  0BF0               	decfsz	??_LCD_send4Bits,f
+  1130  05D1  2DD0               	goto	u1047
+  1131  05D2  0BF1               	decfsz	??_LCD_send4Bits+1,f
+  1132  05D3  2DD0               	goto	u1047
+  1133  05D4  2DD5               	nop2
+  1134                           
+  1135                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 255: RB3 = 0;
+  1136  05D5  1283               	bcf	3,5	;RP0=0, select bank0
+  1137  05D6  1303               	bcf	3,6	;RP1=0, select bank0
+  1138  05D7  1186               	bcf	6,3	;volatile
+  1139                           
+  1140                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 256: _delay((unsigned long)((2)*(4000000L/4000.0))
+      +                          );
+  1141  05D8  3003               	movlw	3
+  1142  05D9  00F1               	movwf	??_LCD_send4Bits+1
+  1143  05DA  3097               	movlw	151
+  1144  05DB  00F0               	movwf	??_LCD_send4Bits
+  1145  05DC                     u1057:	
+  1146  05DC  0BF0               	decfsz	??_LCD_send4Bits,f
+  1147  05DD  2DDC               	goto	u1057
+  1148  05DE  0BF1               	decfsz	??_LCD_send4Bits+1,f
+  1149  05DF  2DDC               	goto	u1057
+  1150  05E0  2DE1               	nop2
+  1151  05E1  0008               	return
+  1152  05E2                     __end_of_LCD_send4Bits:	
+  1153  05E2                     __ptext12:	
+  1154 ;; *************** function _LCD_command *****************
+  1155 ;; Defined at:
+  1156 ;;		line 265 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  1157 ;; Parameters:    Size  Location     Type
+  1158 ;;  comm            1    wreg     unsigned char 
+  1159 ;; Auto vars:     Size  Location     Type
+  1160 ;;  comm            1    4[COMMON] unsigned char 
+  1161 ;; Return value:  Size  Location     Type
+  1162 ;;		None               void
+  1163 ;; Registers used:
+  1164 ;;		wreg, status,2, status,0, pclath, cstack
+  1165 ;; Tracked objects:
+  1166 ;;		On entry : 0/0
+  1167 ;;		On exit  : 0/0
+  1168 ;;		Unchanged: 0/0
+  1169 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1170 ;;      Params:         0       0       0       0       0
+  1171 ;;      Locals:         1       0       0       0       0
+  1172 ;;      Temps:          0       0       0       0       0
+  1173 ;;      Totals:         1       0       0       0       0
+  1174 ;;Total ram usage:        1 bytes
+  1175 ;; Hardware stack levels used:    1
+  1176 ;; Hardware stack levels required when called:    2
+  1177 ;; This function calls:
+  1178 ;;		_LCD_send
+  1179 ;; This function is called by:
+  1180 ;;		_LCD_gotoXY
+  1181 ;;		_LCD_init
+  1182 ;;		_cicloTimeSet
+  1183 ;;		_timeSet
+  1184 ;; This function uses a non-reentrant model
+  1185 ;;
+  1186                           
+  1187                           
+  1188                           ;psect for function _LCD_command
+  1189  05E2                     _LCD_command:	
+  1190                           
+  1191                           ;incstack = 0
+  1192                           ; Regs used in _LCD_command: [wreg+status,2+status,0+pclath+cstack]
+  1193                           ;LCD_command@comm stored from wreg
+  1194  05E2  00F4               	movwf	LCD_command@comm
+  1195                           
+  1196                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 267: RB2 = 0;
+  1197  05E3  1283               	bcf	3,5	;RP0=0, select bank0
+  1198  05E4  1303               	bcf	3,6	;RP1=0, select bank0
+  1199  05E5  1106               	bcf	6,2	;volatile
+  1200                           
+  1201                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 268: LCD_send(comm);
+  1202  05E6  0874               	movf	LCD_command@comm,w
+  1203  05E7  2EB3               	ljmp	_LCD_send
+  1204  05E8                     __end_of_LCD_command:	
+  1205  05E8                     __ptext6:	
+  1206 ;; *************** function _LCD_gotoXY *****************
+  1207 ;; Defined at:
+  1208 ;;		line 277 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  1209 ;; Parameters:    Size  Location     Type
+  1210 ;;  columna         1    wreg     unsigned char 
+  1211 ;;  fila            1    5[COMMON] unsigned char 
+  1212 ;; Auto vars:     Size  Location     Type
+  1213 ;;  columna         1    6[COMMON] unsigned char 
+  1214 ;; Return value:  Size  Location     Type
+  1215 ;;		None               void
+  1216 ;; Registers used:
+  1217 ;;		wreg, status,2, status,0, pclath, cstack
+  1218 ;; Tracked objects:
+  1219 ;;		On entry : 0/0
+  1220 ;;		On exit  : 0/0
+  1221 ;;		Unchanged: 0/0
+  1222 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1223 ;;      Params:         1       0       0       0       0
+  1224 ;;      Locals:         1       0       0       0       0
+  1225 ;;      Temps:          0       0       0       0       0
+  1226 ;;      Totals:         2       0       0       0       0
+  1227 ;;Total ram usage:        2 bytes
+  1228 ;; Hardware stack levels used:    1
+  1229 ;; Hardware stack levels required when called:    3
+  1230 ;; This function calls:
+  1231 ;;		_LCD_command
+  1232 ;; This function is called by:
+  1233 ;;		_timeShow
+  1234 ;;		_cicloTimeSet
+  1235 ;;		_timeSet
+  1236 ;; This function uses a non-reentrant model
+  1237 ;;
+  1238                           
+  1239                           
+  1240                           ;psect for function _LCD_gotoXY
+  1241  05E8                     _LCD_gotoXY:	
+  1242                           
+  1243                           ;incstack = 0
+  1244                           ; Regs used in _LCD_gotoXY: [wreg+status,2+status,0+pclath+cstack]
+  1245                           ;LCD_gotoXY@columna stored from wreg
+  1246  05E8  00F6               	movwf	LCD_gotoXY@columna
+  1247                           
+  1248                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 279: if(fila == 0)
+  1249  05E9  0875               	movf	LCD_gotoXY@fila,w
+  1250  05EA  1D03               	btfss	3,2
+  1251  05EB  2DEF               	goto	l1105
+  1252                           
+  1253                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 280: LCD_command(0x80 + columna + 0x00);
+  1254  05EC  0876               	movf	LCD_gotoXY@columna,w
+  1255  05ED  3E80               	addlw	128
+  1256  05EE  2DE2               	ljmp	_LCD_command
+  1257  05EF                     l1105:	
+  1258                           
+  1259                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 281: else
+  1260                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 282: LCD_command(0x80 + columna + 0x40);
+  1261  05EF  0876               	movf	LCD_gotoXY@columna,w
+  1262  05F0  3EC0               	addlw	192
+  1263  05F1  2DE2               	ljmp	_LCD_command
+  1264  05F2                     __end_of_LCD_gotoXY:	
+  1265  05F2                     __ptext1:	
+  1266 ;; *************** function _timeShow *****************
+  1267 ;; Defined at:
+  1268 ;;		line 592 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  1269 ;; Parameters:    Size  Location     Type
+  1270 ;;		None
+  1271 ;; Auto vars:     Size  Location     Type
+  1272 ;;		None
+  1273 ;; Return value:  Size  Location     Type
+  1274 ;;		None               void
+  1275 ;; Registers used:
+  1276 ;;		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+  1277 ;; Tracked objects:
+  1278 ;;		On entry : 300/0
+  1279 ;;		On exit  : 0/0
+  1280 ;;		Unchanged: 0/0
+  1281 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1282 ;;      Params:         0       0       0       0       0
+  1283 ;;      Locals:         0       0       0       0       0
+  1284 ;;      Temps:          0       0       0       0       0
+  1285 ;;      Totals:         0       0       0       0       0
+  1286 ;;Total ram usage:        0 bytes
+  1287 ;; Hardware stack levels used:    1
+  1288 ;; Hardware stack levels required when called:    4
+  1289 ;; This function calls:
+  1290 ;;		_LCDPrintDiaSemana
+  1291 ;;		_LCDPrintNumero
+  1292 ;;		_LCD_gotoXY
+  1293 ;;		_LCD_putChar
+  1294 ;; This function is called by:
+  1295 ;;		_main
+  1296 ;; This function uses a non-reentrant model
+  1297 ;;
+  1298                           
+  1299                           
+  1300                           ;psect for function _timeShow
+  1301  05F2                     _timeShow:	
+  1302                           
+  1303                           ;incstack = 0
+  1304                           ; Regs used in _timeShow: [wreg-fsr0h+status,2+status,0+pclath+cstack]
+  1305  05F2  3001               	movlw	1
+  1306                           
+  1307                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 594: LCD_gotoXY(1,0);
+  1308  05F3  01F5               	clrf	LCD_gotoXY@fila
+  1309  05F4  25E8  120A  118A   	fcall	_LCD_gotoXY
+  1310                           
+  1311                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 595: LCDPrintNumero(DS1307_Dia);
+  1312  05F7  1283               	bcf	3,5	;RP0=0, select bank0
+  1313  05F8  1303               	bcf	3,6	;RP1=0, select bank0
+  1314  05F9  0821               	movf	_DS1307_Dia,w
+  1315  05FA  26A4  120A  118A   	fcall	_LCDPrintNumero
+  1316                           
+  1317                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 596: LCD_putChar('/');
+  1318  05FD  302F               	movlw	47
+  1319  05FE  269E  120A  118A   	fcall	_LCD_putChar
+  1320                           
+  1321                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 597: LCDPrintNumero(DS1307_Mes);
+  1322  0601  1283               	bcf	3,5	;RP0=0, select bank0
+  1323  0602  1303               	bcf	3,6	;RP1=0, select bank0
+  1324  0603  0824               	movf	_DS1307_Mes,w
+  1325  0604  26A4  120A  118A   	fcall	_LCDPrintNumero
+  1326                           
+  1327                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 598: LCD_putChar('/');
+  1328  0607  302F               	movlw	47
+  1329  0608  269E  120A  118A   	fcall	_LCD_putChar
+  1330                           
+  1331                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 599: LCDPrintNumero(DS1307_Ano);
+  1332  060B  1283               	bcf	3,5	;RP0=0, select bank0
+  1333  060C  1303               	bcf	3,6	;RP1=0, select bank0
+  1334  060D  0820               	movf	_DS1307_Ano,w
+  1335  060E  26A4  120A  118A   	fcall	_LCDPrintNumero
+  1336                           
+  1337                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 600: LCD_putChar(' ');
+  1338  0611  3020               	movlw	32
+  1339  0612  269E  120A  118A   	fcall	_LCD_putChar
+  1340                           
+  1341                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 601: LCD_putChar(' ');
+  1342  0615  3020               	movlw	32
+  1343  0616  269E  120A  118A   	fcall	_LCD_putChar
+  1344                           
+  1345                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 602: LCD_putChar(' ');
+  1346  0619  3020               	movlw	32
+  1347  061A  269E  120A  118A   	fcall	_LCD_putChar
+  1348                           
+  1349                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 603: LCDPrintDiaSemana();
+  1350  061D  263E  120A  118A   	fcall	_LCDPrintDiaSemana
+  1351  0620  3001               	movlw	1
+  1352                           
+  1353                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 604: LCD_gotoXY(1,1);
+  1354  0621  01F5               	clrf	LCD_gotoXY@fila
+  1355  0622  0AF5               	incf	LCD_gotoXY@fila,f
+  1356  0623  25E8  120A  118A   	fcall	_LCD_gotoXY
+  1357                           
+  1358                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 605: LCDPrintNumero(DS1307_Hora);
+  1359  0626  1283               	bcf	3,5	;RP0=0, select bank0
+  1360  0627  1303               	bcf	3,6	;RP1=0, select bank0
+  1361  0628  0823               	movf	_DS1307_Hora,w
+  1362  0629  26A4  120A  118A   	fcall	_LCDPrintNumero
+  1363                           
+  1364                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 606: LCD_putChar(':');
+  1365  062C  303A               	movlw	58
+  1366  062D  269E  120A  118A   	fcall	_LCD_putChar
+  1367                           
+  1368                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 607: LCDPrintNumero(DS1307_Minuto);
+  1369  0630  1283               	bcf	3,5	;RP0=0, select bank0
+  1370  0631  1303               	bcf	3,6	;RP1=0, select bank0
+  1371  0632  0825               	movf	_DS1307_Minuto,w
+  1372  0633  26A4  120A  118A   	fcall	_LCDPrintNumero
+  1373                           
+  1374                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 608: LCD_putChar(':');
+  1375  0636  303A               	movlw	58
+  1376  0637  269E  120A  118A   	fcall	_LCD_putChar
+  1377                           
+  1378                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 609: LCDPrintNumero(DS1307_Segundo);
+  1379  063A  1283               	bcf	3,5	;RP0=0, select bank0
+  1380  063B  1303               	bcf	3,6	;RP1=0, select bank0
+  1381  063C  0826               	movf	_DS1307_Segundo,w
+  1382  063D  2EA4               	ljmp	_LCDPrintNumero
+  1383  063E                     __end_of_timeShow:	
+  1384  063E                     __ptext8:	
+  1385 ;; *************** function _LCDPrintDiaSemana *****************
+  1386 ;; Defined at:
+  1387 ;;		line 473 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  1388 ;; Parameters:    Size  Location     Type
+  1389 ;;		None
+  1390 ;; Auto vars:     Size  Location     Type
+  1391 ;;		None
+  1392 ;; Return value:  Size  Location     Type
+  1393 ;;		None               void
+  1394 ;; Registers used:
+  1395 ;;		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+  1396 ;; Tracked objects:
+  1397 ;;		On entry : 0/0
+  1398 ;;		On exit  : 0/0
+  1399 ;;		Unchanged: 0/0
+  1400 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1401 ;;      Params:         0       0       0       0       0
+  1402 ;;      Locals:         0       0       0       0       0
+  1403 ;;      Temps:          0       0       0       0       0
+  1404 ;;      Totals:         0       0       0       0       0
+  1405 ;;Total ram usage:        0 bytes
+  1406 ;; Hardware stack levels used:    1
+  1407 ;; Hardware stack levels required when called:    3
+  1408 ;; This function calls:
+  1409 ;;		_LCD_putChar
+  1410 ;; This function is called by:
+  1411 ;;		_timeShow
+  1412 ;;		_cicloTimeSet
+  1413 ;; This function uses a non-reentrant model
+  1414 ;;
+  1415                           
+  1416                           
+  1417                           ;psect for function _LCDPrintDiaSemana
+  1418  063E                     _LCDPrintDiaSemana:	
+  1419                           
+  1420                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 511: break;
+  1421                           
+  1422                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 475: switch (DS1307_DiaSemana)
+  1423                           
+  1424                           ;incstack = 0
+  1425                           ; Regs used in _LCDPrintDiaSemana: [wreg-fsr0h+status,2+status,0+pclath+cstack]
+  1426  063E  1283               	bcf	3,5	;RP0=0, select bank0
+  1427  063F  1303               	bcf	3,6	;RP1=0, select bank0
+  1428  0640  0822               	movf	_DS1307_DiaSemana,w
+  1429                           
+  1430                           ; Switch size 1, requested type "space"
+  1431                           ; Number of cases is 7, Range of values is 1 to 7
+  1432                           ; switch strategies available:
+  1433                           ; Name         Instructions Cycles
+  1434                           ; simple_byte           22    12 (average)
+  1435                           ; direct_byte           32    11 (fixed)
+  1436                           ; jumptable            263     9 (fixed)
+  1437                           ;	Chosen strategy is simple_byte
+  1438  0641  3A01               	xorlw	1	; case 1
+  1439  0642  1903               	skipnz
+  1440  0643  2E57               	goto	l1109
+  1441  0644  3A03               	xorlw	3	; case 2
+  1442  0645  1903               	skipnz
+  1443  0646  2E61               	goto	l1111
+  1444  0647  3A01               	xorlw	1	; case 3
+  1445  0648  1903               	skipnz
+  1446  0649  2E6B               	goto	l1113
+  1447  064A  3A07               	xorlw	7	; case 4
+  1448  064B  1903               	skipnz
+  1449  064C  2E75               	goto	l1115
+  1450  064D  3A01               	xorlw	1	; case 5
+  1451  064E  1903               	skipnz
+  1452  064F  2E7F               	goto	l1117
+  1453  0650  3A03               	xorlw	3	; case 6
+  1454  0651  1903               	skipnz
+  1455  0652  2E89               	goto	l1119
+  1456  0653  3A01               	xorlw	1	; case 7
+  1457  0654  1903               	skipnz
+  1458  0655  2E93               	goto	l1121
+  1459  0656  2E9D               	goto	l141
+  1460  0657                     l1109:	
+  1461                           
+  1462                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 478: LCD_putChar('D');
+  1463  0657  3044               	movlw	68
+  1464  0658  269E  120A  118A   	fcall	_LCD_putChar
+  1465                           
+  1466                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 479: LCD_putChar('O');
+  1467  065B  304F               	movlw	79
+  1468  065C  269E  120A  118A   	fcall	_LCD_putChar
+  1469                           
+  1470                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 480: LCD_putChar('M');
+  1471  065F  304D               	movlw	77
+  1472  0660  2E9E               	ljmp	_LCD_putChar
+  1473  0661                     l1111:	
+  1474                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 481: break;
+  1475                           
+  1476                           
+  1477                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 483: LCD_putChar('L');
+  1478  0661  304C               	movlw	76
+  1479  0662  269E  120A  118A   	fcall	_LCD_putChar
+  1480                           
+  1481                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 484: LCD_putChar('U');
+  1482  0665  3055               	movlw	85
+  1483  0666  269E  120A  118A   	fcall	_LCD_putChar
+  1484                           
+  1485                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 485: LCD_putChar('N');
+  1486  0669  304E               	movlw	78
+  1487  066A  2E9E               	ljmp	_LCD_putChar
+  1488  066B                     l1113:	
+  1489                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 486: break;
+  1490                           
+  1491                           
+  1492                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 488: LCD_putChar('M');
+  1493  066B  304D               	movlw	77
+  1494  066C  269E  120A  118A   	fcall	_LCD_putChar
+  1495                           
+  1496                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 489: LCD_putChar('A');
+  1497  066F  3041               	movlw	65
+  1498  0670  269E  120A  118A   	fcall	_LCD_putChar
+  1499                           
+  1500                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 490: LCD_putChar('R');
+  1501  0673  3052               	movlw	82
+  1502  0674  2E9E               	ljmp	_LCD_putChar
+  1503  0675                     l1115:	
+  1504                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 491: break;
+  1505                           
+  1506                           
+  1507                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 493: LCD_putChar('M');
+  1508  0675  304D               	movlw	77
+  1509  0676  269E  120A  118A   	fcall	_LCD_putChar
+  1510                           
+  1511                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 494: LCD_putChar('I');
+  1512  0679  3049               	movlw	73
+  1513  067A  269E  120A  118A   	fcall	_LCD_putChar
+  1514                           
+  1515                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 495: LCD_putChar('E');
+  1516  067D  3045               	movlw	69
+  1517  067E  2E9E               	ljmp	_LCD_putChar
+  1518  067F                     l1117:	
+  1519                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 496: break;
+  1520                           
+  1521                           
+  1522                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 498: LCD_putChar('J');
+  1523  067F  304A               	movlw	74
+  1524  0680  269E  120A  118A   	fcall	_LCD_putChar
+  1525                           
+  1526                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 499: LCD_putChar('U');
+  1527  0683  3055               	movlw	85
+  1528  0684  269E  120A  118A   	fcall	_LCD_putChar
+  1529                           
+  1530                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 500: LCD_putChar('E');
+  1531  0687  3045               	movlw	69
+  1532  0688  2E9E               	ljmp	_LCD_putChar
+  1533  0689                     l1119:	
+  1534                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 501: break;
+  1535                           
+  1536                           
+  1537                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 503: LCD_putChar('V');
+  1538  0689  3056               	movlw	86
+  1539  068A  269E  120A  118A   	fcall	_LCD_putChar
+  1540                           
+  1541                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 504: LCD_putChar('I');
+  1542  068D  3049               	movlw	73
+  1543  068E  269E  120A  118A   	fcall	_LCD_putChar
+  1544                           
+  1545                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 505: LCD_putChar('E');
+  1546  0691  3045               	movlw	69
+  1547  0692  2E9E               	ljmp	_LCD_putChar
+  1548  0693                     l1121:	
+  1549                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 506: break;
+  1550                           
+  1551                           
+  1552                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 508: LCD_putChar('S');
+  1553  0693  3053               	movlw	83
+  1554  0694  269E  120A  118A   	fcall	_LCD_putChar
+  1555                           
+  1556                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 509: LCD_putChar('A');
+  1557  0697  3041               	movlw	65
+  1558  0698  269E  120A  118A   	fcall	_LCD_putChar
+  1559                           
+  1560                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 510: LCD_putChar('B');
+  1561  069B  3042               	movlw	66
+  1562  069C  2E9E               	ljmp	_LCD_putChar
+  1563  069D                     l141:	
+  1564  069D  0008               	return
+  1565  069E                     __end_of_LCDPrintDiaSemana:	
+  1566  069E                     __ptext9:	
+  1567 ;; *************** function _LCD_putChar *****************
+  1568 ;; Defined at:
+  1569 ;;		line 271 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  1570 ;; Parameters:    Size  Location     Type
+  1571 ;;  date            1    wreg     unsigned char 
+  1572 ;; Auto vars:     Size  Location     Type
+  1573 ;;  date            1    4[COMMON] unsigned char 
+  1574 ;; Return value:  Size  Location     Type
+  1575 ;;		None               void
+  1576 ;; Registers used:
+  1577 ;;		wreg, status,2, status,0, pclath, cstack
+  1578 ;; Tracked objects:
+  1579 ;;		On entry : 0/0
+  1580 ;;		On exit  : 0/0
+  1581 ;;		Unchanged: 0/0
+  1582 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1583 ;;      Params:         0       0       0       0       0
+  1584 ;;      Locals:         1       0       0       0       0
+  1585 ;;      Temps:          0       0       0       0       0
+  1586 ;;      Totals:         1       0       0       0       0
+  1587 ;;Total ram usage:        1 bytes
+  1588 ;; Hardware stack levels used:    1
+  1589 ;; Hardware stack levels required when called:    2
+  1590 ;; This function calls:
+  1591 ;;		_LCD_send
+  1592 ;; This function is called by:
+  1593 ;;		_LCDPrintDiaSemana
+  1594 ;;		_LCDPrintNumero
+  1595 ;;		_timeShow
+  1596 ;; This function uses a non-reentrant model
+  1597 ;;
+  1598                           
+  1599                           
+  1600                           ;psect for function _LCD_putChar
+  1601  069E                     _LCD_putChar:	
+  1602                           
+  1603                           ;incstack = 0
+  1604                           ; Regs used in _LCD_putChar: [wreg+status,2+status,0+pclath+cstack]
+  1605                           ;LCD_putChar@date stored from wreg
+  1606  069E  00F4               	movwf	LCD_putChar@date
+  1607                           
+  1608                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 273: RB2 = 1;
+  1609  069F  1283               	bcf	3,5	;RP0=0, select bank0
+  1610  06A0  1303               	bcf	3,6	;RP1=0, select bank0
+  1611  06A1  1506               	bsf	6,2	;volatile
+  1612                           
+  1613                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 274: LCD_send(date);
+  1614  06A2  0874               	movf	LCD_putChar@date,w
+  1615  06A3  2EB3               	ljmp	_LCD_send
+  1616  06A4                     __end_of_LCD_putChar:	
+  1617  06A4                     __ptext7:	
+  1618 ;; *************** function _LCDPrintNumero *****************
+  1619 ;; Defined at:
+  1620 ;;		line 579 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  1621 ;; Parameters:    Size  Location     Type
+  1622 ;;  numero          1    wreg     unsigned char 
+  1623 ;; Auto vars:     Size  Location     Type
+  1624 ;;  numero          1    5[COMMON] unsigned char 
+  1625 ;; Return value:  Size  Location     Type
+  1626 ;;		None               void
+  1627 ;; Registers used:
+  1628 ;;		wreg, status,2, status,0, pclath, cstack
+  1629 ;; Tracked objects:
+  1630 ;;		On entry : 0/0
+  1631 ;;		On exit  : 0/0
+  1632 ;;		Unchanged: 0/0
+  1633 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1634 ;;      Params:         0       0       0       0       0
+  1635 ;;      Locals:         1       0       0       0       0
+  1636 ;;      Temps:          0       0       0       0       0
+  1637 ;;      Totals:         1       0       0       0       0
+  1638 ;;Total ram usage:        1 bytes
+  1639 ;; Hardware stack levels used:    1
+  1640 ;; Hardware stack levels required when called:    3
+  1641 ;; This function calls:
+  1642 ;;		_LCD_putChar
+  1643 ;;		_decimalToBCD
+  1644 ;; This function is called by:
+  1645 ;;		_timeShow
+  1646 ;;		_cicloTimeSet
+  1647 ;;		_timeSet
+  1648 ;; This function uses a non-reentrant model
+  1649 ;;
+  1650                           
+  1651                           
+  1652                           ;psect for function _LCDPrintNumero
+  1653  06A4                     _LCDPrintNumero:	
+  1654                           
+  1655                           ;incstack = 0
+  1656                           ; Regs used in _LCDPrintNumero: [wreg+status,2+status,0+pclath+cstack]
+  1657                           ;LCDPrintNumero@numero stored from wreg
+  1658  06A4  00F5               	movwf	LCDPrintNumero@numero
+  1659                           
+  1660                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 581: numero = decimalToBCD(numero);
+  1661  06A5  27AC  120A  118A   	fcall	_decimalToBCD
+  1662  06A8  00F5               	movwf	LCDPrintNumero@numero
+  1663                           
+  1664                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 582: LCD_putChar((numero>>4) + 48);
+  1665  06A9  0E75               	swapf	LCDPrintNumero@numero,w
+  1666  06AA  390F               	andlw	15
+  1667  06AB  3E30               	addlw	48
+  1668  06AC  269E  120A  118A   	fcall	_LCD_putChar
+  1669                           
+  1670                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 583: LCD_putChar((numero & 0x0F) + 48);
+  1671  06AF  0875               	movf	LCDPrintNumero@numero,w
+  1672  06B0  390F               	andlw	15
+  1673  06B1  3E30               	addlw	48
+  1674  06B2  2E9E               	ljmp	_LCD_putChar
+  1675  06B3                     __end_of_LCDPrintNumero:	
+  1676  06B3                     __ptext13:	
+  1677 ;; *************** function _LCD_send *****************
+  1678 ;; Defined at:
+  1679 ;;		line 259 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  1680 ;; Parameters:    Size  Location     Type
+  1681 ;;  date            1    wreg     unsigned char 
+  1682 ;; Auto vars:     Size  Location     Type
+  1683 ;;  date            1    3[COMMON] unsigned char 
+  1684 ;; Return value:  Size  Location     Type
+  1685 ;;		None               void
+  1686 ;; Registers used:
+  1687 ;;		wreg, status,2, status,0, pclath, cstack
+  1688 ;; Tracked objects:
+  1689 ;;		On entry : 300/0
+  1690 ;;		On exit  : 0/0
+  1691 ;;		Unchanged: 0/0
+  1692 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1693 ;;      Params:         0       0       0       0       0
+  1694 ;;      Locals:         1       0       0       0       0
+  1695 ;;      Temps:          0       0       0       0       0
+  1696 ;;      Totals:         1       0       0       0       0
+  1697 ;;Total ram usage:        1 bytes
+  1698 ;; Hardware stack levels used:    1
+  1699 ;; Hardware stack levels required when called:    1
+  1700 ;; This function calls:
+  1701 ;;		_LCD_send4Bits
+  1702 ;; This function is called by:
+  1703 ;;		_LCD_command
+  1704 ;;		_LCD_putChar
+  1705 ;; This function uses a non-reentrant model
+  1706 ;;
+  1707                           
+  1708                           
+  1709                           ;psect for function _LCD_send
+  1710  06B3                     _LCD_send:	
+  1711                           
+  1712                           ;incstack = 0
+  1713                           ; Regs used in _LCD_send: [wreg+status,2+status,0+pclath+cstack]
+  1714                           ;LCD_send@date stored from wreg
+  1715  06B3  00F3               	movwf	LCD_send@date
+  1716                           
+  1717                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 261: LCD_send4Bits(date);
+  1718  06B4  0873               	movf	LCD_send@date,w
+  1719  06B5  25A6  120A  118A   	fcall	_LCD_send4Bits
+  1720                           
+  1721                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 262: LCD_send4Bits(date<<4);
+  1722  06B8  0E73               	swapf	LCD_send@date,w
+  1723  06B9  39F0               	andlw	240
+  1724  06BA  2DA6               	ljmp	_LCD_send4Bits
+  1725  06BB                     __end_of_LCD_send:	
+  1726  06BB                     __ptext10:	
+  1727 ;; *************** function _setup *****************
+  1728 ;; Defined at:
+  1729 ;;		line 704 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  1730 ;; Parameters:    Size  Location     Type
+  1731 ;;		None
+  1732 ;; Auto vars:     Size  Location     Type
+  1733 ;;		None
+  1734 ;; Return value:  Size  Location     Type
+  1735 ;;		None               void
+  1736 ;; Registers used:
+  1737 ;;		wreg, status,2, status,0, pclath, cstack
+  1738 ;; Tracked objects:
+  1739 ;;		On entry : B00/0
+  1740 ;;		On exit  : 0/0
+  1741 ;;		Unchanged: 0/0
+  1742 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1743 ;;      Params:         0       0       0       0       0
+  1744 ;;      Locals:         0       0       0       0       0
+  1745 ;;      Temps:          0       0       0       0       0
+  1746 ;;      Totals:         0       0       0       0       0
+  1747 ;;Total ram usage:        0 bytes
+  1748 ;; Hardware stack levels used:    1
+  1749 ;; Hardware stack levels required when called:    4
+  1750 ;; This function calls:
+  1751 ;;		_I2C_start
+  1752 ;;		_I2C_stop
+  1753 ;;		_I2C_writeByte
+  1754 ;;		_LCD_init
+  1755 ;; This function is called by:
+  1756 ;;		_main
+  1757 ;; This function uses a non-reentrant model
+  1758 ;;
+  1759                           
+  1760                           
+  1761                           ;psect for function _setup
+  1762  06BB                     _setup:	
+  1763                           
+  1764                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 706: CMCON = 0x07;
+  1765                           
+  1766                           ;incstack = 0
+  1767                           ; Regs used in _setup: [wreg+status,2+status,0+pclath+cstack]
+  1768  06BB  3007               	movlw	7
+  1769  06BC  1683               	bsf	3,5	;RP0=1, select bank1
+  1770  06BD  009C               	movwf	28	;volatile
+  1771                           
+  1772                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 707: ADCON1 = 0x06;
+  1773  06BE  3006               	movlw	6
+  1774  06BF  009F               	movwf	31	;volatile
+  1775                           
+  1776                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 708: ADCON0 = 0x00;
+  1777  06C0  1283               	bcf	3,5	;RP0=0, select bank0
+  1778  06C1  019F               	clrf	31	;volatile
+  1779                           
+  1780                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 709: GIE = 0;
+  1781  06C2  138B               	bcf	11,7	;volatile
+  1782                           
+  1783                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 711: TRISA0 = 1;
+  1784  06C3  1683               	bsf	3,5	;RP0=1, select bank1
+  1785  06C4  1405               	bsf	5,0	;volatile
+  1786                           
+  1787                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 712: TRISA1 = 1;
+  1788  06C5  1485               	bsf	5,1	;volatile
+  1789                           
+  1790                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 713: TRISA2 = 1;
+  1791  06C6  1505               	bsf	5,2	;volatile
+  1792                           
+  1793                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 714: TRISA3 = 1;
+  1794  06C7  1585               	bsf	5,3	;volatile
+  1795                           
+  1796                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 716: I2C_start();
+  1797  06C8  27BB  120A  118A   	fcall	_I2C_start
+  1798                           
+  1799                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 717: I2C_writeByte(0xD0);
+  1800  06CB  30D0               	movlw	208
+  1801  06CC  2790  120A  118A   	fcall	_I2C_writeByte
+  1802                           
+  1803                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 718: I2C_writeByte(0x07);
+  1804  06CF  3007               	movlw	7
+  1805  06D0  2790  120A  118A   	fcall	_I2C_writeByte
+  1806                           
+  1807                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 719: I2C_writeByte(0x90);
+  1808  06D3  3090               	movlw	144
+  1809  06D4  2790  120A  118A   	fcall	_I2C_writeByte
+  1810                           
+  1811                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 720: I2C_stop();
+  1812  06D7  27C6  120A  118A   	fcall	_I2C_stop
+  1813                           
+  1814                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 722: LCD_init();
+  1815  06DA  2D55               	ljmp	l1147
+  1816  06DB                     __end_of_setup:	
+  1817  06DB                     __ptext17:	
+  1818 ;; *************** function _DS1307_timeRead *****************
+  1819 ;; Defined at:
+  1820 ;;		line 426 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  1821 ;; Parameters:    Size  Location     Type
+  1822 ;;		None
+  1823 ;; Auto vars:     Size  Location     Type
+  1824 ;;		None
+  1825 ;; Return value:  Size  Location     Type
+  1826 ;;		None               void
+  1827 ;; Registers used:
+  1828 ;;		wreg, status,2, status,0, pclath, cstack
+  1829 ;; Tracked objects:
+  1830 ;;		On entry : 300/0
+  1831 ;;		On exit  : 300/0
+  1832 ;;		Unchanged: 0/0
+  1833 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1834 ;;      Params:         0       0       0       0       0
+  1835 ;;      Locals:         0       0       0       0       0
+  1836 ;;      Temps:          0       0       0       0       0
+  1837 ;;      Totals:         0       0       0       0       0
+  1838 ;;Total ram usage:        0 bytes
+  1839 ;; Hardware stack levels used:    1
+  1840 ;; Hardware stack levels required when called:    1
+  1841 ;; This function calls:
+  1842 ;;		_BCDToDecimal
+  1843 ;;		_I2C_readByte
+  1844 ;;		_I2C_start
+  1845 ;;		_I2C_stop
+  1846 ;;		_I2C_writeByte
+  1847 ;; This function is called by:
+  1848 ;;		_main
+  1849 ;; This function uses a non-reentrant model
+  1850 ;;
+  1851                           
+  1852                           
+  1853                           ;psect for function _DS1307_timeRead
+  1854  06DB                     _DS1307_timeRead:	
+  1855                           
+  1856                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 428: I2C_start();
+  1857                           
+  1858                           ;incstack = 0
+  1859                           ; Regs used in _DS1307_timeRead: [wreg+status,2+status,0+pclath+cstack]
+  1860  06DB  27BB  120A  118A   	fcall	_I2C_start
+  1861                           
+  1862                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 429: I2C_writeByte(0xD0);
+  1863  06DE  30D0               	movlw	208
+  1864  06DF  2790  120A  118A   	fcall	_I2C_writeByte
+  1865                           
+  1866                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 430: I2C_writeByte(0x00);
+  1867  06E2  3000               	movlw	0
+  1868  06E3  2790  120A  118A   	fcall	_I2C_writeByte
+  1869                           
+  1870                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 431: I2C_start();
+  1871  06E6  27BB  120A  118A   	fcall	_I2C_start
+  1872                           
+  1873                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 432: I2C_writeByte(0xD1);
+  1874  06E9  30D1               	movlw	209
+  1875  06EA  2790  120A  118A   	fcall	_I2C_writeByte
+  1876                           
+  1877                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 433: DS1307_Segundo = BCDToDecimal(I2C_readByte(1)
+      +                          );
+  1878  06ED  3001               	movlw	1
+  1879  06EE  2723  120A  118A   	fcall	_I2C_readByte
+  1880  06F1  2744  120A  118A   	fcall	_BCDToDecimal
+  1881  06F4  00A6               	movwf	_DS1307_Segundo
+  1882                           
+  1883                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 434: DS1307_Minuto = BCDToDecimal(I2C_readByte(1))
+      +                          ;
+  1884  06F5  3001               	movlw	1
+  1885  06F6  2723  120A  118A   	fcall	_I2C_readByte
+  1886  06F9  2744  120A  118A   	fcall	_BCDToDecimal
+  1887  06FC  00A5               	movwf	_DS1307_Minuto
+  1888                           
+  1889                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 435: DS1307_Hora = BCDToDecimal(I2C_readByte(1));
+  1890  06FD  3001               	movlw	1
+  1891  06FE  2723  120A  118A   	fcall	_I2C_readByte
+  1892  0701  2744  120A  118A   	fcall	_BCDToDecimal
+  1893  0704  00A3               	movwf	_DS1307_Hora
+  1894                           
+  1895                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 436: DS1307_DiaSemana = I2C_readByte(1);
+  1896  0705  3001               	movlw	1
+  1897  0706  2723  120A  118A   	fcall	_I2C_readByte
+  1898  0709  00A2               	movwf	_DS1307_DiaSemana
+  1899                           
+  1900                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 437: DS1307_Dia = BCDToDecimal(I2C_readByte(1));
+  1901  070A  3001               	movlw	1
+  1902  070B  2723  120A  118A   	fcall	_I2C_readByte
+  1903  070E  2744  120A  118A   	fcall	_BCDToDecimal
+  1904  0711  00A1               	movwf	_DS1307_Dia
+  1905                           
+  1906                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 438: DS1307_Mes = BCDToDecimal(I2C_readByte(1));
+  1907  0712  3001               	movlw	1
+  1908  0713  2723  120A  118A   	fcall	_I2C_readByte
+  1909  0716  2744  120A  118A   	fcall	_BCDToDecimal
+  1910  0719  00A4               	movwf	_DS1307_Mes
+  1911                           
+  1912                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 439: DS1307_Ano = BCDToDecimal(I2C_readByte(0));
+  1913  071A  3000               	movlw	0
+  1914  071B  2723  120A  118A   	fcall	_I2C_readByte
+  1915  071E  2744  120A  118A   	fcall	_BCDToDecimal
+  1916  0721  00A0               	movwf	_DS1307_Ano
+  1917                           
+  1918                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 441: I2C_stop();
+  1919  0722  2FC6               	ljmp	l1177
+  1920  0723                     __end_of_DS1307_timeRead:	
+  1921  0723                     __ptext21:	
+  1922 ;; *************** function _I2C_readByte *****************
+  1923 ;; Defined at:
+  1924 ;;		line 359 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  1925 ;; Parameters:    Size  Location     Type
+  1926 ;;  ACKByte         1    wreg     unsigned char 
+  1927 ;; Auto vars:     Size  Location     Type
+  1928 ;;  ACKByte         1    0[COMMON] unsigned char 
+  1929 ;;  LoopCounter     1    2[COMMON] unsigned char 
+  1930 ;;  dato            1    1[COMMON] unsigned char 
+  1931 ;; Return value:  Size  Location     Type
+  1932 ;;                  1    wreg      unsigned char 
+  1933 ;; Registers used:
+  1934 ;;		wreg, status,2, status,0
+  1935 ;; Tracked objects:
+  1936 ;;		On entry : 200/100
+  1937 ;;		On exit  : 300/0
+  1938 ;;		Unchanged: 0/0
+  1939 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1940 ;;      Params:         0       0       0       0       0
+  1941 ;;      Locals:         3       0       0       0       0
+  1942 ;;      Temps:          0       0       0       0       0
+  1943 ;;      Totals:         3       0       0       0       0
+  1944 ;;Total ram usage:        3 bytes
+  1945 ;; Hardware stack levels used:    1
+  1946 ;; This function calls:
+  1947 ;;		Nothing
+  1948 ;; This function is called by:
+  1949 ;;		_DS1307_timeRead
+  1950 ;; This function uses a non-reentrant model
+  1951 ;;
+  1952                           
+  1953                           
+  1954                           ;psect for function _I2C_readByte
+  1955  0723                     _I2C_readByte:	
+  1956                           
+  1957                           ;incstack = 0
+  1958                           ; Regs used in _I2C_readByte: [wreg+status,2+status,0]
+  1959                           ;I2C_readByte@ACKByte stored from wreg
+  1960  0723  00F0               	movwf	I2C_readByte@ACKByte
+  1961                           
+  1962                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 361: uint8_t LoopCounter;
+  1963                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 362: uint8_t dato=0;
+  1964  0724  01F1               	clrf	I2C_readByte@dato
+  1965                           
+  1966                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 364: TRISB0 = 1;
+  1967  0725  1683               	bsf	3,5	;RP0=1, select bank1
+  1968  0726  1406               	bsf	6,0	;volatile
+  1969                           
+  1970                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 365: for(LoopCounter=0; LoopCounter<8; LoopCounter
+      +                          ++)
+  1971  0727  01F2               	clrf	I2C_readByte@LoopCounter
+  1972  0728                     l108:	
+  1973                           
+  1974                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 366: {
+  1975                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 367: RB1 = 1;
+  1976  0728  1283               	bcf	3,5	;RP0=0, select bank0
+  1977  0729  1486               	bsf	6,1	;volatile
+  1978                           
+  1979                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 368: dato<<=1;
+  1980  072A  1003               	clrc
+  1981  072B  0DF1               	rlf	I2C_readByte@dato,f
+  1982                           
+  1983                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 369: if(RB0) dato|=1;
+  1984  072C  1806               	btfsc	6,0	;volatile
+  1985  072D  1471               	bsf	I2C_readByte@dato,0
+  1986                           
+  1987                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 370: RB1 = 0;
+  1988  072E  1086               	bcf	6,1	;volatile
+  1989  072F  3008               	movlw	8
+  1990  0730  0AF2               	incf	I2C_readByte@LoopCounter,f
+  1991  0731  0272               	subwf	I2C_readByte@LoopCounter,w
+  1992  0732  1C03               	skipc
+  1993  0733  2F28               	goto	l108
+  1994                           
+  1995                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 371: }
+  1996                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 373: TRISB0 = 0;
+  1997  0734  1683               	bsf	3,5	;RP0=1, select bank1
+  1998  0735  1006               	bcf	6,0	;volatile
+  1999                           
+  2000                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 374: RB0 = !ACKByte;
+  2001  0736  0870               	movf	I2C_readByte@ACKByte,w
+  2002  0737  1D03               	btfss	3,2
+  2003  0738  2F3D               	goto	u660
+  2004  0739  1283               	bcf	3,5	;RP0=0, select bank0
+  2005  073A  1303               	bcf	3,6	;RP1=0, select bank0
+  2006  073B  1406               	bsf	6,0	;volatile
+  2007  073C  2F40               	goto	l1213
+  2008  073D                     u660:	
+  2009  073D  1283               	bcf	3,5	;RP0=0, select bank0
+  2010  073E  1303               	bcf	3,6	;RP1=0, select bank0
+  2011  073F  1006               	bcf	6,0	;volatile
+  2012  0740                     l1213:	
+  2013                           
+  2014                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 375: RB1 = 1;
+  2015  0740  1486               	bsf	6,1	;volatile
+  2016                           
+  2017                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 376: RB1 = 0;
+  2018  0741  1086               	bcf	6,1	;volatile
+  2019                           
+  2020                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 377: return dato;
+  2021  0742  0871               	movf	I2C_readByte@dato,w
+  2022  0743  0008               	return
+  2023  0744                     __end_of_I2C_readByte:	
+  2024  0744                     __ptext22:	
+  2025 ;; *************** function _BCDToDecimal *****************
+  2026 ;; Defined at:
+  2027 ;;		line 387 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  2028 ;; Parameters:    Size  Location     Type
+  2029 ;;  bcdByte         1    wreg     unsigned char 
+  2030 ;; Auto vars:     Size  Location     Type
+  2031 ;;  bcdByte         1    1[COMMON] unsigned char 
+  2032 ;;  decimal         1    0[COMMON] unsigned char 
+  2033 ;; Return value:  Size  Location     Type
+  2034 ;;                  1    wreg      unsigned char 
+  2035 ;; Registers used:
+  2036 ;;		wreg, status,2, status,0
+  2037 ;; Tracked objects:
+  2038 ;;		On entry : 300/0
+  2039 ;;		On exit  : 300/0
+  2040 ;;		Unchanged: 300/0
+  2041 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  2042 ;;      Params:         0       0       0       0       0
+  2043 ;;      Locals:         2       0       0       0       0
+  2044 ;;      Temps:          0       0       0       0       0
+  2045 ;;      Totals:         2       0       0       0       0
+  2046 ;;Total ram usage:        2 bytes
+  2047 ;; Hardware stack levels used:    1
+  2048 ;; This function calls:
+  2049 ;;		Nothing
+  2050 ;; This function is called by:
+  2051 ;;		_DS1307_timeRead
+  2052 ;; This function uses a non-reentrant model
+  2053 ;;
+  2054                           
+  2055                           
+  2056                           ;psect for function _BCDToDecimal
+  2057  0744                     _BCDToDecimal:	
+  2058                           
+  2059                           ;incstack = 0
+  2060                           ; Regs used in _BCDToDecimal: [wreg+status,2+status,0]
+  2061                           ;BCDToDecimal@bcdByte stored from wreg
+  2062  0744  00F1               	movwf	BCDToDecimal@bcdByte
+  2063                           
+  2064                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 389: uint8_t decimal = 0;
+  2065  0745  01F0               	clrf	BCDToDecimal@decimal
+  2066  0746                     l1227:	
+  2067                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 391: while(bcdByte > 0x09)
+  2068                           
+  2069  0746  300A               	movlw	10
+  2070  0747  0271               	subwf	BCDToDecimal@bcdByte,w
+  2071  0748  1C03               	btfss	3,0
+  2072  0749  2F4F               	goto	l1229
+  2073                           
+  2074                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 392: {
+  2075                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 393: bcdByte -= 0x10;
+  2076  074A  3010               	movlw	16
+  2077  074B  02F1               	subwf	BCDToDecimal@bcdByte,f
+  2078                           
+  2079                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 394: decimal += 10;
+  2080  074C  300A               	movlw	10
+  2081  074D  07F0               	addwf	BCDToDecimal@decimal,f
+  2082  074E  2F46               	goto	l1227
+  2083  074F                     l1229:	
+  2084                           
+  2085                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 395: }
+  2086                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 396: decimal += bcdByte;
+  2087  074F  0871               	movf	BCDToDecimal@bcdByte,w
+  2088  0750  07F0               	addwf	BCDToDecimal@decimal,f
+  2089                           
+  2090                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 397: return decimal;
+  2091  0751  0870               	movf	BCDToDecimal@decimal,w
+  2092  0752  0008               	return
+  2093  0753                     __end_of_BCDToDecimal:	
+  2094  007E                     btemp	set	126	;btemp
+  2095  007E                     wtemp	set	126
+  2096  007E                     wtemp0	set	126
+  2097  0080                     wtemp1	set	128
+  2098  0082                     wtemp2	set	130
+  2099  0084                     wtemp3	set	132
+  2100  0086                     wtemp4	set	134
+  2101  0088                     wtemp5	set	136
+  2102  007F                     wtemp6	set	127
+  2103  007E                     ttemp	set	126
+  2104  007E                     ttemp0	set	126
+  2105  0081                     ttemp1	set	129
+  2106  0084                     ttemp2	set	132
+  2107  0087                     ttemp3	set	135
+  2108  007F                     ttemp4	set	127
+  2109  007E                     ltemp	set	126
+  2110  007E                     ltemp0	set	126
+  2111  0082                     ltemp1	set	130
+  2112  0086                     ltemp2	set	134
+  2113  0080                     ltemp3	set	128
+  2114  0753                     __ptext15:	
+  2115 ;; *************** function _DS1307_timeWrite *****************
+  2116 ;; Defined at:
+  2117 ;;		line 450 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  2118 ;; Parameters:    Size  Location     Type
+  2119 ;;		None
+  2120 ;; Auto vars:     Size  Location     Type
+  2121 ;;		None
+  2122 ;; Return value:  Size  Location     Type
+  2123 ;;		None               void
+  2124 ;; Registers used:
+  2125 ;;		wreg, status,2, status,0, pclath, cstack
+  2126 ;; Tracked objects:
+  2127 ;;		On entry : 0/0
+  2128 ;;		On exit  : 300/0
+  2129 ;;		Unchanged: 0/0
+  2130 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  2131 ;;      Params:         0       0       0       0       0
+  2132 ;;      Locals:         0       0       0       0       0
+  2133 ;;      Temps:          0       0       0       0       0
+  2134 ;;      Totals:         0       0       0       0       0
+  2135 ;;Total ram usage:        0 bytes
+  2136 ;; Hardware stack levels used:    1
+  2137 ;; Hardware stack levels required when called:    1
+  2138 ;; This function calls:
+  2139 ;;		_I2C_start
+  2140 ;;		_I2C_stop
+  2141 ;;		_I2C_writeByte
+  2142 ;;		_decimalToBCD
+  2143 ;; This function is called by:
+  2144 ;;		_main
+  2145 ;; This function uses a non-reentrant model
+  2146 ;;
+  2147                           
+  2148                           
+  2149                           ;psect for function _DS1307_timeWrite
+  2150  0753                     _DS1307_timeWrite:	
+  2151                           
+  2152                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 452: I2C_start();
+  2153                           
+  2154                           ;incstack = 0
+  2155                           ; Regs used in _DS1307_timeWrite: [wreg+status,2+status,0+pclath+cstack]
+  2156  0753  27BB  120A  118A   	fcall	_I2C_start
+  2157                           
+  2158                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 453: I2C_writeByte(0xD0);
+  2159  0756  30D0               	movlw	208
+  2160  0757  2790  120A  118A   	fcall	_I2C_writeByte
+  2161                           
+  2162                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 454: I2C_writeByte(0x00);
+  2163  075A  3000               	movlw	0
+  2164  075B  2790  120A  118A   	fcall	_I2C_writeByte
+  2165                           
+  2166                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 455: I2C_writeByte(0);
+  2167  075E  3000               	movlw	0
+  2168  075F  2790  120A  118A   	fcall	_I2C_writeByte
+  2169                           
+  2170                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 456: I2C_writeByte(decimalToBCD(DS1307_Minuto));
+  2171  0762  1283               	bcf	3,5	;RP0=0, select bank0
+  2172  0763  0825               	movf	_DS1307_Minuto,w
+  2173  0764  27AC  120A  118A   	fcall	_decimalToBCD
+  2174  0767  2790  120A  118A   	fcall	_I2C_writeByte
+  2175                           
+  2176                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 457: I2C_writeByte(decimalToBCD(DS1307_Hora));
+  2177  076A  1283               	bcf	3,5	;RP0=0, select bank0
+  2178  076B  0823               	movf	_DS1307_Hora,w
+  2179  076C  27AC  120A  118A   	fcall	_decimalToBCD
+  2180  076F  2790  120A  118A   	fcall	_I2C_writeByte
+  2181                           
+  2182                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 458: I2C_writeByte(DS1307_DiaSemana);
+  2183  0772  1283               	bcf	3,5	;RP0=0, select bank0
+  2184  0773  0822               	movf	_DS1307_DiaSemana,w
+  2185  0774  2790  120A  118A   	fcall	_I2C_writeByte
+  2186                           
+  2187                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 459: I2C_writeByte(decimalToBCD(DS1307_Dia));
+  2188  0777  1283               	bcf	3,5	;RP0=0, select bank0
+  2189  0778  0821               	movf	_DS1307_Dia,w
+  2190  0779  27AC  120A  118A   	fcall	_decimalToBCD
+  2191  077C  2790  120A  118A   	fcall	_I2C_writeByte
+  2192                           
+  2193                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 460: I2C_writeByte(decimalToBCD(DS1307_Mes));
+  2194  077F  1283               	bcf	3,5	;RP0=0, select bank0
+  2195  0780  0824               	movf	_DS1307_Mes,w
+  2196  0781  27AC  120A  118A   	fcall	_decimalToBCD
+  2197  0784  2790  120A  118A   	fcall	_I2C_writeByte
+  2198                           
+  2199                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 461: I2C_writeByte(decimalToBCD(DS1307_Ano));
+  2200  0787  1283               	bcf	3,5	;RP0=0, select bank0
+  2201  0788  0820               	movf	_DS1307_Ano,w
+  2202  0789  27AC  120A  118A   	fcall	_decimalToBCD
+  2203  078C  2790  120A  118A   	fcall	_I2C_writeByte
+  2204                           
+  2205                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 462: I2C_stop();
+  2206  078F  2FC6               	ljmp	l1177
+  2207  0790                     __end_of_DS1307_timeWrite:	
+  2208  0790                     __ptext18:	
+  2209 ;; *************** function _I2C_writeByte *****************
+  2210 ;; Defined at:
+  2211 ;;		line 339 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  2212 ;; Parameters:    Size  Location     Type
+  2213 ;;  dato            1    wreg     unsigned char 
+  2214 ;; Auto vars:     Size  Location     Type
+  2215 ;;  dato            1    1[COMMON] unsigned char 
+  2216 ;;  LoopCounter     1    2[COMMON] unsigned char 
+  2217 ;;  ACKbit          1    0        unsigned char 
+  2218 ;; Return value:  Size  Location     Type
+  2219 ;;                  1    wreg      unsigned char 
+  2220 ;; Registers used:
+  2221 ;;		wreg, status,2, status,0
+  2222 ;; Tracked objects:
+  2223 ;;		On entry : 0/0
+  2224 ;;		On exit  : 300/100
+  2225 ;;		Unchanged: 0/0
+  2226 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  2227 ;;      Params:         0       0       0       0       0
+  2228 ;;      Locals:         3       0       0       0       0
+  2229 ;;      Temps:          0       0       0       0       0
+  2230 ;;      Totals:         3       0       0       0       0
+  2231 ;;Total ram usage:        3 bytes
+  2232 ;; Hardware stack levels used:    1
+  2233 ;; This function calls:
+  2234 ;;		Nothing
+  2235 ;; This function is called by:
+  2236 ;;		_DS1307_timeRead
+  2237 ;;		_DS1307_timeWrite
+  2238 ;;		_setup
+  2239 ;; This function uses a non-reentrant model
+  2240 ;;
+  2241                           
+  2242                           
+  2243                           ;psect for function _I2C_writeByte
+  2244  0790                     _I2C_writeByte:	
+  2245                           
+  2246                           ;incstack = 0
+  2247                           ; Regs used in _I2C_writeByte: [wreg+status,2+status,0]
+  2248                           ;I2C_writeByte@dato stored from wreg
+  2249  0790  00F1               	movwf	I2C_writeByte@dato
+  2250                           
+  2251                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 341: uint8_t LoopCounter;
+  2252                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 342: bool ACKbit;
+  2253                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 344: for(LoopCounter=0; LoopCounter<8; LoopCounter
+      +                          ++)
+  2254  0791  01F2               	clrf	I2C_writeByte@LoopCounter
+  2255  0792                     l103:	
+  2256                           
+  2257                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 345: {
+  2258                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 346: RB0 = (dato & 0x80) == 0x80;
+  2259  0792  1FF1               	btfss	I2C_writeByte@dato,7
+  2260  0793  2F98               	goto	u610
+  2261  0794  1283               	bcf	3,5	;RP0=0, select bank0
+  2262  0795  1303               	bcf	3,6	;RP1=0, select bank0
+  2263  0796  1406               	bsf	6,0	;volatile
+  2264  0797  2F9B               	goto	u624
+  2265  0798                     u610:	
+  2266  0798  1283               	bcf	3,5	;RP0=0, select bank0
+  2267  0799  1303               	bcf	3,6	;RP1=0, select bank0
+  2268  079A  1006               	bcf	6,0	;volatile
+  2269  079B                     u624:	
+  2270                           
+  2271                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 347: RB1 = 1;
+  2272  079B  1486               	bsf	6,1	;volatile
+  2273                           
+  2274                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 348: dato<<=1;
+  2275  079C  1003               	clrc
+  2276  079D  0DF1               	rlf	I2C_writeByte@dato,f
+  2277                           
+  2278                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 349: RB1 = 0;
+  2279  079E  1086               	bcf	6,1	;volatile
+  2280  079F  3008               	movlw	8
+  2281  07A0  0AF2               	incf	I2C_writeByte@LoopCounter,f
+  2282  07A1  0272               	subwf	I2C_writeByte@LoopCounter,w
+  2283  07A2  1C03               	skipc
+  2284  07A3  2F92               	goto	l103
+  2285                           
+  2286                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 350: }
+  2287                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 352: TRISB0 = 1;
+  2288  07A4  1683               	bsf	3,5	;RP0=1, select bank1
+  2289  07A5  1406               	bsf	6,0	;volatile
+  2290                           
+  2291                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 353: RB1 = 1;
+  2292  07A6  1283               	bcf	3,5	;RP0=0, select bank0
+  2293  07A7  1486               	bsf	6,1	;volatile
+  2294                           
+  2295                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 355: RB1 = 0;
+  2296  07A8  1086               	bcf	6,1	;volatile
+  2297                           
+  2298                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 356: TRISB0 = 0;
+  2299  07A9  1683               	bsf	3,5	;RP0=1, select bank1
+  2300  07AA  1006               	bcf	6,0	;volatile
+  2301  07AB  0008               	return
+  2302  07AC                     __end_of_I2C_writeByte:	
+  2303  07AC                     __ptext16:	
+  2304 ;; *************** function _decimalToBCD *****************
+  2305 ;; Defined at:
+  2306 ;;		line 407 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  2307 ;; Parameters:    Size  Location     Type
+  2308 ;;  decimalByte     1    wreg     unsigned char 
+  2309 ;; Auto vars:     Size  Location     Type
+  2310 ;;  decimalByte     1    1[COMMON] unsigned char 
+  2311 ;;  BCDByte         1    0[COMMON] unsigned char 
+  2312 ;; Return value:  Size  Location     Type
+  2313 ;;                  1    wreg      unsigned char 
+  2314 ;; Registers used:
+  2315 ;;		wreg, status,2, status,0
+  2316 ;; Tracked objects:
+  2317 ;;		On entry : 0/0
+  2318 ;;		On exit  : 0/0
+  2319 ;;		Unchanged: 0/0
+  2320 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  2321 ;;      Params:         0       0       0       0       0
+  2322 ;;      Locals:         2       0       0       0       0
+  2323 ;;      Temps:          0       0       0       0       0
+  2324 ;;      Totals:         2       0       0       0       0
+  2325 ;;Total ram usage:        2 bytes
+  2326 ;; Hardware stack levels used:    1
+  2327 ;; This function calls:
+  2328 ;;		Nothing
+  2329 ;; This function is called by:
+  2330 ;;		_DS1307_timeWrite
+  2331 ;;		_LCDPrintNumero
+  2332 ;; This function uses a non-reentrant model
+  2333 ;;
+  2334                           
+  2335                           
+  2336                           ;psect for function _decimalToBCD
+  2337  07AC                     _decimalToBCD:	
+  2338                           
+  2339                           ;incstack = 0
+  2340                           ; Regs used in _decimalToBCD: [wreg+status,2+status,0]
+  2341                           ;decimalToBCD@decimalByte stored from wreg
+  2342  07AC  00F1               	movwf	decimalToBCD@decimalByte
+  2343                           
+  2344                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 409: uint8_t BCDByte = 0;
+  2345  07AD  01F0               	clrf	decimalToBCD@BCDByte
+  2346  07AE                     l1093:	
+  2347                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 411: while(decimalByte > 9)
+  2348                           
+  2349  07AE  300A               	movlw	10
+  2350  07AF  0271               	subwf	decimalToBCD@decimalByte,w
+  2351  07B0  1C03               	btfss	3,0
+  2352  07B1  2FB7               	goto	l1095
+  2353                           
+  2354                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 412: {
+  2355                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 413: BCDByte += 0x10;
+  2356  07B2  3010               	movlw	16
+  2357  07B3  07F0               	addwf	decimalToBCD@BCDByte,f
+  2358                           
+  2359                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 414: decimalByte -= 10;
+  2360  07B4  300A               	movlw	10
+  2361  07B5  02F1               	subwf	decimalToBCD@decimalByte,f
+  2362  07B6  2FAE               	goto	l1093
+  2363  07B7                     l1095:	
+  2364                           
+  2365                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 415: }
+  2366                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 416: BCDByte += decimalByte;
+  2367  07B7  0871               	movf	decimalToBCD@decimalByte,w
+  2368  07B8  07F0               	addwf	decimalToBCD@BCDByte,f
+  2369                           
+  2370                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 417: return BCDByte;
+  2371  07B9  0870               	movf	decimalToBCD@BCDByte,w
+  2372  07BA  0008               	return
+  2373  07BB                     __end_of_decimalToBCD:	
+  2374  07BB                     __ptext20:	
+  2375 ;; *************** function _I2C_start *****************
+  2376 ;; Defined at:
+  2377 ;;		line 322 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  2378 ;; Parameters:    Size  Location     Type
+  2379 ;;		None
+  2380 ;; Auto vars:     Size  Location     Type
+  2381 ;;		None
+  2382 ;; Return value:  Size  Location     Type
+  2383 ;;		None               void
+  2384 ;; Registers used:
+  2385 ;;		None
+  2386 ;; Tracked objects:
+  2387 ;;		On entry : 0/100
+  2388 ;;		On exit  : 300/0
+  2389 ;;		Unchanged: 0/0
+  2390 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  2391 ;;      Params:         0       0       0       0       0
+  2392 ;;      Locals:         0       0       0       0       0
+  2393 ;;      Temps:          0       0       0       0       0
+  2394 ;;      Totals:         0       0       0       0       0
+  2395 ;;Total ram usage:        0 bytes
+  2396 ;; Hardware stack levels used:    1
+  2397 ;; This function calls:
+  2398 ;;		Nothing
+  2399 ;; This function is called by:
+  2400 ;;		_DS1307_timeRead
+  2401 ;;		_DS1307_timeWrite
+  2402 ;;		_setup
+  2403 ;; This function uses a non-reentrant model
+  2404 ;;
+  2405                           
+  2406                           
+  2407                           ;psect for function _I2C_start
+  2408  07BB                     _I2C_start:	
+  2409                           
+  2410                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 324: RB0 = 1;
+  2411                           
+  2412                           ;incstack = 0
+  2413                           ; Regs used in _I2C_start: []
+  2414  07BB  1283               	bcf	3,5	;RP0=0, select bank0
+  2415  07BC  1303               	bcf	3,6	;RP1=0, select bank0
+  2416  07BD  1406               	bsf	6,0	;volatile
+  2417                           
+  2418                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 325: RB1 = 1;
+  2419  07BE  1486               	bsf	6,1	;volatile
+  2420                           
+  2421                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 326: TRISB1 = 0;
+  2422  07BF  1683               	bsf	3,5	;RP0=1, select bank1
+  2423  07C0  1086               	bcf	6,1	;volatile
+  2424                           
+  2425                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 327: TRISB0 = 0;
+  2426  07C1  1006               	bcf	6,0	;volatile
+  2427                           
+  2428                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 328: RB0 = 0;
+  2429  07C2  1283               	bcf	3,5	;RP0=0, select bank0
+  2430  07C3  1006               	bcf	6,0	;volatile
+  2431                           
+  2432                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 329: RB1 = 0;
+  2433  07C4  1086               	bcf	6,1	;volatile
+  2434  07C5  0008               	return
+  2435  07C6                     __end_of_I2C_start:	
+  2436  07C6                     __ptext19:	
+  2437 ;; *************** function _I2C_stop *****************
+  2438 ;; Defined at:
+  2439 ;;		line 332 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  2440 ;; Parameters:    Size  Location     Type
+  2441 ;;		None
+  2442 ;; Auto vars:     Size  Location     Type
+  2443 ;;		None
+  2444 ;; Return value:  Size  Location     Type
+  2445 ;;		None               void
+  2446 ;; Registers used:
+  2447 ;;		None
+  2448 ;; Tracked objects:
+  2449 ;;		On entry : 200/100
+  2450 ;;		On exit  : 300/0
+  2451 ;;		Unchanged: 0/0
+  2452 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  2453 ;;      Params:         0       0       0       0       0
+  2454 ;;      Locals:         0       0       0       0       0
+  2455 ;;      Temps:          0       0       0       0       0
+  2456 ;;      Totals:         0       0       0       0       0
+  2457 ;;Total ram usage:        0 bytes
+  2458 ;; Hardware stack levels used:    1
+  2459 ;; This function calls:
+  2460 ;;		Nothing
+  2461 ;; This function is called by:
+  2462 ;;		_DS1307_timeRead
+  2463 ;;		_DS1307_timeWrite
+  2464 ;;		_setup
+  2465 ;; This function uses a non-reentrant model
+  2466 ;;
+  2467                           
+  2468                           
+  2469                           ;psect for function _I2C_stop
+  2470  07C6                     _I2C_stop:	
+  2471  07C6                     l1177:	
+  2472                           ;incstack = 0
+  2473                           ; Regs used in _I2C_stop: []
+  2474                           
+  2475                           
+  2476                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 334: RB0 = 0;
+  2477  07C6  1283               	bcf	3,5	;RP0=0, select bank0
+  2478  07C7  1006               	bcf	6,0	;volatile
+  2479                           
+  2480                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 335: RB1 = 1;
+  2481  07C8  1486               	bsf	6,1	;volatile
+  2482                           
+  2483                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 336: RB0 = 1;
+  2484  07C9  1406               	bsf	6,0	;volatile
+  2485  07CA  0008               	return
+  2486  07CB                     __end_of_I2C_stop:	
+  2487  07CB                     __ptext3:	
+  2488 ;; *************** function _diasDelMes *****************
+  2489 ;; Defined at:
+  2490 ;;		line 554 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  2491 ;; Parameters:    Size  Location     Type
+  2492 ;;		None
+  2493 ;; Auto vars:     Size  Location     Type
+  2494 ;;		None
+  2495 ;; Return value:  Size  Location     Type
+  2496 ;;                  1    wreg      unsigned char 
+  2497 ;; Registers used:
+  2498 ;;		wreg, status,2, status,0, pclath, cstack
+  2499 ;; Tracked objects:
+  2500 ;;		On entry : 300/0
+  2501 ;;		On exit  : 300/0
+  2502 ;;		Unchanged: 0/0
+  2503 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  2504 ;;      Params:         0       0       0       0       0
+  2505 ;;      Locals:         0       0       0       0       0
+  2506 ;;      Temps:          0       0       0       0       0
+  2507 ;;      Totals:         0       0       0       0       0
+  2508 ;;Total ram usage:        0 bytes
+  2509 ;; Hardware stack levels used:    1
+  2510 ;; Hardware stack levels required when called:    1
+  2511 ;; This function calls:
+  2512 ;;		_bisiesto
+  2513 ;; This function is called by:
+  2514 ;;		_timeSet
+  2515 ;; This function uses a non-reentrant model
+  2516 ;;
+  2517                           
+  2518                           
+  2519                           ;psect for function _diasDelMes
+  2520  07CB                     _diasDelMes:	
+  2521                           
+  2522                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 556: if(DS1307_Mes==2)
+  2523                           
+  2524                           ;incstack = 0
+  2525                           ; Regs used in _diasDelMes: [wreg+status,2+status,0+pclath+cstack]
+  2526  07CB  3002               	movlw	2
+  2527  07CC  0624               	xorwf	_DS1307_Mes,w
+  2528  07CD  1D03               	btfss	3,2
+  2529  07CE  2FD6               	goto	l1249
+  2530                           
+  2531                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 557: {
+  2532                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 558: if(bisiesto())
+  2533  07CF  27E7  120A  118A   	fcall	_bisiesto
+  2534  07D2  3A00               	xorlw	0
+  2535  07D3  1D03               	btfss	3,2
+  2536                           
+  2537                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 559: return 29;
+  2538  07D4  341D               	retlw	29
+  2539  07D5  341C               	retlw	28
+  2540  07D6                     l1249:	
+  2541                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 560: else
+  2542                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 561: return 28;
+  2543                           
+  2544                           
+  2545                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 563: else
+  2546                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 564: {
+  2547                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 565: if((DS1307_Mes==4) || (DS1307_Mes==6) || (DS1
+      +                          307_Mes==9) || (DS1307_Mes==11))
+  2548  07D6  3004               	movlw	4
+  2549  07D7  0624               	xorwf	_DS1307_Mes,w
+  2550  07D8  1903               	btfsc	3,2
+  2551  07D9  341E               	retlw	30
+  2552  07DA  3006               	movlw	6
+  2553  07DB  0624               	xorwf	_DS1307_Mes,w
+  2554  07DC  1903               	btfsc	3,2
+  2555  07DD  341E               	retlw	30
+  2556  07DE  3009               	movlw	9
+  2557  07DF  0624               	xorwf	_DS1307_Mes,w
+  2558  07E0  1903               	btfsc	3,2
+  2559  07E1  341E               	retlw	30
+  2560  07E2  300B               	movlw	11
+  2561  07E3  0624               	xorwf	_DS1307_Mes,w
+  2562  07E4  1903               	btfsc	3,2
+  2563                           
+  2564                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 566: return 30;
+  2565  07E5  341E               	retlw	30
+  2566                           
+  2567                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 567: else
+  2568                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 568: return 31;
+  2569  07E6  341F               	retlw	31
+  2570  07E7                     __end_of_diasDelMes:	
+  2571  07E7                     __ptext4:	
+  2572 ;; *************** function _bisiesto *****************
+  2573 ;; Defined at:
+  2574 ;;		line 531 in file "Digital_Clock_Test_PIC16F877A_XC8.c"
+  2575 ;; Parameters:    Size  Location     Type
+  2576 ;;		None
+  2577 ;; Auto vars:     Size  Location     Type
+  2578 ;;  dato            1    0[COMMON] unsigned char 
+  2579 ;; Return value:  Size  Location     Type
+  2580 ;;                  1    wreg      unsigned char 
+  2581 ;; Registers used:
+  2582 ;;		wreg, status,2, status,0
+  2583 ;; Tracked objects:
+  2584 ;;		On entry : 300/0
+  2585 ;;		On exit  : 300/0
+  2586 ;;		Unchanged: 0/0
+  2587 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  2588 ;;      Params:         0       0       0       0       0
+  2589 ;;      Locals:         1       0       0       0       0
+  2590 ;;      Temps:          0       0       0       0       0
+  2591 ;;      Totals:         1       0       0       0       0
+  2592 ;;Total ram usage:        1 bytes
+  2593 ;; Hardware stack levels used:    1
+  2594 ;; This function calls:
+  2595 ;;		Nothing
+  2596 ;; This function is called by:
+  2597 ;;		_diasDelMes
+  2598 ;; This function uses a non-reentrant model
+  2599 ;;
+  2600                           
+  2601                           
+  2602                           ;psect for function _bisiesto
+  2603  07E7                     _bisiesto:	
+  2604                           
+  2605                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 534: uint8_t dato = DS1307_Ano;
+  2606                           
+  2607                           ;incstack = 0
+  2608                           ; Regs used in _bisiesto: [wreg+status,2+status,0]
+  2609  07E7  0820               	movf	_DS1307_Ano,w
+  2610  07E8  00F0               	movwf	bisiesto@dato
+  2611  07E9                     l1131:	
+  2612                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 536: while(dato >= 4)
+  2613                           
+  2614  07E9  3004               	movlw	4
+  2615  07EA  0270               	subwf	bisiesto@dato,w
+  2616  07EB  1C03               	btfss	3,0
+  2617  07EC  2FF0               	goto	l1133
+  2618                           
+  2619                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 537: {
+  2620                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 538: dato -= 4;
+  2621  07ED  3004               	movlw	4
+  2622  07EE  02F0               	subwf	bisiesto@dato,f
+  2623  07EF  2FE9               	goto	l1131
+  2624  07F0                     l1133:	
+  2625                           
+  2626                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 539: }
+  2627                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 540: if(dato == 0)
+  2628  07F0  0870               	movf	bisiesto@dato,w
+  2629  07F1  1903               	btfsc	3,2
+  2630                           
+  2631                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 541: return 1;
+  2632  07F2  3401               	retlw	1
+  2633                           
+  2634                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 542: else
+  2635                           ;Digital_Clock_Test_PIC16F877A_XC8.c: 543: return 0;
+  2636  07F3  3400               	retlw	0
+  2637  07F4                     __end_of_bisiesto:	
+
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        0
+    BSS         8
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMMON           14     14      14
+    BANK0            80      3      11
+    BANK1            80      0       0
+    BANK3            96      0       0
+    BANK2            96      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMMON
+
+    _timeShow->_LCD_gotoXY
+    _timeSet->_cicloTimeSet
+    _diasDelMes->_bisiesto
+    _cicloTimeSet->_LCD_gotoXY
+    _LCD_gotoXY->_LCD_command
+    _LCDPrintNumero->_LCD_putChar
+    _LCDPrintDiaSemana->_LCD_putChar
+    _LCD_putChar->_LCD_send
+    _setup->_LCD_init
+    _LCD_init->_LCD_command
+    _LCD_command->_LCD_send
+    _LCD_send->_LCD_send4Bits
+    _DS1307_timeWrite->_I2C_writeByte
+    _DS1307_timeRead->_I2C_readByte
+    _DS1307_timeRead->_I2C_writeByte
+
+Critical Paths under _main in BANK0
+
+    _timeSet->_cicloTimeSet
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 2     2      0    5499
+                                              1 BANK0      2     2      0
+                    _DS1307_timeRead
+                   _DS1307_timeWrite
+                              _setup
+                            _timeSet
+                           _timeShow
+ ---------------------------------------------------------------------------------
+ (1) _timeShow                                             0     0      0    1084
+                  _LCDPrintDiaSemana
+                     _LCDPrintNumero
+                         _LCD_gotoXY
+                        _LCD_putChar
+ ---------------------------------------------------------------------------------
+ (1) _timeSet                                              0     0      0    3712
+                     _LCDPrintNumero
+                        _LCD_command
+                         _LCD_gotoXY
+                       _cicloTimeSet
+                         _diasDelMes
+ ---------------------------------------------------------------------------------
+ (2) _diasDelMes                                           0     0      0      46
+                           _bisiesto
+ ---------------------------------------------------------------------------------
+ (3) _bisiesto                                             1     1      0      46
+                                              0 COMMON     1     1      0
+ ---------------------------------------------------------------------------------
+ (2) _cicloTimeSet                                         8     4      4    2736
+                                              7 COMMON     7     3      4
+                                              0 BANK0      1     1      0
+                  _LCDPrintDiaSemana
+                     _LCDPrintNumero
+                        _LCD_command
+                         _LCD_gotoXY
+                         _diasDelMes (ARG)
+ ---------------------------------------------------------------------------------
+ (2) _LCD_gotoXY                                           2     1      1     485
+                                              5 COMMON     2     1      1
+                        _LCD_command
+ ---------------------------------------------------------------------------------
+ (2) _LCDPrintNumero                                       1     1      0     291
+                                              5 COMMON     1     1      0
+                        _LCD_putChar
+                       _decimalToBCD
+ ---------------------------------------------------------------------------------
+ (2) _LCDPrintDiaSemana                                    0     0      0     154
+                        _LCD_putChar
+ ---------------------------------------------------------------------------------
+ (2) _LCD_putChar                                          1     1      0     154
+                                              4 COMMON     1     1      0
+                           _LCD_send
+ ---------------------------------------------------------------------------------
+ (1) _setup                                                0     0      0     318
+                          _I2C_start
+                           _I2C_stop
+                      _I2C_writeByte
+                           _LCD_init
+ ---------------------------------------------------------------------------------
+ (2) _LCD_init                                             3     3      0     242
+                                              5 COMMON     3     3      0
+                        _LCD_command
+                      _LCD_send4Bits
+ ---------------------------------------------------------------------------------
+ (3) _LCD_command                                          1     1      0     154
+                                              4 COMMON     1     1      0
+                           _LCD_send
+ ---------------------------------------------------------------------------------
+ (3) _LCD_send                                             1     1      0     132
+                                              3 COMMON     1     1      0
+                      _LCD_send4Bits
+ ---------------------------------------------------------------------------------
+ (4) _LCD_send4Bits                                        3     3      0      88
+                                              0 COMMON     3     3      0
+ ---------------------------------------------------------------------------------
+ (1) _DS1307_timeWrite                                     0     0      0     146
+                          _I2C_start
+                           _I2C_stop
+                      _I2C_writeByte
+                       _decimalToBCD
+ ---------------------------------------------------------------------------------
+ (3) _decimalToBCD                                         2     2      0      70
+                                              0 COMMON     2     2      0
+ ---------------------------------------------------------------------------------
+ (1) _DS1307_timeRead                                      0     0      0     239
+                       _BCDToDecimal
+                       _I2C_readByte
+                          _I2C_start
+                           _I2C_stop
+                      _I2C_writeByte
+ ---------------------------------------------------------------------------------
+ (2) _I2C_writeByte                                        3     3      0      76
+                                              0 COMMON     3     3      0
+ ---------------------------------------------------------------------------------
+ (2) _I2C_stop                                             0     0      0       0
+ ---------------------------------------------------------------------------------
+ (2) _I2C_start                                            0     0      0       0
+ ---------------------------------------------------------------------------------
+ (2) _I2C_readByte                                         3     3      0      93
+                                              0 COMMON     3     3      0
+ ---------------------------------------------------------------------------------
+ (2) _BCDToDecimal                                         2     2      0      70
+                                              0 COMMON     2     2      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 4
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+   _DS1307_timeRead
+     _BCDToDecimal
+     _I2C_readByte
+     _I2C_start
+     _I2C_stop
+     _I2C_writeByte
+   _DS1307_timeWrite
+     _I2C_start
+     _I2C_stop
+     _I2C_writeByte
+     _decimalToBCD
+   _setup
+     _I2C_start
+     _I2C_stop
+     _I2C_writeByte
+     _LCD_init
+       _LCD_command
+         _LCD_send
+           _LCD_send4Bits
+       _LCD_send4Bits
+   _timeSet
+     _LCDPrintNumero
+       _LCD_putChar
+         _LCD_send
+           _LCD_send4Bits
+       _decimalToBCD
+     _LCD_command
+       _LCD_send
+         _LCD_send4Bits
+     _LCD_gotoXY
+       _LCD_command
+         _LCD_send
+           _LCD_send4Bits
+     _cicloTimeSet
+       _LCDPrintDiaSemana
+         _LCD_putChar
+           _LCD_send
+             _LCD_send4Bits
+       _LCDPrintNumero
+         _LCD_putChar
+           _LCD_send
+             _LCD_send4Bits
+         _decimalToBCD
+       _LCD_command
+         _LCD_send
+           _LCD_send4Bits
+       _LCD_gotoXY
+         _LCD_command
+           _LCD_send
+             _LCD_send4Bits
+       _diasDelMes (ARG)
+         _bisiesto
+     _diasDelMes
+       _bisiesto
+   _timeShow
+     _LCDPrintDiaSemana
+       _LCD_putChar
+         _LCD_send
+           _LCD_send4Bits
+     _LCDPrintNumero
+       _LCD_putChar
+         _LCD_send
+           _LCD_send4Bits
+       _decimalToBCD
+     _LCD_gotoXY
+       _LCD_command
+         _LCD_send
+           _LCD_send4Bits
+     _LCD_putChar
+       _LCD_send
+         _LCD_send4Bits
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BITCOMMON            E      0       0       0        0.0%
+EEDATA             100      0       0       0        0.0%
+NULL                 0      0       0       0        0.0%
+CODE                 0      0       0       0        0.0%
+COMMON               E      E       E       1      100.0%
+BITSFR0              0      0       0       1        0.0%
+SFR0                 0      0       0       1        0.0%
+BITSFR1              0      0       0       2        0.0%
+SFR1                 0      0       0       2        0.0%
+STACK                0      0       0       2        0.0%
+ABS                  0      0      19       3        0.0%
+BITBANK0            50      0       0       4        0.0%
+BITSFR3              0      0       0       4        0.0%
+SFR3                 0      0       0       4        0.0%
+BANK0               50      3       B       5       13.8%
+BITSFR2              0      0       0       5        0.0%
+SFR2                 0      0       0       5        0.0%
+BITBANK1            50      0       0       6        0.0%
+BANK1               50      0       0       7        0.0%
+BITBANK3            60      0       0       8        0.0%
+BANK3               60      0       0       9        0.0%
+BITBANK2            60      0       0      10        0.0%
+BANK2               60      0       0      11        0.0%
+DATA                 0      0      19      12        0.0%
+
+
+Microchip Technology PIC Macro Assembler V1.35 build -356382666 
+Symbol Table                                                                                   Mon Nov  6 23:55:22 2017
+
+      __end_of_decimalToBCD 07BB          __size_of_I2C_start 000B                         l103 0792  
+                       l108 0728                         l141 069D                         l221 045B  
+                       l224 045F                         _GIE 005F                         _RA0 0028  
+                       _RA1 0029                         _RB0 0030                         _RA2 002A  
+                       _RB1 0031                         _RA3 002B                         _RB2 0032  
+                       _RB3 0033                         _RB4 0034                         _RB5 0035  
+                       _RB6 0036                         _RB7 0037                         u510 05B6  
+                       u504 05B0                         u610 0798                         u530 05BF  
+                       u524 05B9                         u550 05C8                         u624 079B  
+                       u544 05C2                         u490 05AD                         u660 073D  
+                       u564 05CB                         u977 0441                         u987 0525  
+                       u997 053A                 ?_LCD_gotoXY 0075                __CFG_FOSC$HS 0000  
+    __size_of_LCD_send4Bits 003C                        l1111 0661                        l1121 0693  
+                      l1113 066B                        l1105 05EF                        l1115 0675  
+                      l1131 07E9                        l1213 0740                        l1117 067F  
+                      l1109 0657                        l1301 052D                        l1133 07F0  
+                      l1119 0689                        l1313 0546                        l1401 04B9  
+                      l1227 0746                        l1147 0555                        l1307 0532  
+                      l1403 04BE                        l1411 04E4                        l1229 074F  
+                      l1093 07AE                        l1309 0540                        l1405 04CD  
+                      l1095 07B7                        l1407 04D2                        l1177 07C6  
+                      l1249 07D6                        l1409 04E0                        l1451 0447  
+                      l1443 0433                        l1285 0507                        l1269 04F1  
+                      l1295 051B                        l1287 0509                        l1279 0500  
+                      l1391 0482                        l1455 0451                        l1297 051F  
+                      l1393 0490                        l1449 0439                        l1299 04ED  
+                      l1395 0495                        l1387 0471                        l1397 04A5  
+                      l1389 047F                        l1399 04AA                ?_LCD_command 0070  
+                      u1007 0562                        u1017 0571                        u1027 057D  
+                      u1037 0587                        u1047 05D0                        u1057 05DC  
+                      _main 042E        __end_of_cicloTimeSet 0555                        btemp 007E  
+                      ltemp 007E                ?_LCD_putChar 0070               _DS1307_Minuto 0025  
+                      start 0000                        ttemp 007E            __end_of_I2C_stop 07CB  
+                      wtemp 007E           ??_DS1307_timeRead 0073              LCD_gotoXY@fila 0075  
+            _LCDPrintNumero 06A4            __end_of_LCD_init 05A6            __end_of_LCD_send 06BB  
+                     ?_main 0070               __CFG_WDTE$OFF 0000                       _CMCON 009C  
+      cicloTimeSet@editDato 007A       __size_of_BCDToDecimal 000F               __CFG_PWRTE$ON 0000  
+                     _setup 06BB             __end_of_timeSet 04EC                       ltemp0 007E  
+                     ltemp1 0082                       ltemp2 0086                       ltemp3 0080  
+            _DS1307_Segundo 0026                       ttemp0 007E                       ttemp1 0081  
+                     ttemp2 0084                       ttemp3 0087                       ttemp4 007F  
+                     status 0003       __size_of_I2C_readByte 0021           __end_of_I2C_start 07C6  
+                     wtemp0 007E                       wtemp1 0080                       wtemp2 0082  
+                     wtemp3 0084                       wtemp4 0086                       wtemp5 0088  
+                     wtemp6 007F           ?_DS1307_timeWrite 0070          ??_DS1307_timeWrite 0073  
+       __size_of_LCD_gotoXY 000A             __initialization 07F4                __end_of_main 0462  
+    __end_of_LCDPrintNumero 06B3               _LCD_send4Bits 05A6                _BCDToDecimal 0744  
+                    ??_main 0029                _I2C_readByte 0723                      _ADCON0 001F  
+                    _ADCON1 009F                      ?_setup 0070                      _TRISA0 0428  
+                    _TRISA1 0429                      _TRISB0 0430                      _TRISA2 042A  
+                    _TRISB1 0431                      _TRISA3 042B                      _TRISB2 0432  
+                    _TRISB3 0433                      _TRISB4 0434                      _TRISB5 0435  
+                    _TRISB6 0436                      _TRISB7 0437       __size_of_decimalToBCD 000F  
+          __end_of_bisiesto 07F4              ?_LCD_send4Bits 0070             ?_LCDPrintNumero 0070  
+          __end_of_timeShow 063E                   ?_I2C_stop 0070                   ??_timeSet 007E  
+     __size_of_cicloTimeSet 0069                _decimalToBCD 07AC    I2C_writeByte@LoopCounter 0072  
+   __end_of__initialization 07FC        __size_of_LCD_command 0006                   ?_LCD_init 0070  
+                 ?_LCD_send 0070        __size_of_LCD_putChar 0006              __pcstackCOMMON 0070  
+       decimalToBCD@BCDByte 0070               __end_of_setup 06DB                LCD_send@date 0073  
+              _cicloTimeSet 04EC                ??_LCD_gotoXY 0076                  ??_I2C_stop 0070  
+           _DS1307_timeRead 06DB      __size_of_I2C_writeByte 001C                     ??_setup 0078  
+                __pbssBANK0 0020                  _diasDelMes 07CB                  ??_LCD_init 0075  
+                ??_LCD_send 0073           I2C_writeByte@dato 0071             ??_LCD_send4Bits 0070  
+        __end_of_LCD_gotoXY 05F2                  __pmaintext 042E                   ?_bisiesto 0070  
+          _DS1307_DiaSemana 0022                   _I2C_start 07BB     decimalToBCD@decimalByte 0071  
+                 ?_timeShow 0070               _I2C_writeByte 0790   __size_of_DS1307_timeWrite 003D  
+                   __ptext1 05F2                     __ptext2 0462                     __ptext3 07CB  
+                   __ptext4 07E7                     __ptext5 04EC                     __ptext6 05E8  
+                   __ptext7 06A4                     __ptext8 063E                     __ptext9 069E  
+           LCD_putChar@date 0074     __end_of_DS1307_timeRead 0723                     _timeSet 0462  
+                ??_bisiesto 0070         I2C_readByte@ACKByte 0070            cicloTimeSet@lcdX 0078  
+          cicloTimeSet@lcdY 0079        end_of_initialization 07FC                 ?_diasDelMes 0070  
+          ??_LCDPrintNumero 0075                  ?_I2C_start 0070                  ??_timeShow 0077  
+            ?_I2C_writeByte 0070           __size_of_I2C_stop 0005                 _DS1307_Hora 0023  
+         __size_of_LCD_init 0051           __size_of_LCD_send 0008           _LCDPrintDiaSemana 063E  
+       __size_of_diasDelMes 001C          ?_LCDPrintDiaSemana 0070            ?_DS1307_timeRead 0070  
+       start_initialization 07F4            I2C_readByte@dato 0071           LCD_gotoXY@columna 0076  
+       ??_LCDPrintDiaSemana 0075               ??_LCD_command 0074               ??_LCD_putChar 0074  
+           ??_I2C_writeByte 0070                 ??_I2C_start 0070   __end_of_LCDPrintDiaSemana 069E  
+          _DS1307_timeWrite 0753               _editMenuState 0027                   ___latbits 0002  
+             __pcstackBANK0 0028         BCDToDecimal@bcdByte 0071           __size_of_bisiesto 000D  
+       BCDToDecimal@decimal 0070         __end_of_LCD_command 05E8       __end_of_LCD_send4Bits 05E2  
+       __end_of_LCD_putChar 06A4           __size_of_timeShow 004C               ?_BCDToDecimal 0070  
+                  _I2C_stop 07C6                    ?_timeSet 0070               ?_I2C_readByte 0070  
+            __size_of_setup 0020                ??_diasDelMes 0071                    _LCD_init 0555  
+                  _LCD_send 06B3  __size_of_LCDPrintDiaSemana 0060              ??_BCDToDecimal 0070  
+        __end_of_diasDelMes 07E7                  _DS1307_Dia 0021                  _DS1307_Ano 0020  
+                _DS1307_Mes 0024     I2C_readByte@LoopCounter 0072              ??_I2C_readByte 0070  
+        cicloTimeSet@limInf 0028          cicloTimeSet@limSup 0077               ?_decimalToBCD 0070  
+               _LCD_command 05E2                 _LCD_putChar 069E        LCDPrintNumero@numero 0075  
+         LCD_send4Bits@date 0072               ?_cicloTimeSet 0077                    __ptext10 06BB  
+                  __ptext11 0555                    __ptext20 07BB                    __ptext12 05E2  
+                  __ptext21 0723                    __ptext13 06B3                    __ptext22 0744  
+                  __ptext14 05A6                    __ptext15 0753                    __ptext16 07AC  
+                  __ptext17 06DB                    __ptext18 0790                    __ptext19 07C6  
+                  _bisiesto 07E7            __size_of_timeSet 008A              ??_decimalToBCD 0070  
+  __end_of_DS1307_timeWrite 0790               __size_of_main 0034                    _timeShow 05F2  
+   __size_of_LCDPrintNumero 000F              ??_cicloTimeSet 007B                  _LCD_gotoXY 05E8  
+      __end_of_BCDToDecimal 0753    __size_of_DS1307_timeRead 0048                bisiesto@dato 0070  
+      __end_of_I2C_readByte 0744       __end_of_I2C_writeByte 07AC             LCD_command@comm 0074  
