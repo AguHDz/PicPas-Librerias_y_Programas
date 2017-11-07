@@ -2,12 +2,13 @@
 ===================================================================
 [Ultima Edición: 06/11/2017: Resultados Definitivos]
 Esta 2ª comparativa utiliza un "programa patrón" mucho más complejo que el usado en al 1ª comparativa, que era demasiado básico.
+
 Se trata de un reloj de tiempo real usando el microcontrolador PIC16F877A (y el PIC16F84A cuando el compilador es capaz de generar un ejecutanle de menos de 1K) todas las funciones de reloj las realiza el integrado DS1307 que se comunica mediante protocolo I2C, 3 botones de entrada y un display LCD de salida.
 
 La comunicación I2C es por software por lo que es aplicable a cualquier PIC y se han utilizado instrucciones básicas para optimizar el tamaño del código, huyendo de las librerías estándar que puedan acompañar a los compiladores y que invalidarían la prueba. Cuando el compilador dispone de ella, la única instrucción o librería usada ha sido delay_ms() por estar siempre muy optimizada y más o menos estandarizada en todos los compiladores.
 
 PUESTO OBTENIDO POR CADA COMPILADOR TRAS PRUEBA:
- 1ª PICPAS 0.8.1 (https://github.com/t-edson/PicPas - GRATUITO) - 1722 (MEJOR)
+ 1ª PICPAS v.0.8.1 (https://github.com/t-edson/PicPas - GRATUITO) - 1722 (MEJOR)
  2º XC8 v.1.35 (http://www.microchip.com - DE PAGO - VERSION REGISTRADA) - 1757
  3º CCS C v.5.0.74 (http://www.ccsinfo.com/ - DE PAGO) - 1767
  4º MIKROPASCAL v.7.1.0 (https://shop.mikroe.com/mikropascal-pic - DE PAGO) - 1967
